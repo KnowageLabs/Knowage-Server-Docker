@@ -1,4 +1,4 @@
-spagobi:
+knowage:
     image: knowagelabs/knowage:latest
     links:
         - knowagedb:db
