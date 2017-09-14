@@ -1,5 +1,5 @@
 knowage:
-    image: knowagelabs/knowage:latest
+    image: knowagelabs/knowage:develop
     links:
         - knowagedb:db
     environment:
