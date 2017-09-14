@@ -4,6 +4,7 @@ spagobi:
         - knowagedb:db
     environment:
         - WAIT_MYSQL=true
+        - ENABLE_HIGHCHARTS=n
 
 spagobidb:
     image: mysql:5.5
