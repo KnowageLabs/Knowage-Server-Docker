@@ -12,7 +12,7 @@ Knowage is the professional open source suite for modern business analytics over
 
 # Run Knowage
 
-Differently from its predecessor (i.e. SpagoBI), you MUST uses ```docker-compose``` for running Knowage with a MySQL container. This will be shipped with within a single command. You can find the compose file definition [here](https://github.com/KnowageLabs/Knowage-Server/master/docker/6.1-all-in-one). 
+Differently from its predecessor (i.e. SpagoBI), you MUST uses ```docker-compose``` for running Knowage with a MySQL container. This will be shipped with within a single command.
 
 ## Supported tags and respective docker-compose links
 
