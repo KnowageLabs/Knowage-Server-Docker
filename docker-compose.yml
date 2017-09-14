@@ -1,12 +1,12 @@
 spagobi:
-    image: knowagelabs/knowage:6.1
+    image: knowagelabs/knowage:latest
     links:
         - knowagedb:db
     environment:
         - WAIT_MYSQL=true
         - ENABLE_HIGHCHARTS=n
 
-spagobidb:
+knowagedb:
     image: mysql:5.5
     environment:
         - MYSQL_USER=knowageuser
