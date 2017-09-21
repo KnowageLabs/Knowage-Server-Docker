@@ -33,7 +33,6 @@ $ docker-compose up
 The only two environment properties used by Knowage are:
 
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
-* ```ENABLE_HIGHCHARTS``` : *optional* - define which library must be used to visualise data. Default option is *n* (i.e. ChartJS). Other options are *y* (i.e. Highcharts) and *demo* (i.e. Highcharts withe demo contents pre-installed).
 
 # Use Knowage
 
