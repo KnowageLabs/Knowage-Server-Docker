@@ -4,7 +4,6 @@ knowage:
         - knowagedb:db
     environment:
         - WAIT_MYSQL=true
-        - ENABLE_HIGHCHARTS=n
 
 knowagedb:
     image: mysql:5.5
