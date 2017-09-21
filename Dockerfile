@@ -12,8 +12,8 @@ ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 WORKDIR ${KNOWAGE_DIRECTORY}
 
 RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
-RUN ["/bin/bash", "-c", " debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
-RUN apt-get update && apt-get upgrade -y && apt-get -y install wget coreutils unzip mysql-server mysql-client && rm -rf /var/lib/apt/lists/*
+RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
+RUN apt-get update && apt-get -y install wget coreutils unzip mysql-server mysql-client
 
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
