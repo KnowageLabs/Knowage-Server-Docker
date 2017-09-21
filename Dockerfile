@@ -30,8 +30,12 @@ COPY ./entrypoint.sh ./
 #make all scripts executable
 RUN chmod +x *.sh
 
+#debug
+RUN pwd
+RUN ls
+
 #Install Knowage via installer and default params
-RUN ["sh", "-c", "Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties"]
+RUN ["/bin/bash", "-c", "Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
