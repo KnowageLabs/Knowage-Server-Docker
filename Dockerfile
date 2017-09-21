@@ -26,6 +26,7 @@ RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
         rm mysql.zip
 
 COPY ./entrypoint.sh ./
+COPY ./default_params.properties ./
 
 #make all scripts executable
 RUN chmod +x *.sh
