@@ -37,8 +37,8 @@ if [ -n "$DB_ENV_MYSQL_DATABASE" ]; then
         fi
 
         #replace in server.xml
-        old_connection='<Resource url="jdbc:mysql://localhost:3306/knowage_ce" username="root" password="root"'
-        new_connection='<Resource url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
+        old_connection='url="jdbc:mysql://localhost:3306/knowage_ce" username="root" password="root"'
+        new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
         sed -i "s|${old_connection}|${mysql_connection}|" ${KNOWAGE_DIRECTORY}/conf/server.xml
 fi
 
