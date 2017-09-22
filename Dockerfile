@@ -1,6 +1,6 @@
 #Download base image ubuntu 16.04
 FROM ubuntu:16.04
-FROM openjdk:8
+FROM FROM java:openjdk-8-jre
 FROM mysql:5.7
 
 ENV MYSQL_ROOT_PASSWORD=root
