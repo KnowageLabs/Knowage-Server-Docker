@@ -3,6 +3,8 @@ FROM ubuntu:16.04
 FROM FROM java:openjdk-8-jre
 FROM mysql:5.7
 
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+
 ENV MYSQL_ROOT_PASSWORD=root
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
