@@ -16,7 +16,7 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
-#RUN apt-get update && apt-get -y install wget coreutils unzip mysql-server mysql-client
+RUN apt-get update && apt-get -y install wget coreutils unzip
 
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
