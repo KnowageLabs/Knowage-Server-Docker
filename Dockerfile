@@ -17,9 +17,9 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 RUN apt-get update && apt-get -y install wget coreutils unzip default-jre && rm -rf /var/lib/apt/lists/*
 
 #download knowage and extract it
-#RUN wget "${KNOWAGE_URL}" && \
-#       unzip Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip && \
-#       rm Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
+RUN wget "${KNOWAGE_URL}" && \
+       unzip Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip && \
+       rm Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
 
 #download mysql scripts
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
