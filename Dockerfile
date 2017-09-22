@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 FROM java:openjdk-8
 FROM mysql:5.7
 
-RUN ls /usr/lib/jvm/java-8-openjdk-amd64 
+RUN ls /usr/lib/jvm/
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV INSTALL4J_JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
