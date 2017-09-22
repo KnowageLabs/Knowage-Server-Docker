@@ -33,7 +33,7 @@ COPY ./default_params.properties ./
 RUN chmod +x *.sh
 
 #Install Knowage via installer and default params
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysqladmin -h localhost -u root -proot version && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties && cat ${KNOWAGE_DIRECTORY}/webapps/.install4j/installation.log"]
+RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysqladmin -h localhost -u root -proot version && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties && cat ${KNOWAGE_DIRECTORY}/Knowage-Server-CE/webapps/.install4j/installation.log"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
