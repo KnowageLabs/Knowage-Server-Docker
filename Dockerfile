@@ -1,7 +1,7 @@
-FROM mysql:5.7
+FROM java:8
 
 # Environment variables
-ENV MYSQL_ROOT_PASSWORD=root
+#ENV MYSQL_ROOT_PASSWORD=root
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170921
@@ -12,11 +12,11 @@ ENV KNOWAGE_DIRECTORY /home/knowage
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 WORKDIR ${KNOWAGE_DIRECTORY}
 
-#RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
-#RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
-#RUN apt-get update && apt-get -y install wget coreutils default-jre unzip && rm -rf /var/lib/apt/lists/*
+RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
+RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
+RUN apt-get update && apt-get -y install wget coreutils unzip mysql-client mysql-server && rm -rf /var/lib/apt/lists/*
 
-RUN /etc/init.d/mysql start && mysqladmin -u root version
+RUN /etc/init.d/mysql start && mysqladmin -u root -p root version
 
 #download knowage and extract it
 #RUN wget "${KNOWAGE_URL}" && \
