@@ -13,9 +13,7 @@ RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/r
 RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
 RUN apt-get update && apt-get -y install wget coreutils default-jre unzip mysql-client mysql-server && rm -rf /var/lib/apt/lists/*
 
-RUN service mysql start
-RUN systemctl status mysql.service
-RUN mysqladmin -p root -u root version
+RUN service mysql start && systemctl status mysql.service && mysqladmin -p root -u root version
 
 RUN ls /usr/lib/jvm/
 
