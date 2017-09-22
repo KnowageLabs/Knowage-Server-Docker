@@ -5,6 +5,7 @@ FROM mysql:5.7
 
 ENV MYSQL_ROOT_PASSWORD=root
 
+RUN service mysqld start
 RUN mysqladmin -p root -u root version
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
