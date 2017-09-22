@@ -1,12 +1,4 @@
-#Download base image ubuntu 16.04
-#FROM ubuntu:16.04
-FROM mysql:5.7
-#FROM java:openjdk-8
-
-ENV MYSQL_ROOT_PASSWORD=root
-
-RUN service mysql start
-RUN mysqladmin -p root -u root version
+FROM java:8
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170921
@@ -17,9 +9,12 @@ ENV KNOWAGE_DIRECTORY /home/knowage
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 WORKDIR ${KNOWAGE_DIRECTORY}
 
-#RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
-#RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
-RUN apt-get update && apt-get -y install wget coreutils default-jre unzip && rm -rf /var/lib/apt/lists/*
+RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
+RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
+RUN apt-get update && apt-get -y install wget coreutils default-jre unzip mysql-client mysql-server && rm -rf /var/lib/apt/lists/*
+
+RUN service mysql start
+RUN mysqladmin -p root -u root version
 
 RUN ls /usr/lib/jvm/
 
