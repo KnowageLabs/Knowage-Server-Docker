@@ -16,6 +16,8 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
 RUN apt-get update && apt-get -y install wget coreutils default-jre unzip && rm -rf /var/lib/apt/lists/*
 
+RUN /etc/init.d/mysql start && mysqladmin -u root version
+
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
        unzip Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip && \
