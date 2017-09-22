@@ -1,9 +1,10 @@
 #Download base image ubuntu 16.04
 FROM ubuntu:16.04
-FROM java:openjdk-8-jre
+FROM java:openjdk-8
 FROM mysql:5.7
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV INSTALL4J_JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 ENV MYSQL_ROOT_PASSWORD=root
 
