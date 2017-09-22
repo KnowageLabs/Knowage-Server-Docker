@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:5.5
 
 # Environment variables
 ENV MYSQL_ROOT_PASSWORD=root
