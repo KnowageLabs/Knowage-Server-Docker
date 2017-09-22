@@ -1,6 +1,6 @@
 #Download base image ubuntu 16.04
 FROM ubuntu:16.04
-FROM FROM java:openjdk-8-jre
+FROM java:openjdk-8-jre
 FROM mysql:5.7
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
