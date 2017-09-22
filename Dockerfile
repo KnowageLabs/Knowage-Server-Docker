@@ -1,6 +1,9 @@
 #Download base image ubuntu 16.04
 FROM ubuntu:16.04
 FROM java:8
+FROM mysql:5.7
+
+ENV MYSQL_ROOT_PASSWORD=root
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170921
@@ -11,9 +14,9 @@ ENV KNOWAGE_DIRECTORY /home/knowage
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 WORKDIR ${KNOWAGE_DIRECTORY}
 
-RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
-RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
-RUN apt-get update && apt-get -y install wget coreutils unzip mysql-server mysql-client
+#RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
+#RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
+#RUN apt-get update && apt-get -y install wget coreutils unzip mysql-server mysql-client
 
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
@@ -30,10 +33,6 @@ COPY ./default_params.properties ./
 
 #make all scripts executable
 RUN chmod +x *.sh
-
-#debug
-RUN pwd
-RUN ls
 
 #Install Knowage via installer and default params
 RUN ["/bin/bash", "-c", "./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties"]
