@@ -3,6 +3,9 @@
 FROM mysql:5.7
 #FROM java:openjdk-8
 
+RUN systemctl status mysql.service
+RUN mysqladmin -p root -u root version
+
 ENV MYSQL_ROOT_PASSWORD=root
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
@@ -21,9 +24,9 @@ RUN apt-get update && apt-get -y install wget coreutils default-jre unzip && rm 
 RUN ls /usr/lib/jvm/
 
 #download knowage and extract it
-RUN wget "${KNOWAGE_URL}" && \
-       unzip Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip && \
-       rm Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
+#RUN wget "${KNOWAGE_URL}" && \
+#       unzip Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip && \
+#       rm Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
 
 #download mysql scripts
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
@@ -37,7 +40,7 @@ COPY ./default_params.properties ./
 RUN chmod +x *.sh
 
 #Install Knowage via installer and default params
-RUN ["/bin/bash", "-c", "./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties"]
+#RUN ["/bin/bash", "-c", "./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -varfile default_params.properties"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
