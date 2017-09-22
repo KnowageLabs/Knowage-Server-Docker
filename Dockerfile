@@ -3,8 +3,6 @@
 FROM mysql:5.7
 #FROM java:openjdk-8
 
-RUN ls /usr/lib/jvm/
-
 ENV MYSQL_ROOT_PASSWORD=root
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
@@ -19,6 +17,8 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
 RUN apt-get update && apt-get -y install wget coreutils default-jre unzip && rm -rf /var/lib/apt/lists/*
+
+RUN ls /usr/lib/jvm/
 
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
