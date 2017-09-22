@@ -32,6 +32,8 @@ COPY ./default_params.properties ./
 #make all scripts executable
 RUN chmod +x *.sh
 
+RUN ls /etc/mysql
+
 #Install Knowage via installer and default params
 RUN ["/bin/bash", "-c", "service mysql start && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
