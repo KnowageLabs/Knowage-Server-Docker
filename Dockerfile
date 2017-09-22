@@ -3,10 +3,9 @@
 FROM mysql:5.7
 #FROM java:openjdk-8
 
-RUN systemctl status mysql.service
-RUN mysqladmin -p root -u root version
-
 ENV MYSQL_ROOT_PASSWORD=root
+
+RUN mysqladmin -p root -u root version
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170921
