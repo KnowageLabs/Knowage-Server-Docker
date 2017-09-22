@@ -1,7 +1,7 @@
 #Download base image ubuntu 16.04
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
 FROM mysql:5.7
-FROM java:openjdk-8
+#FROM java:openjdk-8
 
 RUN ls /usr/lib/jvm/
 
@@ -18,7 +18,7 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'"]
 #RUN ["/bin/bash", "-c", "debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'"]
-RUN apt-get update && apt-get -y install wget coreutils unzip
+RUN apt-get update && apt-get -y install wget coreutils default-jre unzip && rm -rf /var/lib/apt/lists/*
 
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
