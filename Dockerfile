@@ -38,10 +38,10 @@ RUN sed -i 's/#bind-address/bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf
 RUN sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
 RUN cat /etc/mysql/mysql.conf.d/mysqld.cnf
 
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysql -h 127.0.0.1 -P 3306 -u root -proot -e 'SELECT host, user FROM mysql.user' && mysql -u root -proot -e 'USE mysql; UPDATE `user` SET `Host`=\"%\" WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;'"]
+RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysql -u root -proot -e 'SELECT host, user FROM mysql.user' && mysql -u root -proot -e 'USE mysql; UPDATE `user` SET `Host`=\"%\" WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;'"]
 
 #Install Knowage via installer and default params
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
+RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysql -u root -proot -e 'SELECT host, user FROM mysql.user' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
