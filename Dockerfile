@@ -2,7 +2,7 @@ FROM mysql:5.7
 
 # Environment variables
 ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_ROOT_HOST=%
+ENV MYSQL_ROOT_HOST=localhost
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170921
@@ -33,12 +33,8 @@ COPY ./default_params.properties ./
 #make all scripts executable
 RUN chmod +x *.sh
 
-RUN ls /etc/mysql
-RUN cat /etc/mysql/my.cnf
-RUN cat /etc/mysql/mysql.cnf
-
 #Install Knowage via installer and default params
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysqld -u root -proot -h localhost -e 'SELECT host, user FROM mysql.user' && && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
+RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysqld -u root -proot -h localhost -e \"SELECT host, user FROM mysql.user\" && && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
