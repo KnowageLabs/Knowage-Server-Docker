@@ -32,6 +32,8 @@ COPY ./default_params.properties ./
 
 #make all scripts executable
 RUN chmod +x *.sh
+RUN sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
+RUN["/bin/bash", "-c", "mysql -uroot -proot -e 'USE mysql; UPDATE `user` SET `Host`='%' WHERE `User`='root' AND `Host`='localhost'; DELETE FROM `user` WHERE `Host` != "%" AND `User`='root'; FLUSH PRIVILEGES;'"]
 
 #Install Knowage via installer and default params
 RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysqld -u root -proot -e 'SELECT host, user FROM mysql.user' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
