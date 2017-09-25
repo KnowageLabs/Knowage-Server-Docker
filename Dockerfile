@@ -1,8 +1,8 @@
 FROM mysql:5.7
 
 # Environment variables
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_ROOT_HOST=127.0.0.1
+#ENV MYSQL_ROOT_PASSWORD=root
+#ENV MYSQL_ROOT_HOST=127.0.0.1
 
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170921
@@ -33,15 +33,13 @@ COPY ./default_params.properties ./
 #make all scripts executable
 RUN chmod +x *.sh
 
-RUN cat /etc/mysql/mysql.conf.d/mysqld.cnf
-RUN sed -i 's/#bind-address/bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf
-RUN sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
-RUN cat /etc/mysql/mysql.conf.d/mysqld.cnf
-
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysql -u root -proot -e 'SELECT host, user FROM mysql.user' && mysql -u root -proot -e 'USE mysql; UPDATE `user` SET `Host`=\"%\" WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;'"]
+#RUN cat /etc/mysql/mysql.conf.d/mysqld.cnf
+#RUN sed -i 's/#bind-address/bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+#RUN sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+#RUN cat /etc/mysql/mysql.conf.d/mysqld.cnf
 
 #Install Knowage via installer and default params
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysql -u root -proot -e 'SELECT host, user FROM mysql.user' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
+RUN ["/bin/bash", "-c", "/etc/init.d/mysql start &&  mysql -u root -e 'USE mysql; UPDATE `user` SET `Host`=\"%\", `plugin`=\"mysql_native_password\"  WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
