@@ -37,7 +37,7 @@ RUN cat /etc/mysql/my.cnf
 RUN cat /etc/mysql/mysql.cnf
 
 #Install Knowage via installer and default params
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && mysql --verbose --help | grep bind-address && mysql -u root -proot -h localhost -e "SELECT host, user FROM mysql.user;" && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
+RUN ["/bin/bash", "-c", "/etc/init.d/mysql start && {mysql --verbose --help | grep bind-address} && mysql -u root -proot -h localhost -e "SELECT host, user FROM mysql.user" && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
