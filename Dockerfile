@@ -34,6 +34,12 @@ RUN ["/bin/bash", "-c", "/etc/init.d/mysql start &&  mysql -u root -e 'USE mysql
 RUN ls ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}
 
 WORKDIR ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}/bin
+
+#make the script executable by bash (not only sh) and
+#make spagobi running forever without exiting
+RUN sed -i "s/bin\/sh/bin\/bash/" startup.sh && \
+	sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" startup.sh
+
 COPY ./entrypoint.sh ./
 
 #make all scripts executable
