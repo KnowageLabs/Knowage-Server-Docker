@@ -2,7 +2,7 @@ FROM mysql:5.6
 
 # Environment variables
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
-ENV KNOWAGE_RELEASE_DATE=20170921
+ENV KNOWAGE_RELEASE_DATE=20170929
 ENV KNOWAGE_URL=http://download.forge.ow2.org/knowage/Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
 ENV TOMCAT_DIRECTORY=Knowage-Server-CE
 ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscripts-6.0.0_20170616.zip
