@@ -30,7 +30,9 @@ COPY ./default_params.properties ./
 #Install Knowage via installer and default params
 RUN ["/bin/bash", "-c", "/etc/init.d/mysql start &&  mysql -u root -e 'USE mysql; UPDATE `user` SET `Host`=\"%\", `plugin`=\"mysql_native_password\"  WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
-WORKDIR ${KNOWAGE_DIRECTORY}/bin
+RUN ls ${KNOWAGE_DIRECTORY}/Knowage-Server-CE
+
+WORKDIR ${KNOWAGE_DIRECTORY}/Knowage-Server-CE/bin
 COPY ./entrypoint.sh ./
 
 #make all scripts executable
@@ -39,7 +41,5 @@ RUN chmod +x *.sh
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
 ENTRYPOINT ["./entrypoint.sh"]
-
-WORKDIR ${KNOWAGE_DIRECTORY}/Knowage-Server-CE/bin
 
 CMD ["./startup.sh"]
