@@ -44,6 +44,8 @@ COPY ./entrypoint.sh ./
 
 #make all scripts executable
 RUN chmod +x *.sh
+#where the data is stored in all in one run
+VOLUME /var/lib/mysql
 
 EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
