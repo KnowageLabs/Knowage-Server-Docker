@@ -25,6 +25,9 @@ RUN chmod +x *.sh
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
         unzip mysql.zip && \
         rm mysql.zip
+	
+COPY ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create.sql /docker-entrypoint-initdb.d/
+COPY ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
 
 COPY ./default_params.properties ./
 
@@ -49,4 +52,4 @@ EXPOSE 8080
 #-d option is passed to run knowage forever without exiting from container
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["./startup.sh"]
+CMD ["/etc/init.d/mysql start","./startup.sh"]
