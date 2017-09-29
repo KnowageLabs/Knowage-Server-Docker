@@ -8,8 +8,8 @@ if [[ -z "$PUBLIC_ADDRESS" ]]; then
 fi
 
 #replace the address of container inside server.xml
-sed -i "s/http:\/\/.*:8080/http:\/\/${PUBLIC_ADDRESS}:8080/g" ${KNOWAGE_DIRECTORY}/conf/server.xml
-sed -i "s/http:\/\/localhost:8080/http:\/\/${PUBLIC_ADDRESS}:8080/g" ${KNOWAGE_DIRECTORY}/webapps/knowage/WEB-INF/web.xml
+sed -i "s/http:\/\/.*:8080/http:\/\/${PUBLIC_ADDRESS}:8080/g" ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}/conf/server.xml
+sed -i "s/http:\/\/localhost:8080/http:\/\/${PUBLIC_ADDRESS}:8080/g" ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}/webapps/knowage/WEB-INF/web.xml
 
 #wait for MySql if it's a compose image
 if [ -n "$WAIT_MYSQL" ]; then
@@ -39,7 +39,7 @@ if [ -n "$DB_ENV_MYSQL_DATABASE" ]; then
         #replace in server.xml
         old_connection='url="jdbc:mysql://localhost:3306/knowage_ce" username="root" password="root"'
         new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
-        sed -i "s|${old_connection}|${mysql_connection}|" ${KNOWAGE_DIRECTORY}/conf/server.xml
+        sed -i "s|${old_connection}|${mysql_connection}|" ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}/conf/server.xml
 fi
 
 exec "$@"
