@@ -70,5 +70,5 @@ EXPOSE 8080
 #use -d option to run knowage forever without exiting from container
 ENTRYPOINT ["./entrypoint.sh"]
 
-#this will start mysql and knowage just after the previous entrypoint
-CMD ["/etc/init.d/mysql start","./startup.sh"]
+#this will start knowage just after the previous entrypoint
+CMD ["./startup.sh"]
