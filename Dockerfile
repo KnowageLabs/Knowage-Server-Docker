@@ -35,7 +35,7 @@ ENV MYSQL_DATABASE knowage_ce
 
 #copy the scripts to init the db in the docker mysql entrypoint
 #these will be used during the first run to init the db
-COPY MySQL_create.sql /docker-entrypoint-initdb.d/
+COPY /home/knowage/mysql/MySQL_create.sql /docker-entrypoint-initdb.d/
 COPY MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
 
 #go to knowage home directory
