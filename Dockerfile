@@ -9,9 +9,33 @@ ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscrip
 
 ENV KNOWAGE_DIRECTORY /home/knowage
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
-WORKDIR ${KNOWAGE_DIRECTORY}
 
 RUN apt-get update && apt-get -y install wget coreutils unzip default-jre && rm -rf /var/lib/apt/lists/*
+
+#go to knowage home directory
+WORKDIR ${KNOWAGE_DIRECTORY}
+
+#download mysql scripts
+RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
+        unzip mysql.zip && \
+        rm mysql.zip
+
+#go to script mysql directory inside knowage directory
+WORKDIR ${MYSQL_SCRIPT_DIRECTORY}
+
+#add create database as first line and use database as second
+sed -i '1s/^/USE knowage_ce;\n/' MySQL_create.sql
+sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create.sql
+sed -i '1s/^/USE knowage_ce;\n/' MySQL_create_quartz_schema.sql
+sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create_quartz_schema.sql
+
+#copy the scripts to init the db in the docker mysql entrypoint
+#these will be used during the first run to init the db
+COPY MySQL_create.sql /docker-entrypoint-initdb.d/
+COPY MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
+
+#go to knowage home directory
+WORKDIR ${KNOWAGE_DIRECTORY}
 
 #download knowage and extract it
 RUN wget "${KNOWAGE_URL}" && \
@@ -21,35 +45,36 @@ RUN wget "${KNOWAGE_URL}" && \
 #make all scripts executable
 RUN chmod +x *.sh
 
-#download mysql scripts
-RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
-        unzip mysql.zip && \
-        rm mysql.zip
-	
-COPY ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create.sql /docker-entrypoint-initdb.d/
-COPY ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
+#set mysql data as volume, so that data while be kept at accross different runtimes
+VOLUME /var/lib/mysql
 
+#copy the properties file which contains default answer for the unattended execution of the installer
 COPY ./default_params.properties ./
 
-#Install Knowage via installer and default params
+#Install Knowage via installer using the default params
 RUN ["/bin/bash", "-c", "/etc/init.d/mysql start &&  mysql -u root -e 'USE mysql; UPDATE `user` SET `Host`=\"%\", `plugin`=\"mysql_native_password\"  WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties"]
 
+#go to binary folder in order to execute tomcat startup
 WORKDIR ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}/bin
 
 #make the script executable by bash (not only sh) and
-#make spagobi running forever without exiting
+#make knowage running forever without exiting when running the container
 RUN sed -i "s/bin\/sh/bin\/bash/" startup.sh && \
 	sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" startup.sh
 
+#copy entrypoint to be used at runtime
 COPY ./entrypoint.sh ./
 
 #make all scripts executable
 RUN chmod +x *.sh
-#where the data is stored in all in one run
-VOLUME /var/lib/mysql
 
+#expose common tomcat port
+#this can be used by the host to expose the application
+#you can use it while running image with the param '-p 8080:8080'
 EXPOSE 8080
-#-d option is passed to run knowage forever without exiting from container
+
+#use -d option to run knowage forever without exiting from container
 ENTRYPOINT ["./entrypoint.sh"]
 
+#this will start mysql and knowage just after the previous entrypoint
 CMD ["/etc/init.d/mysql start","./startup.sh"]
