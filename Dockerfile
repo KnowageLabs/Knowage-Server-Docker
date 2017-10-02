@@ -43,7 +43,7 @@ RUN wget "${KNOWAGE_URL}" && \
 RUN chmod +x *.sh
 
 #set mysql data as volume, so that data while be kept at accross different runtimes
-VOLUME /var/lib/mysql
+#VOLUME /var/lib/mysql
 
 #copy the properties file which contains default answer for the unattended execution of the installer
 COPY ./default_params.properties ./
