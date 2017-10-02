@@ -78,7 +78,9 @@ WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps
 #download knowage engines and extract them
 RUN wget "${KNOWAGE_CORE_URL}" && \
        unzip ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
-       rm ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip
+       rm ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
+       jar -xvf ${KNOWAGE_CORE_ENGINE}.war && \
+       rm ${KNOWAGE_CORE_ENGINE}.war
 
 #go to apache tomcat webapps directory
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf
