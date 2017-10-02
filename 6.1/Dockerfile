@@ -63,10 +63,14 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 RUN apt-get update && apt-get install -y wget coreutils unzip mysql-client  && rm -rf /var/lib/apt/lists/*
 
 #download apache tomcat and extract it
-ADD ${APACHE_TOMCAT_URL} ./
+RUN wget "${APACHE_TOMCAT_URL}" && \
+       unzip ${APACHE_TOMCAT_PACKAGE}.zip && \
+       rm ${APACHE_TOMCAT_PACKAGE}.zip
 
 #download knowage engines and extract them
-ADD ${KNOWAGE_CORE_URL} ${APACHE_TOMCAT_PACKAGE}/webapps/
+RUN wget "${KNOWAGE_CORE_URL}" && \
+       unzip ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip ${APACHE_TOMCAT_PACKAGE}/webapps && \
+       rm ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip
 
 #override apache tomcat server configuration
 COPY server.xml ${APACHE_TOMCAT_PACKAGE}/conf/
