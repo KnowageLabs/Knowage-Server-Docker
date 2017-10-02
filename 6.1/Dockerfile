@@ -48,7 +48,7 @@ ENV KNOWAGE_WHATIF_ENGINE ${KNOWAGE_CORE_ENGINE}whatifengine
 ENV KNOWAGE_WHATIF_URL http://download.forge.ow2.org/knowage/${KNOWAGE_WHATIF_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip
 
 ENV APACHE_TOMCAT_VERSION 7.0.57
-ENV APACHE_TOMCAT_PACKAGE apache-tomcat-${7.0.57}
+ENV APACHE_TOMCAT_PACKAGE apache-tomcat-${APACHE_TOMCAT_VERSION}
 ENV APACHE_TOMCAT_URL https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.zip
 
 # MySQL environment variables
