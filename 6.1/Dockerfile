@@ -62,6 +62,11 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 
 RUN apt-get update && apt-get install -y wget coreutils unzip mysql-client  && rm -rf /var/lib/apt/lists/*
 
+#download mysql scripts
+RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
+        unzip mysql.zip && \
+        rm mysql.zip && \
+
 #download apache tomcat and extract it
 RUN wget "${APACHE_TOMCAT_URL}" && \
        unzip ${APACHE_TOMCAT_PACKAGE}.zip && \
