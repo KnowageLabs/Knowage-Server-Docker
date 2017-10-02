@@ -19,15 +19,19 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
         unzip mysql.zip && \
         rm mysql.zip
-
+RUN ls
 #go to script mysql directory inside knowage directory
 WORKDIR ${MYSQL_SCRIPT_DIRECTORY}
 
+RUN ls
+
 #add create database as first line and use database as second
-RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create.sql
-RUN sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create.sql
-RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create_quartz_schema.sql
-RUN sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create_quartz_schema.sql
+#RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create.sql
+#RUN sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create.sql
+#RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create_quartz_schema.sql
+#RUN sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create_quartz_schema.sql
+
+ENV MYSQL_DATABASE knowage_ce
 
 #copy the scripts to init the db in the docker mysql entrypoint
 #these will be used during the first run to init the db
