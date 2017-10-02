@@ -1,4 +1,4 @@
-FROM mysql:5.6
+FROM mysql:5.7
 
 # Knowage environment variables
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
@@ -41,7 +41,7 @@ RUN chmod +x *.sh
 COPY ./default_params.properties ./
 
 #Install Knowage via installer using the default params
-RUN ["/bin/bash", "-c", "/etc/init.d/mysql start &&  mysql -u root -e 'USE mysql; UPDATE `user` SET `Host`=\"%\", `plugin`=\"mysql_native_password\"  WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties && /etc/init.d/mysql stop"]
+RUN ["/bin/bash", "-c", "mysqld --initialize-insecure &&  mysql -u root -e 'USE mysql; UPDATE `user` SET `Host`=\"%\", `plugin`=\"mysql_native_password\"  WHERE `User`=\"root\" AND `Host`=\"localhost\"; DELETE FROM `user` WHERE `Host` != \"%\" AND `User`=\"root\"; FLUSH PRIVILEGES;' && ./Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.sh -q -console -Dinstall4j.debug=true -Dinstall4j.keepLog=true -Dinstall4j.logToStderr=true -Dinstall4j.detailStdout=true -varfile default_params.properties && /etc/init.d/mysql stop"]
 
 #download mysql scripts
 #copy the scripts to init the db in the docker mysql entrypoint
@@ -74,4 +74,4 @@ EXPOSE 8080
 ENTRYPOINT ["./entrypoint.sh"]
 
 #this will start knowage just after the previous entrypoint
-CMD ["/etc/init.d/mysql start", "./startup.sh"]
+CMD ["mysqld", "./startup.sh"]
