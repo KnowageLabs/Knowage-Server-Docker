@@ -1,13 +1,15 @@
 FROM mysql:5.6
 
-# Environment variables
+# Knowage environment variables
 ENV KNOWAGE_VERSION=6_0_0-CE-Installer-Unix
 ENV KNOWAGE_RELEASE_DATE=20170929
 ENV KNOWAGE_URL=http://download.forge.ow2.org/knowage/Knowage-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
 ENV TOMCAT_DIRECTORY=Knowage-Server-CE
-ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscripts-6.0.0_20170616.zip
-
 ENV KNOWAGE_DIRECTORY /home/knowage
+
+# MySQL environment variables
+ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscripts-6.0.0_20170616.zip
+ENV MYSQL_DATABASE knowage_ce
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 
 RUN apt-get update && apt-get -y install wget coreutils unzip default-jre && rm -rf /var/lib/apt/lists/*
@@ -16,25 +18,19 @@ RUN apt-get update && apt-get -y install wget coreutils unzip default-jre && rm 
 WORKDIR ${KNOWAGE_DIRECTORY}
 
 #download mysql scripts
+#copy the scripts to init the db in the docker mysql entrypoint
+#these will be used during the first run to init the db
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
         unzip mysql.zip && \
-        rm mysql.zip
-
-#go to script mysql directory inside knowage directory
-WORKDIR ${MYSQL_SCRIPT_DIRECTORY}
+        rm mysql.zip && \
+	cp MySQL_create.sql /docker-entrypoint-initdb.d/ && \
+	cp MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
 
 #add create database as first line and use database as second
 #RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create.sql
 #RUN sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create.sql
 #RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create_quartz_schema.sql
 #RUN sed -i '1s/^/CREATE DATABASE knowage_ce;\n/' MySQL_create_quartz_schema.sql
-
-ENV MYSQL_DATABASE knowage_ce
-
-#copy the scripts to init the db in the docker mysql entrypoint
-#these will be used during the first run to init the db
-RUN ["cp", "${MYSQL_SCRIPT_DIRECTORY}/MySQL_create.sql", "/docker-entrypoint-initdb.d/"]
-COPY MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
 
 #go to knowage home directory
 WORKDIR ${KNOWAGE_DIRECTORY}
