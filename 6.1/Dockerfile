@@ -65,7 +65,7 @@ RUN apt-get update && apt-get install -y wget coreutils unzip mysql-client  && r
 #download mysql scripts
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
         unzip mysql.zip && \
-        rm mysql.zip && \
+        rm mysql.zip
 
 #download apache tomcat and extract it
 RUN wget "${APACHE_TOMCAT_URL}" && \
