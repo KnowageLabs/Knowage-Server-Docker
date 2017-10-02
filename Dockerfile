@@ -12,7 +12,8 @@ ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscrip
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 
 #change mysql data directory
-RUN sed -i 's|/var/lib/mysql|/var/lib/mysql2|g' /etc/mysql/my.cnf
+RUN sed -i 's|/var/lib/mysql|/var/lib/mysql2|g' /etc/mysql/mysql.conf.d/mysqld.cnf
+#RUN sed -i 's|/var/lib/mysql|/var/lib/mysql2|g' /etc/mysql/my.cnf
 
 RUN apt-get update && apt-get -y install wget coreutils unzip default-jre && rm -rf /var/lib/apt/lists/*
 
@@ -73,4 +74,4 @@ EXPOSE 8080
 ENTRYPOINT ["./entrypoint.sh"]
 
 #this will start knowage just after the previous entrypoint
-CMD ["./startup.sh"]
+CMD ["/etc/init.d/mysql start", "./startup.sh"]
