@@ -67,13 +67,19 @@ RUN wget "${APACHE_TOMCAT_URL}" && \
        unzip ${APACHE_TOMCAT_PACKAGE}.zip && \
        rm ${APACHE_TOMCAT_PACKAGE}.zip
 
+#go to apache tomcat webapps directory
+WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps
+
 #download knowage engines and extract them
 RUN wget "${KNOWAGE_CORE_URL}" && \
-       unzip ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip ${APACHE_TOMCAT_PACKAGE}/webapps && \
+       unzip ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
        rm ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip
 
+#go to apache tomcat webapps directory
+WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf
+
 #override apache tomcat server configuration
-COPY server.xml ${APACHE_TOMCAT_PACKAGE}/conf/
+COPY server.xml ./
 
 #go to binary folder in order to execute tomcat startup
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin
