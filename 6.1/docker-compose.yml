@@ -1,5 +1,5 @@
 knowage:
-    image: knowagelabs/knowage:6.1
+    image: knowagelabs/knowage-server-docker:6.1
     links:
         - knowagedb:db
     environment:
