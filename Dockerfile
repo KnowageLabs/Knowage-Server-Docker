@@ -9,8 +9,10 @@ ENV KNOWAGE_DIRECTORY /home/knowage
 
 # MySQL environment variables
 ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscripts-6.0.0_20170616.zip
-ENV MYSQL_DATABASE knowage_ce
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
+
+#change mysql data directory
+RUN sed -i 's|/var/lib/mysql|/var/lib/mysql2|g' /etc/mysql/my.cnf
 
 RUN apt-get update && apt-get -y install wget coreutils unzip default-jre && rm -rf /var/lib/apt/lists/*
 
@@ -43,10 +45,10 @@ RUN ["/bin/bash", "-c", "/etc/init.d/mysql start &&  mysql -u root -e 'USE mysql
 #download mysql scripts
 #copy the scripts to init the db in the docker mysql entrypoint
 #these will be used during the first run to init the db
-RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
-        unzip mysql.zip && \
-        rm mysql.zip && \
-	cp mysql/MySQL_create*.sql /docker-entrypoint-initdb.d/
+#RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
+#        unzip mysql.zip && \
+#        rm mysql.zip && \
+#	cp mysql/MySQL_create*.sql /docker-entrypoint-initdb.d/
 
 #go to binary folder in order to execute tomcat startup
 WORKDIR ${KNOWAGE_DIRECTORY}/${TOMCAT_DIRECTORY}/bin
