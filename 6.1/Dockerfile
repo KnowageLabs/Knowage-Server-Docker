@@ -79,7 +79,10 @@ WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps
 RUN wget "${KNOWAGE_CORE_URL}" && \
        unzip ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
        rm ${KNOWAGE_CORE_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
-       jar -xvf ${KNOWAGE_CORE_ENGINE}.war && \
+       mkdir ${KNOWAGE_CORE_ENGINE} && \
+       cd ${KNOWAGE_CORE_ENGINE} && \
+       jar -xf ${KNOWAGE_CORE_ENGINE}.war && \
+       cd .. && \
        rm ${KNOWAGE_CORE_ENGINE}.war
 
 #go to apache tomcat webapps directory
