@@ -23,8 +23,7 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 RUN wget "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip && \
         unzip mysql.zip && \
         rm mysql.zip && \
-	cp MySQL_create.sql /docker-entrypoint-initdb.d/ && \
-	cp MySQL_create_quartz_schema.sql /docker-entrypoint-initdb.d/
+	cp mysql/MySQL_create*.sql /docker-entrypoint-initdb.d/
 
 #add create database as first line and use database as second
 #RUN sed -i '1s/^/USE knowage_ce;\n/' MySQL_create.sql
