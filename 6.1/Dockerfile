@@ -49,7 +49,7 @@ ENV KNOWAGE_WHATIF_URL http://download.forge.ow2.org/knowage/${KNOWAGE_WHATIF_EN
 
 ENV APACHE_TOMCAT_VERSION 7.0.57
 ENV APACHE_TOMCAT_PACKAGE apache-tomcat-${APACHE_TOMCAT_VERSION}
-ENV APACHE_TOMCAT_URL https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.zip
+ENV APACHE_TOMCAT_URL https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/${APACHE_TOMCAT_PACKAGE}.zip
 
 # MySQL environment variables
 ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscripts-${KNOWAGE_VERSION}_${KNOWAGE_RELEASE_DATE}.zip
@@ -63,13 +63,13 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 RUN apt-get update && apt-get install -y wget coreutils unzip mysql-client  && rm -rf /var/lib/apt/lists/*
 
 #download apache tomcat and extract it
-ADD ${APACHE_TOMCAT_URL} .
+ADD ${APACHE_TOMCAT_URL} ./
 
 #download knowage engines and extract them
-ADD ${KNOWAGE_CORE_URL} ${APACHE_TOMCAT_PACKAGE}/webapps
+ADD ${KNOWAGE_CORE_URL} ${APACHE_TOMCAT_PACKAGE}/webapps/
 
 #override apache tomcat server configuration
-COPY server.xml ${APACHE_TOMCAT_PACKAGE}/conf
+COPY server.xml ${APACHE_TOMCAT_PACKAGE}/conf/
 
 #go to binary folder in order to execute tomcat startup
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin
