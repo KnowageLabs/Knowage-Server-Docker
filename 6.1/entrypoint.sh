@@ -14,10 +14,11 @@ sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_D
 
 #wait for mysql if it's a compose image
 if [ -n "$WAIT_MYSQL" ]; then
+	sleep 5
 	while ! curl http://$DB_PORT_3306_TCP_ADDR:$DB_PORT_3306_TCP_PORT/
 	do
 	  echo "$(date) - still trying to connect to mysql"
-	  sleep 5
+	  sleep 1
 	done
 fi
 
