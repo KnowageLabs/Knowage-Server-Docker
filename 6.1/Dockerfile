@@ -51,10 +51,20 @@ ENV APACHE_TOMCAT_VERSION 7.0.57
 ENV APACHE_TOMCAT_PACKAGE apache-tomcat-${APACHE_TOMCAT_VERSION}
 ENV APACHE_TOMCAT_URL https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/${APACHE_TOMCAT_PACKAGE}.zip
 
-# MySQL environment variables
+#location of mysql script to init knowage db
 ENV KNOWAGE_MYSQL_SCRIPT_URL=http://download.forge.ow2.org/knowage/mysql-dbscripts-${KNOWAGE_VERSION}_${KNOWAGE_RELEASE_DATE}.zip
 
+ENV LIB_COMMONS_LOGGING_URL https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
+ENV LIB_COMMONS_LOGGING_API_URL https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar
+ENV LIB_CONCURRENT_URL https://search.maven.org/remotecontent?filepath=org/lucee/oswego-concurrent/1.3.4/oswego-concurrent-1.3.4.jar
+ENV LIB_MYSQL_CONNECTOR_URL https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar
+ENV LIB_GERONIMO_COMMONJ_URL https://search.maven.org/remotecontent?filepath=org/apache/geronimo/specs/geronimo-commonj_1.1_spec/1.0/geronimo-commonj_1.1_spec-1.0.jar
+ENV LIB_MYFOO_COMMONJ_PACKAGE foo-commonj-1.1.0
+ENV LIB_MYFOO_COMMONJ_URL http://commonj.myfoo.de/bin/${LIB_MYFOO_COMMONJ_PACKAGE}.zip
+
+#knowage directory
 ENV KNOWAGE_DIRECTORY /home/knowage
+#mysql script directory
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 
 #go to knowage home directory
@@ -82,7 +92,22 @@ RUN wget "${KNOWAGE_CORE_URL}" && \
        unzip ${KNOWAGE_CORE_ENGINE}.war -d ${KNOWAGE_CORE_ENGINE} && \
        rm ${KNOWAGE_CORE_ENGINE}.war
 
-#go to apache tomcat webapps directory
+#go to apache tomcat lib directory
+WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/lib
+
+#download knowage libs and put them into apache tomcat lib
+RUN wget "${LIB_COMMONS_LOGGING_URL}"
+RUN wget "${LIB_COMMONS_LOGGING_API_URL}"
+RUN wget "${LIB_CONCURRENT_URL}"
+RUN wget "${LIB_MYSQL_CONNECTOR_URL}"
+RUN wget "${LIB_GERONIMO_COMMONJ_URL}"
+RUN wget "${LIB_MYFOO_COMMONJ_URL}" && \
+	unzip ${LIB_MYFOO_COMMONJ_PACKAGE}.zip && \
+	rm ${LIB_MYFOO_COMMONJ_PACKAGE}.zip && \
+	cp ${LIB_MYFOO_COMMONJ_PACKAGE}/lib/${LIB_MYFOO_COMMONJ_PACKAGE}.jar . && \
+	rm -r ${LIB_MYFOO_COMMONJ_PACKAGE}
+
+#go to apache tomcat configuration directory
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf
 
 #override apache tomcat server configuration
