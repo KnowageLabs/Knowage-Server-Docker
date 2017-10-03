@@ -30,7 +30,7 @@ $ docker-compose up
 
 ## Properties
 
-The only two environment properties used by Knowage are:
+The only environment properties used by Knowage are:
 
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
 
