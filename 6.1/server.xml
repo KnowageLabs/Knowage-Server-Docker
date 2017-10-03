@@ -34,7 +34,7 @@
 		<Environment name="sso_class" type="java.lang.String" value="it.eng.spagobi.services.common.FakeSsoService"/>
 		
 		<!-- KNOWAGE -->
-		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/knowage" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword/>
+		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/knowage" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword"/>
 		
 		<!-- MULTITHREAD WORK MANAGER -->
 		<Resource auth="Container" factory="de.myfoo.commonj.work.FooWorkManagerFactory" maxThreads="15" minThreads="5" name="wm/SpagoWorkManager" type="commonj.work.WorkManager"/>
