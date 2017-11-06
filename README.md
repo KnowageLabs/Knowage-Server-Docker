@@ -55,9 +55,7 @@ $ sudo route -n add 172.17.0.0/16 ip-of-host-Virtual-Machine
 
 Users available by default (username/password):
 
-> * biadmin/biadmin
-> * bidev/bidev
-> * biuser/biuser
+> biadmin/biadmin, bidev/bidev and biuser/biuser 
 
 # License
 
