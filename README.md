@@ -1,3 +1,5 @@
+[![Docker badge](https://img.shields.io/docker/pulls/knowagelabs/knowage-server-docker.svg)](https://hub.docker.com/r/knowagelabs/knowage-server-docker/)
+
 # What is Knowage?
 
 Knowage is the professional open source suite for modern business analytics over traditional sources and big data systems.
