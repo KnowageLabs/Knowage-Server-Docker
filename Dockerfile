@@ -62,6 +62,8 @@ ENV LIB_GERONIMO_COMMONJ_URL https://search.maven.org/remotecontent?filepath=org
 ENV LIB_MYFOO_COMMONJ_PACKAGE foo-commonj-1.1.0
 ENV LIB_MYFOO_COMMONJ_URL http://commonj.myfoo.de/bin/${LIB_MYFOO_COMMONJ_PACKAGE}.zip
 
+ENV LIB_POSTGRESQL_CONNECTOR_URL https://jdbc.postgresql.org/download/postgresql-42.2.4.jar
+
 #knowage directory
 ENV KNOWAGE_DIRECTORY /home/knowage
 #mysql script directory
@@ -134,7 +136,6 @@ RUN wget "${KNOWAGE_KPI_URL}" && \
        unzip ${KNOWAGE_KPI_ENGINE}.war -d ${KNOWAGE_KPI_ENGINE} && \
        rm ${KNOWAGE_KPI_ENGINE}.war
        
-       
 RUN wget "${KNOWAGE_META_URL}" && \
        unzip -o ${KNOWAGE_META_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
        rm ${KNOWAGE_META_ENGINE}-${KNOWAGE_PACKAGE_SUFFIX}.zip && \
@@ -185,6 +186,9 @@ RUN wget "${LIB_MYFOO_COMMONJ_URL}" && \
 	rm ${LIB_MYFOO_COMMONJ_PACKAGE}.zip && \
 	cp ${LIB_MYFOO_COMMONJ_PACKAGE}/lib/${LIB_MYFOO_COMMONJ_PACKAGE}.jar . && \
 	rm -r ${LIB_MYFOO_COMMONJ_PACKAGE}
+
+#dowload DBs libraries and put them into apache tomcat lib
+RUN wget "${LIB_POSTGRESQL_CONNECTOR_URL}"
 
 #go to apache tomcat configuration directory
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf
