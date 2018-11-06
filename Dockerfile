@@ -72,6 +72,7 @@ ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 #go to knowage home directory
 WORKDIR ${KNOWAGE_DIRECTORY}
 
+#install required packages and clean up to save space
 RUN apt-get update && apt-get install -y wget coreutils unzip mysql-client  && rm -rf /var/lib/apt/lists/*
 
 #download mysql scripts
