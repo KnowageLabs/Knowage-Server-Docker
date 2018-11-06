@@ -59,8 +59,7 @@ ENV LIB_COMMONS_LOGGING_API_URL https://search.maven.org/remotecontent?filepath=
 ENV LIB_CONCURRENT_URL https://search.maven.org/remotecontent?filepath=org/lucee/oswego-concurrent/1.3.4/oswego-concurrent-1.3.4.jar
 ENV LIB_MYSQL_CONNECTOR_URL https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar
 ENV LIB_GERONIMO_COMMONJ_URL https://search.maven.org/remotecontent?filepath=org/apache/geronimo/specs/geronimo-commonj_1.1_spec/1.0/geronimo-commonj_1.1_spec-1.0.jar
-ENV LIB_MYFOO_COMMONJ_PACKAGE foo-commonj-1.1.0
-ENV LIB_MYFOO_COMMONJ_URL http://commonj.myfoo.de/bin/${LIB_MYFOO_COMMONJ_PACKAGE}.zip
+ENV LIB_MYFOO_COMMONJ_URL https://github.com/SpagoBILabs/SpagoBI/blob/mvn-repo/releases/de/myfoo/commonj/1.0/commonj-1.0.jar?raw=true
 
 ENV LIB_POSTGRESQL_CONNECTOR_URL https://jdbc.postgresql.org/download/postgresql-42.2.4.jar
 
@@ -182,11 +181,7 @@ RUN wget "${LIB_COMMONS_LOGGING_API_URL}"
 RUN wget "${LIB_CONCURRENT_URL}"
 RUN wget "${LIB_MYSQL_CONNECTOR_URL}"
 RUN wget "${LIB_GERONIMO_COMMONJ_URL}"
-RUN wget "${LIB_MYFOO_COMMONJ_URL}" && \
-	unzip ${LIB_MYFOO_COMMONJ_PACKAGE}.zip && \
-	rm ${LIB_MYFOO_COMMONJ_PACKAGE}.zip && \
-	cp ${LIB_MYFOO_COMMONJ_PACKAGE}/lib/${LIB_MYFOO_COMMONJ_PACKAGE}.jar . && \
-	rm -r ${LIB_MYFOO_COMMONJ_PACKAGE}
+RUN wget "${LIB_MYFOO_COMMONJ_URL}"
 
 #dowload DBs libraries and put them into apache tomcat lib
 RUN wget "${LIB_POSTGRESQL_CONNECTOR_URL}"
