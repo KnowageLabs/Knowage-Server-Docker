@@ -10,7 +10,7 @@ Knowage is the professional open source suite for modern business analytics over
  
 ## Supported tags and respective Dockerfile links
 
-* ```latest``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/Dockerfile)
+* ```latest``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.3.3/Dockerfile)
 * ```6.1.1``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.1.1/Dockerfile)
 * ```6.2.0-RC``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.0-RC/Dockerfile)
 * ```6.2.2``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/Dockerfile)
@@ -22,7 +22,7 @@ Differently from its predecessor (i.e. SpagoBI), you MUST uses ```docker-compose
 
 ### Supported tags and respective docker-compose links
 
-* ```latest``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/docker-compose.yml)
+* ```latest``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.3.3/docker-compose.yml)
 * ```6.1.1``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.1.1/docker-compose.yml)
 * ```6.2.0-RC``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.0-RC/docker-compose.yml)
 * ```6.2.2``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/docker-compose.yml)
