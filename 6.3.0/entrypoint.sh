@@ -9,7 +9,8 @@ fi
 
 #create setenv.sh file
 touch ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
-echo JAVA_OPTS="${JAVA_OPTS} -Xmx4g -XX:MaxPermSize=192m" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
+echo "CATALINA_OPTS=\"$CATALINA_OPTS\"" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
+echo "JAVA_OPTS=\"${JAVA_OPTS} -Xmx4g -XX:MaxPermSize=192m\"" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
 chmod +x setenv.sh
 
 #replace the address of container inside server.xml
