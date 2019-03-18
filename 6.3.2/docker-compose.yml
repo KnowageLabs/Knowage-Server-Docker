@@ -1,5 +1,5 @@
 knowage:
-    image: knowagelabs/knowage-server-docker
+    image: knowagelabs/knowage-server-docker:6.3.2
     links:
         - knowagedb:db
     ports:
