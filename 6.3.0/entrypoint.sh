@@ -7,12 +7,6 @@ if [[ -z "$PUBLIC_ADDRESS" ]]; then
         PUBLIC_ADDRESS=`ip route | grep src | awk '{print $9}'`
 fi
 
-#create setenv.sh file
-touch ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
-echo "CATALINA_OPTS=\"$CATALINA_OPTS\"" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
-echo "JAVA_OPTS=\"${JAVA_OPTS} -Xmx4g -XX:MaxPermSize=192m\"" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
-chmod +x setenv.sh
-
 #replace the address of container inside server.xml
 sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 sed -i "s|http:\/\/.*:8080\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
