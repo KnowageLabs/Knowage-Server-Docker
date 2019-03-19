@@ -189,11 +189,16 @@ RUN wget "${LIB_MYFOO_COMMONJ_URL}"
 #dowload DBs libraries and put them into apache tomcat lib
 RUN wget "${LIB_POSTGRESQL_CONNECTOR_URL}"
 
+#create setenv.sh file
+#increase Java Heap memory to 4GB - JAVA_OPTS
+RUN touch ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
+RUN echo "JAVA_OPTS=\"${JAVA_OPTS} -Xmx4g\"" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
+
 #go to apache tomcat configuration directory
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf
 
 #override apache tomcat server configuration
-COPY server.xml ./
+COPY ./server.xml ./
 
 #go to binary folder in order to execute tomcat startup
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin
