@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8-stretch
 
 ENV KNOWAGE_VERSION 6_3_3
 ENV KNOWAGE_EDITION CE

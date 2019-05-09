@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 if [[ -z "$PUBLIC_ADDRESS" ]]; then
@@ -14,11 +14,11 @@ sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_D
 
 # Get the database values from the relation if user doesn't pass them throught enviroment variables.
 # This allow people to use newer docker-compose versions that doesn't support links
-[[ -z $DB_USER ]] && DB_USER=$DB_ENV_MYSQL_USER
-[[ -z $DB_DB ]] && DB_DB=$DB_ENV_MYSQL_DATABASE
-[[ -z $DB_PASS ]] && DB_PASS=$DB_ENV_MYSQL_PASSWORD
-[[ -z $DB_HOST ]] && DB_HOST=$DB_PORT_3306_TCP_ADDR
-[[ -z $DB_PORT ]] && DB_PORT=$DB_PORT_3306_TCP_PORT
+[[ -z "$DB_USER" ]] || DB_USER=$DB_ENV_MYSQL_USER
+[[ -z "$DB_DB" ]] || DB_DB=$DB_ENV_MYSQL_DATABASE
+[[ -z "$DB_PASS" ]] || DB_PASS=$DB_ENV_MYSQL_PASSWORD
+[[ -z "$DB_HOST" ]] || DB_HOST=$DB_PORT_3306_TCP_ADDR
+[[ -z "$DB_PORT" ]] || DB_PORT=$DB_PORT_3306_TCP_PORT
 
 #wait for mysql if it's a compose image
 if [ -n "$WAIT_MYSQL" ]; then
