@@ -10,7 +10,7 @@ Knowage is the professional open source suite for modern business analytics over
  
 ## Supported tags and respective Dockerfile links
 
-* ```latest``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.3.3/Dockerfile)
+* ```latest```, ```6.3.3``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.3.3/Dockerfile)
 * ```6.1.1``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.1.1/Dockerfile)
 * ```6.2.0-RC``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.0-RC/Dockerfile)
 * ```6.2.2``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/Dockerfile)
