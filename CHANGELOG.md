@@ -12,4 +12,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
-## [6.3.1] - 2019-01-21
+## [6.3.3] - 2019-03-12
