@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 
 ENV KNOWAGE_VERSION 6_3_3
 ENV KNOWAGE_EDITION CE
@@ -95,55 +95,55 @@ WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps
 RUN wget "${KNOWAGE_CORE_URL}" && \
        unzip ${KNOWAGE_CORE_ENGINE}.war -d ${KNOWAGE_CORE_ENGINE} && \
        rm ${KNOWAGE_CORE_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_BIRTREPORT_URL}" && \
        unzip ${KNOWAGE_BIRTREPORT_ENGINE}.war -d ${KNOWAGE_BIRTREPORT_ENGINE} && \
        rm ${KNOWAGE_BIRTREPORT_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_COCKPIT_URL}" && \
        unzip ${KNOWAGE_COCKPIT_ENGINE}.war -d ${KNOWAGE_COCKPIT_ENGINE} && \
        rm ${KNOWAGE_COCKPIT_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_COMMONJ_URL}" && \
        unzip ${KNOWAGE_COMMONJ_ENGINE}.war -d ${KNOWAGE_COMMONJ_ENGINE} && \
        rm ${KNOWAGE_COMMONJ_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_DATAMINING_URL}" && \
        unzip ${KNOWAGE_DATAMINING_ENGINE}.war -d ${KNOWAGE_DATAMINING_ENGINE} && \
        rm ${KNOWAGE_DATAMINING_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_GEOREPORT_URL}" && \
        unzip ${KNOWAGE_GEOREPORT_ENGINE}.war -d ${KNOWAGE_GEOREPORT_ENGINE} && \
        rm ${KNOWAGE_GEOREPORT_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_JASPERREPORT_URL}" && \
        unzip ${KNOWAGE_JASPERREPORT_ENGINE}.war -d ${KNOWAGE_JASPERREPORT_ENGINE} && \
        rm ${KNOWAGE_JASPERREPORT_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_KPI_URL}" && \
        unzip ${KNOWAGE_KPI_ENGINE}.war -d ${KNOWAGE_KPI_ENGINE} && \
        rm ${KNOWAGE_KPI_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_META_URL}" && \
        unzip ${KNOWAGE_META_ENGINE}.war -d ${KNOWAGE_META_ENGINE} && \
        rm ${KNOWAGE_META_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_NETWORK_URL}" && \
        unzip ${KNOWAGE_NETWORK_ENGINE}.war -d ${KNOWAGE_NETWORK_ENGINE} && \
        rm ${KNOWAGE_NETWORK_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_QBE_URL}" && \
        unzip ${KNOWAGE_QBE_ENGINE}.war -d ${KNOWAGE_QBE_ENGINE} && \
        rm ${KNOWAGE_QBE_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_SVGVIEWER_URL}" && \
        unzip ${KNOWAGE_SVGVIEWER_ENGINE}.war -d ${KNOWAGE_SVGVIEWER_ENGINE} && \
        rm ${KNOWAGE_SVGVIEWER_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_TALEND_URL}" && \
        unzip ${KNOWAGE_TALEND_ENGINE}.war -d ${KNOWAGE_TALEND_ENGINE} && \
        rm ${KNOWAGE_TALEND_ENGINE}.war
-       
+
 RUN wget "${KNOWAGE_WHATIF_URL}" && \
        unzip ${KNOWAGE_WHATIF_ENGINE}.war -d ${KNOWAGE_WHATIF_ENGINE} && \
        rm ${KNOWAGE_WHATIF_ENGINE}.war
