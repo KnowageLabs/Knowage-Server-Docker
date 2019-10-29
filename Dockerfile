@@ -1,11 +1,10 @@
 FROM java:8
 
-ENV KNOWAGE_VERSION 6_3_0
+ENV KNOWAGE_VERSION 6_3_1
 ENV KNOWAGE_EDITION CE
-ENV KNOWAGE_RELEASE_DATE 20181217
-ENV KNOWAGE_DB_SCRIPTS_RELEASE_DATE 20181221
+ENV KNOWAGE_RELEASE_DATE 20190121
 ENV KNOWAGE_PACKAGE_SUFFIX bin-${KNOWAGE_VERSION}-${KNOWAGE_EDITION}-${KNOWAGE_RELEASE_DATE}
-ENV KNOWAGE_REPO_VERSION 6.3.0
+ENV KNOWAGE_REPO_VERSION 6.3.1
 ENV KNOWAGE_OW2_BASE_URL http://release.ow2.org/knowage/${KNOWAGE_REPO_VERSION}/Applications
 ENV KNOWAGE_OW2_DDL_URL http://release.ow2.org/knowage/${KNOWAGE_REPO_VERSION}/Database%20scripts
 
@@ -56,7 +55,7 @@ ENV APACHE_TOMCAT_PACKAGE apache-tomcat-${APACHE_TOMCAT_VERSION}
 ENV APACHE_TOMCAT_URL https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.37/bin/${APACHE_TOMCAT_PACKAGE}.zip
 
 #location of mysql script to init knowage db
-ENV KNOWAGE_MYSQL_SCRIPT_URL ${KNOWAGE_OW2_DDL_URL}/mysql-dbscripts-${KNOWAGE_VERSION}-${KNOWAGE_DB_SCRIPTS_RELEASE_DATE}.zip
+ENV KNOWAGE_MYSQL_SCRIPT_URL ${KNOWAGE_OW2_DDL_URL}/mysql-dbscripts-${KNOWAGE_VERSION}-${KNOWAGE_RELEASE_DATE}.zip
 
 ENV LIB_COMMONS_LOGGING_URL https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
 ENV LIB_COMMONS_LOGGING_API_URL https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar
@@ -191,6 +190,7 @@ RUN wget "${LIB_MYFOO_COMMONJ_URL}"
 RUN wget "${LIB_POSTGRESQL_CONNECTOR_URL}"
 
 #create setenv.sh file
+#increase Java Heap memory to 4GB - JAVA_OPTS
 RUN touch ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
 RUN echo "JAVA_OPTS=\"${JAVA_OPTS} -Xmx4g\"" >> ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/bin/setenv.sh
 
