@@ -16,9 +16,9 @@ services:
     env_file:
       - env-variables.env
     environment:
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-      - MYSQL_DATABASE=${DB_DB}
+      - MYSQL_USER=$$DB_USER
+      - MYSQL_PASSWORD=$$DB_PASS
+      - MYSQL_DATABASE=$$DB_DB
       - MYSQL_ROOT_PASSWORD=knowagerootpassword
     networks:
       - main
