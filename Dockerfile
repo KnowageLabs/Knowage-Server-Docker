@@ -82,20 +82,76 @@ RUN wget -q "${APACHE_TOMCAT_URL}" \
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps
 
 # Download Knowage engines and extract them
-RUN    wget -O temp.zip "${KNOWAGE_CORE_URL}"         && unzip temp.zip *.war && unzip ${KNOWAGE_CORE_ENGINE}.war         -d ${KNOWAGE_CORE_ENGINE}         && rm ${KNOWAGE_CORE_ENGINE}.war         && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_BIRTREPORT_URL}"   && unzip temp.zip *.war && unzip ${KNOWAGE_BIRTREPORT_ENGINE}.war   -d ${KNOWAGE_BIRTREPORT_ENGINE}   && rm ${KNOWAGE_BIRTREPORT_ENGINE}.war   && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_COCKPIT_URL}"      && unzip temp.zip *.war && unzip ${KNOWAGE_COCKPIT_ENGINE}.war      -d ${KNOWAGE_COCKPIT_ENGINE}      && rm ${KNOWAGE_COCKPIT_ENGINE}.war      && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_COMMONJ_URL}"      && unzip temp.zip *.war && unzip ${KNOWAGE_COMMONJ_ENGINE}.war      -d ${KNOWAGE_COMMONJ_ENGINE}      && rm ${KNOWAGE_COMMONJ_ENGINE}.war      && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_DATAMINING_URL}"   && unzip temp.zip *.war && unzip ${KNOWAGE_DATAMINING_ENGINE}.war   -d ${KNOWAGE_DATAMINING_ENGINE}   && rm ${KNOWAGE_DATAMINING_ENGINE}.war   && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_GEOREPORT_URL}"    && unzip temp.zip *.war && unzip ${KNOWAGE_GEOREPORT_ENGINE}.war    -d ${KNOWAGE_GEOREPORT_ENGINE}    && rm ${KNOWAGE_GEOREPORT_ENGINE}.war    && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_JASPERREPORT_URL}" && unzip temp.zip *.war && unzip ${KNOWAGE_JASPERREPORT_ENGINE}.war -d ${KNOWAGE_JASPERREPORT_ENGINE} && rm ${KNOWAGE_JASPERREPORT_ENGINE}.war && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_KPI_URL}"          && unzip temp.zip *.war && unzip ${KNOWAGE_KPI_ENGINE}.war          -d ${KNOWAGE_KPI_ENGINE}          && rm ${KNOWAGE_KPI_ENGINE}.war          && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_META_URL}"         && unzip temp.zip *.war && unzip ${KNOWAGE_META_ENGINE}.war         -d ${KNOWAGE_META_ENGINE}         && rm ${KNOWAGE_META_ENGINE}.war         && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_NETWORK_URL}"      && unzip temp.zip *.war && unzip ${KNOWAGE_NETWORK_ENGINE}.war      -d ${KNOWAGE_NETWORK_ENGINE}      && rm ${KNOWAGE_NETWORK_ENGINE}.war      && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_QBE_URL}"          && unzip temp.zip *.war && unzip ${KNOWAGE_QBE_ENGINE}.war          -d ${KNOWAGE_QBE_ENGINE}          && rm ${KNOWAGE_QBE_ENGINE}.war          && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_SVGVIEWER_URL}"    && unzip temp.zip *.war && unzip ${KNOWAGE_SVGVIEWER_ENGINE}.war    -d ${KNOWAGE_SVGVIEWER_ENGINE}    && rm ${KNOWAGE_SVGVIEWER_ENGINE}.war    && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_TALEND_URL}"       && unzip temp.zip *.war && unzip ${KNOWAGE_TALEND_ENGINE}.war       -d ${KNOWAGE_TALEND_ENGINE}       && rm ${KNOWAGE_TALEND_ENGINE}.war       && rm temp.zip && \
-       wget -O temp.zip "${KNOWAGE_WHATIF_URL}"       && unzip temp.zip *.war && unzip ${KNOWAGE_WHATIF_ENGINE}.war       -d ${KNOWAGE_WHATIF_ENGINE}       && rm ${KNOWAGE_WHATIF_ENGINE}.war
+RUN wget -O temp.zip "${KNOWAGE_CORE_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_CORE_ENGINE}.war -d ${KNOWAGE_CORE_ENGINE} \
+	&& rm ${KNOWAGE_CORE_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_BIRTREPORT_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_BIRTREPORT_ENGINE}.war -d ${KNOWAGE_BIRTREPORT_ENGINE} \
+	&& rm ${KNOWAGE_BIRTREPORT_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_COCKPIT_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_COCKPIT_ENGINE}.war -d ${KNOWAGE_COCKPIT_ENGINE} \
+	&& rm ${KNOWAGE_COCKPIT_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_COMMONJ_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_COMMONJ_ENGINE}.war -d ${KNOWAGE_COMMONJ_ENGINE} \
+	&& rm ${KNOWAGE_COMMONJ_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_DATAMINING_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_DATAMINING_ENGINE}.war -d ${KNOWAGE_DATAMINING_ENGINE} \
+	&& rm ${KNOWAGE_DATAMINING_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_GEOREPORT_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_GEOREPORT_ENGINE}.war -d ${KNOWAGE_GEOREPORT_ENGINE} \
+	&& rm ${KNOWAGE_GEOREPORT_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_JASPERREPORT_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_JASPERREPORT_ENGINE}.war -d ${KNOWAGE_JASPERREPORT_ENGINE} \
+	&& rm ${KNOWAGE_JASPERREPORT_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_KPI_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_KPI_ENGINE}.war -d ${KNOWAGE_KPI_ENGINE} \
+	&& rm ${KNOWAGE_KPI_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_META_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_META_ENGINE}.war -d ${KNOWAGE_META_ENGINE} \
+	&& rm ${KNOWAGE_META_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_NETWORK_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_NETWORK_ENGINE}.war -d ${KNOWAGE_NETWORK_ENGINE} \
+	&& rm ${KNOWAGE_NETWORK_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_QBE_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_QBE_ENGINE}.war -d ${KNOWAGE_QBE_ENGINE} \
+	&& rm ${KNOWAGE_QBE_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_SVGVIEWER_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_SVGVIEWER_ENGINE}.war -d ${KNOWAGE_SVGVIEWER_ENGINE} \
+	&& rm ${KNOWAGE_SVGVIEWER_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_TALEND_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_TALEND_ENGINE}.war -d ${KNOWAGE_TALEND_ENGINE} \
+	&& rm ${KNOWAGE_TALEND_ENGINE}.war \
+	&& rm temp.zip \
+	&& wget -O temp.zip "${KNOWAGE_WHATIF_URL}" \
+	&& unzip temp.zip *.war \
+	&& unzip ${KNOWAGE_WHATIF_ENGINE}.war -d ${KNOWAGE_WHATIF_ENGINE} \
+	&& rm ${KNOWAGE_WHATIF_ENGINE}.war \
+	&& rm temp.zip
 
 WORKDIR ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/lib
 
