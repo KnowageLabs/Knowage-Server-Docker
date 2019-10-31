@@ -1,7 +1,7 @@
 version: "3"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:develop
+    image: knowagelabs/knowage-server-docker:7.0
     depends_on:
       - knowagedb
     ports:
@@ -15,6 +15,11 @@ services:
     image: mysql:5.6
     env_file:
       - env-variables.env
+    environment:
+      - MYSQL_USER=$$DB_USER
+      - MYSQL_PASSWORD=$$DB_PASS
+      - MYSQL_DATABASE=$$DB_DB
+      - MYSQL_ROOT_PASSWORD=knowagerootpassword
     networks:
       - main
     volumes:
