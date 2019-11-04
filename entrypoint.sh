@@ -24,4 +24,9 @@ old_connection='url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuse
 new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
 sed -i "s|${old_connection}|${new_connection}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 
+#generate random HMAC key
+hmac_key=$( date +%s | sha256sum | cut -d" " -f 1 )
+echo "The HMAC key will be: ${hmac_key}"
+sed -i "s|abc123|${hmac_key}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
+
 exec "$@"
