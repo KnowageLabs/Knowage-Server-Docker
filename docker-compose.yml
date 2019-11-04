@@ -6,26 +6,28 @@ services:
       - knowagedb
     ports:
       - "8080:8080"
-    env_file:
-      - env-variables.env
     networks:
       - main
+    environment:
+      - DB_USER=$DB_USER
+      - DB_PASS=$DB_PASS
+      - DB_DB=$DB_DB
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
   
   knowagedb:
     image: mysql:5.6
-    env_file:
-      - env-variables.env
     environment:
-      - MYSQL_USER=$$DB_USER
-      - MYSQL_PASSWORD=$$DB_PASS
-      - MYSQL_DATABASE=$$DB_DB
+      - MYSQL_USER=$DB_USER
+      - MYSQL_PASSWORD=$DB_PASS
+      - MYSQL_DATABASE=$DB_DB
       - MYSQL_ROOT_PASSWORD=knowagerootpassword
     networks:
       - main
     volumes:
       - "db:/var/lib/mysql"
     healthcheck:
-      test: mysql --user=$$DB_USER --password=$$DB_PASS -e "SELECT 1"
+      test: mysql --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD -e "SELECT 1"
       interval: 5s
       timeout: 10s
       retries: 5
