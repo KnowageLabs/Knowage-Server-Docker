@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 services:
   knowage:
     image: knowagelabs/knowage-server-docker:7.0
@@ -9,32 +9,57 @@ services:
     networks:
       - main
     environment:
-      - DB_USER=$DB_USER
-      - DB_PASS=$DB_PASS
-      - DB_DB=$DB_DB
-      - DB_HOST=$DB_HOST
-      - DB_PORT=$DB_PORT
-  
+      - DB_USER_FILE=knowage_db_root_pass
+      - DB_PASS=/run/secrets/knowage_db_pass
+      - DB_DB=/run/secrets/knowage_db_db
+      - DB_HOST=/run/secrets/knowage_db_host
+      - DB_PORT=/run/secrets/knowage_db_port
+    secrets:
+      - knowage_db_user
+      - knowage_db_pass
+      - knowage_db_db
+      - knowage_db_host
+      - knowage_db_port
+ 
   knowagedb:
-    image: mysql:5.6
+    image: mysql:5.7
     environment:
-      - MYSQL_USER=$DB_USER
-      - MYSQL_PASSWORD=$DB_PASS
-      - MYSQL_DATABASE=$DB_DB
-      - MYSQL_ROOT_PASSWORD=knowagerootpassword
+      - MYSQL_USER_FILE=/run/secrets/knowage_db_user
+      - MYSQL_PASSWORD=/run/secrets/knowage_db_pass
+      - MYSQL_DATABASE=/run/secrets/knowage_db_db
+      - MYSQL_ROOT_PASSWORD=/run/secrets/knowage_db_root_pass
     networks:
       - main
     volumes:
       - "db:/var/lib/mysql"
-    healthcheck:
-      test: mysql --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD -e "SELECT 1"
-      interval: 5s
-      timeout: 10s
-      retries: 5
+    #healthcheck:
+    #  test: mysql --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD -e "SELECT 1"
+    #  interval: 5s
+    #  timeout: 10s
+    #  retries: 5
+    secrets:
+      - knowage_db_user
+      - knowage_db_pass
+      - knowage_db_db
+      - knowage_db_root_pass
 
 volumes:
   db:
 
 networks:
   main:
+
+secrets:
+  knowage_db_user:
+    external: true
+  knowage_db_pass:
+    external: true
+  knowage_db_db:
+    external: true
+  knowage_db_host:
+    external: true
+  knowage_db_port:
+    external: true
+  knowage_db_root_pass:
+    external: true
 
