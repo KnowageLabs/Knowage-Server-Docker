@@ -28,6 +28,8 @@ file_env "DB_PASS"
 file_env "DB_DB"
 file_env "DB_HOST"
 file_env "DB_PORT"
+file_env "HMAC_KEY"
+file_env "PUBLIC_ADDRESS"
 
 if [[ -z "$PUBLIC_ADDRESS" ]]; then
         #get the address of container
@@ -56,9 +58,7 @@ new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username
 sed -i "s|${old_connection}|${new_connection}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 
 #generate random HMAC key
-hmac_key=$( date +%s | sha256sum | cut -d" " -f 1 )
-echo "The HMAC key will be: ${hmac_key}"
-sed -i "s|abc123|${hmac_key}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
+sed -i "s|abc123|${HMAC_KEY}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
 
 exec "$@"
 
