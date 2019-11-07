@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.0
+    image: knowagelabs/knowage-server-docker:6.4
     depends_on:
       - knowagedb
     ports:
