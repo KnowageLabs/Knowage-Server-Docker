@@ -7,26 +7,10 @@
 Knowage is the professional open source suite for modern business analytics over traditional sources and big data systems.
 
 > [knowage-suite.com](https://www.knowage-suite.com)
- 
-## Supported tags and respective Dockerfile links
-
-* ```latest``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.3.3/Dockerfile)
-* ```6.1.1``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.1.1/Dockerfile)
-* ```6.2.0-RC``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.0-RC/Dockerfile)
-* ```6.2.2``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/Dockerfile)
-* ```develop``` : [Dockerfile](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/Dockerfile)
 
 ## Run Knowage
 
-Differently from its predecessor (i.e. SpagoBI), you MUST use ```docker-compose``` for running Knowage with a MySQL container. This will be shipped with within a single command.
-
-### Supported tags and respective docker-compose links
-
-* ```latest``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.3.3/docker-compose.yml)
-* ```6.1.1``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.1.1/docker-compose.yml)
-* ```6.2.0-RC``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.0-RC/docker-compose.yml)
-* ```6.2.2``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/6.2.2/docker-compose.yml)
-* ```develop``` : [docker-compose](https://raw.githubusercontent.com/KnowageLabs/Knowage-Server-Docker/master/docker-compose.yml)
+Differently from its predecessor (i.e. SpagoBI), you can use ```docker-compose``` or ```Docker Swarm``` for running Knowage with a MySQL container. This will be shipped with within a single command.
 
 ### Use docker-compose
 
@@ -36,11 +20,66 @@ Run this command inside the folder with ```docker-compose.yml``` file:
 $ docker-compose up
 ```
 
-### Properties
+### Use Docker Swarm
 
-The only environment properties used by Knowage are:
+Run this command inside the folder with ```docker-compose.yml``` file:
 
+```console
+$ docker stack deploy -c docker-swarm.yml knowage
+```
+
+### Environment variables
+
+Knowage need a specific set of environment variables to correctly start.:
+
+* ```DB_USER``` : *mandatory* - specify the DB user.
+* ```DB_PASS``` : *mandatory* - specify the DB user's password.
+* ```DB_ROOT_PASS``` : *mandatory* - set the root password of the DB.
+* ```DB_DB``` : *mandatory* - specify the DB name.
+* ```DB_HOST``` : *mandatory* - define the DB host.
+* ```DB_PORT``` : *mandatory* - specify the DB port.
+* ```HMAC_KEY``` : *mandatory* - define di HMAC key that will bet set into Tomcat configuration.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
+
+You can edit the file ```.env``` to set every variables you need.
+
+### Docker secrets
+
+If your run Knowage in a Docker Swarm, you may want to use secrets to define the value of the variables above. If you append ```_FILE``` to the name of the preceding environment variables you can specify the path of a Docker Secret that will be available to a running container.
+
+For example, if you create the following secrets:
+
+```console
+$ printf "knowageuser"         | docker secret create knowage_db_user      -
+$ printf "knowagepassword"     | docker secret create knowage_db_pass      -
+$ printf "knowagedb"           | docker secret create knowage_db_host      -
+$ printf "3306"                | docker secret create knowage_db_port      -
+$ printf "knowagedb"           | docker secret create knowage_db_db        -
+$ printf "knowagerootpassword" | docker secret create knowage_db_root_pass -
+$ printf "abc123"              | docker secret create knowage_hmac_key     -
+```
+
+You can create a YAML file for Docker Swarm like:
+
+```console
+version: "3.1"
+services:
+  knowage:
+    image: knowagelabs/knowage-server-docker:7.0
+    ports:
+      - "8080:8080"
+    networks:
+      - main
+    environment:
+      - DB_USER_FILE=/run/secrets/knowage_db_user
+      - DB_PASS_FILE=/run/secrets/knowage_db_pass
+      - DB_DB_FILE=/run/secrets/knowage_db_db
+      - DB_HOST_FILE=/run/secrets/knowage_db_host
+      - DB_PORT_FILE=/run/secrets/knowage_db_port
+      - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
+```
+
+See ```docker-swarm.yml``` for an example.
 
 ## Use Knowage
 
@@ -51,7 +90,7 @@ $ docker inspect --format '{{ .NetworkSettings.IPAddress }}' knowage
 172.17.0.43
 ```
 
-Open Knowage on your browser at url (use your container-ip): 
+Open Knowage on your browser at url (use your container-ip):
 
 > container-ip:8080/knowage
 
@@ -63,7 +102,7 @@ $ sudo route -n add 172.17.0.0/16 ip-of-host-Virtual-Machine
 
 Users available by default (username/password):
 
-> biadmin/biadmin, bidev/bidev and biuser/biuser 
+> biadmin/biadmin, bidev/bidev and biuser/biuser
 
 ## License
 
