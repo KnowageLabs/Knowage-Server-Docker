@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 services:
   knowage:
     image: knowagelabs/knowage-server-docker:7.0
@@ -14,23 +14,20 @@ services:
       - DB_DB=$DB_DB
       - DB_HOST=$DB_HOST
       - DB_PORT=$DB_PORT
-  
+      - HMAC_KEY=abc123
+      - PUBLIC_ADDRESS=localhost
+ 
   knowagedb:
     image: mysql:5.7
     environment:
       - MYSQL_USER=$DB_USER
       - MYSQL_PASSWORD=$DB_PASS
       - MYSQL_DATABASE=$DB_DB
-      - MYSQL_ROOT_PASSWORD=knowagerootpassword
+      - MYSQL_ROOT_PASSWORD=$DB_ROOT_PASS
     networks:
       - main
     volumes:
       - "db:/var/lib/mysql"
-    healthcheck:
-      test: mysql --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD -e "SELECT 1"
-      interval: 5s
-      timeout: 10s
-      retries: 5
 
 volumes:
   db:

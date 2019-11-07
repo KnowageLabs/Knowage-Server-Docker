@@ -1,0 +1,65 @@
+version: "3.1"
+services:
+  knowage:
+    image: knowagelabs/knowage-server-docker:7.0
+    depends_on:
+      - knowagedb
+    ports:
+      - "8080:8080"
+    networks:
+      - main
+    environment:
+      - DB_USER_FILE=/run/secrets/knowage_db_user
+      - DB_PASS_FILE=/run/secrets/knowage_db_pass
+      - DB_DB_FILE=/run/secrets/knowage_db_db
+      - DB_HOST_FILE=/run/secrets/knowage_db_host
+      - DB_PORT_FILE=/run/secrets/knowage_db_port
+      - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
+      - PUBLIC_ADDRESS=localhost
+    secrets:
+      - knowage_db_user
+      - knowage_db_pass
+      - knowage_db_db
+      - knowage_db_host
+      - knowage_db_port
+      - knowage_hmac_key
+ 
+  knowagedb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_USER_FILE=/run/secrets/knowage_db_user
+      - MYSQL_PASSWORD_FILE=/run/secrets/knowage_db_pass
+      - MYSQL_DATABASE_FILE=/run/secrets/knowage_db_db
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/knowage_db_root_pass
+    networks:
+      - main
+    volumes:
+      - "db:/var/lib/mysql"
+    secrets:
+      - knowage_db_user
+      - knowage_db_pass
+      - knowage_db_db
+      - knowage_db_root_pass
+
+volumes:
+  db:
+
+networks:
+  main:
+
+secrets:
+  knowage_db_user:
+    external: true
+  knowage_db_pass:
+    external: true
+  knowage_db_db:
+    external: true
+  knowage_db_host:
+    external: true
+  knowage_db_port:
+    external: true
+  knowage_db_root_pass:
+    external: true
+  knowage_hmac_key:
+    external: true
+
