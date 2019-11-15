@@ -8,24 +8,54 @@ Knowage is the professional open source suite for modern business analytics over
 
 > [knowage-suite.com](https://www.knowage-suite.com)
 
+## What is Docker?
+
+Docker is a project that manage the creation, deployment and running of software container. A container is a small entity that packages code, dependencies and configuration of a single app to let it run in a clean environment hosted on a real machine. Container is not a virtual machine: a container share the resources of the host machine with other containers, following the limits set by a container manager like Docker.
+
+Knowage use Docker to run all the needed containers to let a user to start working easily. Docker can be downloaded from it's main website: https://www.docker.com/get-started
+
 ## Run Knowage
 
 Differently from its predecessor (i.e. SpagoBI), you can use ```docker-compose``` or ```Docker Swarm``` for running Knowage with a MySQL container. This will be shipped with within a single command.
 
+Both ways need to be defined by a simple text file in [YAML](https://docs.docker.com/compose/compose-file/) format that describes which containers must be run.
+
+Pay attention that for both YAML files in this project, the DBMS stores its data in a volume called ```db``` to make them permanent between multiple run of the DBMS. If you want to reset DB data you need to delete that volume.
+
 ### Use docker-compose
 
-Run this command inside the folder with ```docker-compose.yml``` file:
+If you want to run Knowage on your local machine, with minimum configuration, for testing purpose, run this command inside the folder with ```docker-compose.yml``` file:
 
 ```console
 $ docker-compose up
 ```
 
+This launch the DBMS and Knowage in attached mode: here you can see logs of both the container at the same time. To stop both containers you can use ```CTRL+C```. If you want to run Knowage in detached mode use ```-d``` option like:
+
+```console
+$ docker-compose up -d
+```
+
+If you want to remove all the containers that Knowage created, just use:
+
+```console
+$ docker-compose down
+```
+
+In that case, you can also use ```-v``` option to delete all the data of the DBMS that are stored the the relative volume.
+
 ### Use Docker Swarm
 
-Run this command inside the folder with ```docker-compose.yml``` file:
+If you want to run Knowage in a Docker Swarm cluster, with the ability to scale up the main app or the DB, to create complex deployment configuration or to enhance the security with Docker Secrets, run this command inside the folder with ```docker-swarm.yml``` file:
 
 ```console
 $ docker stack deploy -c docker-swarm.yml knowage
+```
+
+If you want to stop Knowage and remove all created containers, you can use:
+
+```console
+docker stack rm
 ```
 
 ### Environment variables
@@ -65,11 +95,9 @@ You can create a YAML file for Docker Swarm like:
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.0
+    image: knowagelabs/knowage-server-docker:6.4
     ports:
       - "8080:8080"
-    networks:
-      - main
     environment:
       - DB_USER_FILE=/run/secrets/knowage_db_user
       - DB_PASS_FILE=/run/secrets/knowage_db_pass
@@ -83,27 +111,37 @@ See ```docker-swarm.yml``` for an example.
 
 ## Use Knowage
 
-Get the IP of container :
+By default, Knowage run its container on the port ```8080/tcp```, as you can see from the sample YAML files. If you set your ```PUBLIC_ADDRESS``` environment to ```localhost``` or ```127.0.0.1```, you can point your browser to:
+
+> http://localhost:8080/knowage
+
+And you could see the login page of Knowage. If this hot happens you have to check Docker configuration to see on what network interface container ports are exposed: by default, Docker should use all network interfaces on the host (the IP ```0.0.0.0``` means all interface).
+
+If you need to expose ports only on a specific ip, you need to add it to ports declaration like:
 
 ```console
-$ docker inspect --format '{{ .NetworkSettings.IPAddress }}' knowage
-172.17.0.43
+version: "3.1"
+services:
+  knowage:
+    image: knowagelabs/knowage-server-docker:6.4
+    ports:
+      - "127.0.0.1:8080:8080"
+    ...
 ```
 
-Open Knowage on your browser at url (use your container-ip):
+By default, the available users are:
 
-> container-ip:8080/knowage
-
-If you run the host with a Virtual Machine (for example in a Mac environment) then you can route the traffic directly to the container from you localhost using route command:
-
-```console
-$ sudo route -n add 172.17.0.0/16 ip-of-host-Virtual-Machine
-```
-
-Users available by default (username/password):
-
-> biadmin/biadmin, bidev/bidev and biuser/biuser
+|User   |Password|
+|-------|--------|
+|biadmin|biadmin |
+|bidev  |bidev   |
+|biuser |biuser  |
 
 ## License
 
 View license information [here](https://github.com/KnowageLabs/Knowage-Server/) for the software contained in this image.
+
+## How to contribute
+
+Before start to contribute, please read and sign the [Contributor License Agreement](https://www.clahub.com/agreements/KnowageLabs/Knowage-Server-Docker).
+The contribution process is based on GitHub pull requests (https://help.github.com/articles/about-pull-requests/).
