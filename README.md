@@ -8,12 +8,6 @@ Knowage is the professional open source suite for modern business analytics over
 
 > [knowage-suite.com](https://www.knowage-suite.com)
 
-## What is Docker?
-
-Docker is a project that manage the creation, deployment and running of software container. A container is a small entity that packages code, dependencies and configuration of a single app to let it run in a clean environment hosted on a real machine. Container is not a virtual machine: a container share the resources of the host machine with other containers, following the limits set by a container manager like Docker.
-
-Knowage use Docker to run all the needed containers to let a user to start working easily. Docker can be downloaded from it's main website: https://www.docker.com/get-started
-
 ## Run Knowage
 
 Differently from its predecessor (i.e. SpagoBI), you can use ```docker-compose``` or ```Docker Swarm``` for running Knowage with a MySQL container. This will be shipped with within a single command.
