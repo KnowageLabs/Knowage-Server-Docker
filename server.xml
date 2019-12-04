@@ -25,7 +25,7 @@
 	<GlobalNamingResources>
 		<!-- Editable user database that can also be used by UserDatabaseRealm 
 			to authenticate users -->
-		<Environment description="HMAC key" name="hmacKey" type="java.lang.String" value="abc123"/> 
+		<Environment description="HMAC key" name="hmacKey" type="java.lang.String" value="__HMAC-key__"/>
 		<Environment name="resource_path" type="java.lang.String" value="${catalina.base}\resources"/>
 		<!-- DEFAULT -->
 		<Environment name="service_url" type="java.lang.String" value="http://localhost:8080/knowage"/>
