@@ -30,7 +30,7 @@
 		<!-- DEFAULT -->
 		<Environment name="service_url" type="java.lang.String" value="http://localhost:8080/knowage"/>
 		<Environment name="host_url" type="java.lang.String" value="http://localhost:8080"/>
-		<Environment name="sso_class" type="java.lang.String" value="it.eng.spagobi.services.common.FakeSsoService"/>
+		<Environment name="sso_class" type="java.lang.String" value="it.eng.spagobi.services.common.JWTSsoService"/>
 		
 		<!-- KNOWAGE -->
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/knowage" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword"/>
