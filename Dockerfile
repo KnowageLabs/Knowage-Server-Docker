@@ -180,7 +180,7 @@ RUN sed -i "s/bin\/sh/bin\/bash/" startup.sh && \
 	sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" startup.sh
 
 # Enable Security Manager
-RUN echo "export JAVA_OPTS=\"$JAVA_OPTS -Djava.security.manager -Djava.security.policy=$CATALINA_HOME/conf/knowage-default.policy\"" >> setenv.sh
+RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -Djava.security.manager -Djava.security.policy=\$CATALINA_HOME/conf/knowage-default.policy\"" >> setenv.sh
 
 #copy entrypoint to be used at runtime
 COPY ./entrypoint.sh ./ \
