@@ -55,7 +55,7 @@ $ docker stack deploy -c docker-swarm.yml knowage
 If you want to stop Knowage and remove all created containers, you can use:
 
 ```console
-$ docker stack rm
+$ docker stack rm knowage
 ```
 
 ### Environment variables
