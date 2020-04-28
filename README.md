@@ -109,7 +109,7 @@ By default, Knowage run its container on the port ```8080/tcp```, as you can see
 
 > http://localhost:8080/knowage
 
-And you could see the login page of Knowage. If this hot happens you have to check Docker configuration to see on what network interface container ports are exposed: by default, Docker should use all network interfaces on the host (the IP ```0.0.0.0``` means all interface).
+And you could see the login page of Knowage. If this doesn't happen you have to check Docker configuration to see on what network interface container ports are exposed: by default, Docker should use all network interfaces on the host (the IP ```0.0.0.0``` means all interface).
 
 If you need to expose ports only on a specific ip, you need to add it to ports declaration like:
 
