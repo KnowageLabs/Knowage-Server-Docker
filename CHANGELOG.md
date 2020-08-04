@@ -12,4 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Security
 
+## [7.2] - 2020-08-03
+
+## Added
+- The new 7.2 version of Knowage
+- Python integration
+- R integration
+
 ## [6.1.1] - 2017-11-10

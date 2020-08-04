@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.1
+    image: knowagelabs/knowage-server-docker:7.2
     depends_on:
       - knowagedb
     ports:
@@ -14,11 +14,11 @@ services:
       - DB_DB=$DB_DB
       - DB_HOST=$DB_HOST
       - DB_PORT=$DB_PORT
-      - HMAC_KEY=abc123
+      # - HMAC_KEY=abc123
       - PUBLIC_ADDRESS=localhost
  
   knowagedb:
-    image: mysql:5.7
+    image: mariadb:10.3
     environment:
       - MYSQL_USER=$DB_USER
       - MYSQL_PASSWORD=$DB_PASS
