@@ -75,6 +75,9 @@ ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 
 WORKDIR ${KNOWAGE_DIRECTORY}
 
+# Copy common files
+COPY CHANGELOG.md CONTRIBUTING.md LICENSE README.md entrypoint.sh wait-for-it.sh ./
+
 # Install required packages and clean up to save space
 RUN apt-get update \
 	&& apt-get upgrade -y \
@@ -89,7 +92,8 @@ RUN wget -q "${KNOWAGE_MYSQL_SCRIPT_URL}" -O mysql.zip \
 # Download Apache Tomcat and extract it
 RUN wget -q "${APACHE_TOMCAT_URL}" \
 	&& unzip ${APACHE_TOMCAT_PACKAGE}.zip \
-	&& rm ${APACHE_TOMCAT_PACKAGE}.zip
+	&& rm ${APACHE_TOMCAT_PACKAGE}.zip \
+	&& ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat
 
 # Download Knowage engines and extract them
 RUN wget -q -O temp.zip "${KNOWAGE_CORE_URL}" \
@@ -167,8 +171,6 @@ RUN        wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_CO
 	&& wget -q -O "${TOMCAT_LIB}/${LIB_MYFOO_COMMONJ_NAME}"        "${LIB_MYFOO_COMMONJ_URL}"       \
 	&& wget -q -O "${TOMCAT_LIB}/${LIB_POSTGRESQL_CONNECTOR_NAME}" "${LIB_POSTGRESQL_CONNECTOR_URL}"
 
-RUN ls -l ${TOMCAT_HOME}
-
 # Override Apache Tomcat server configuration and add security policy
 COPY server.xml knowage-default.policy ${TOMCAT_CONF}/
 
@@ -178,20 +180,12 @@ RUN	   sed -i "s/bin\/sh/bin\/bash/"                   ${TOMCAT_BIN}/startup.sh 
 	&& sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" ${TOMCAT_BIN}/startup.sh
 
 # Enable Security Manager
-RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -Djava.security.manager -Djava.security.policy=\$CATALINA_HOME/conf/knowage-default.policy\"" >> ${TOMCAT_BIN}/setenv.sh
-
-WORKDIR ${TOMCAT_BIN}
-
-# Copy entrypoint to be used at runtime
-COPY	./entrypoint.sh  ./ \
-	./wait-for-it.sh ./
-
-# Make all scripts executable
-RUN chmod +x *.sh
+RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -Djava.security.manager -Djava.security.policy=\$CATALINA_HOME/conf/knowage-default.policy\"" >> ${TOMCAT_BIN}/setenv.sh \
+	&& chmod +x ${TOMCAT_BIN}/*
 
 # Expose common tomcat port
 EXPOSE 8080
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["./startup.sh"]
+CMD ["./apache-tomcat/bin/startup.sh"]
