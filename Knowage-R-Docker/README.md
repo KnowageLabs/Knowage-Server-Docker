@@ -10,21 +10,14 @@ Knowage is the professional open source suite for modern business analytics over
 
 ## Run Knowage R Service
 
-Knowage Python Service needs to be use with Knowage Server Docker.
+Knowage R Service needs to be use with Knowage Server Docker.
 
 ### Environment variables
 
 Knowage Python Service need a specific set of environment variables to correctly start:
 
-* ```HMAC_KEY``` : *optional* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
-* ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
-* ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
+* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
 
 ## License
 
 View license information [here](https://github.com/KnowageLabs/Knowage-Server/) for the software contained in this image.
-
-## How to contribute
-
-Before start to contribute, please read and sign the [Contributor License Agreement](https://www.clahub.com/agreements/KnowageLabs/Knowage-Server-Docker).
-The contribution process is based on GitHub pull requests (https://help.github.com/articles/about-pull-requests/).
