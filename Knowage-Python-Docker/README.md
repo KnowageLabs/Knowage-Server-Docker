@@ -16,9 +16,9 @@ Knowage Python Service needs to be use with Knowage Server Docker.
 
 Knowage Python Service need a specific set of environment variables to correctly start:
 
-* ```HMAC_KEY``` : *optional* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
-* ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
-* ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
+* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
+* ```PUBLIC_ADDRESS``` : *mandatory* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
+* ```PUBLIC_ADDRESS``` : *mandatory* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
 
 ## License
 
