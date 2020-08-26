@@ -16,7 +16,7 @@ Knowage R Service needs to be use with Knowage Server Docker.
 
 Knowage Python Service need a specific set of environment variables to correctly start:
 
-* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
+* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet used with Knowage-Server-Docker.
 
 ## License
 
