@@ -1,0 +1,8 @@
+<data>
+        <environment name="knowage-python">
+                <hmackey>foobar123</hmackey>
+                <knowageaddress>knowage.server.address.com</knowageaddress>
+                <pythonaddress>python.webservice.address.com</pythonaddress>
+                <bokehportsrange>57000-58000</bokehportsrange>
+        </environment>
+</data>
