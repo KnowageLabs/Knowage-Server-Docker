@@ -76,7 +76,7 @@ ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 WORKDIR ${KNOWAGE_DIRECTORY}
 
 # Copy common files
-COPY CHANGELOG.md CONTRIBUTING.md LICENSE README.md entrypoint.sh wait-for-it.sh ./
+COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
 
 # Install required packages and clean up to save space
 RUN apt-get update \
