@@ -52,12 +52,14 @@ then
 	
 	if [ -z "$HMAC_KEY" ]
 	then
-		HMAC_KEY=$( cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 128 | head -n 1 )
+		echo "The HMAC_KEY environment variable is needed"
+		exit -1
 	fi
 	
 	if [ -z "$PASSWORD_ENCRYPTION_SECRET" ]
 	then
-		PASSWORD_ENCRYPTION_SECRET=$( cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 128 | head -n 1 )
+		echo "The PASSWORD_ENCRYPTION_SECRET environment is needed"
+		exit -1
 	fi
 	
 	# Replace the address of container inside server.xml

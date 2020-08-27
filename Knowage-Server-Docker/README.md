@@ -62,8 +62,8 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```DB_DB``` : *mandatory* - specify the DB name.
 * ```DB_HOST``` : *mandatory* - define the DB host.
 * ```DB_PORT``` : *mandatory* - specify the DB port.
-* ```HMAC_KEY``` : *optional* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
-* ```PASSWORD_ENCRYPTION_SECRET``` : *optional* - define the secret used to encrypt password; if not provided will be randomly generated.
+* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
+* ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password; if not provided will be randomly generated.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
 
 You can edit the file ```.env``` to set every variables you need.
