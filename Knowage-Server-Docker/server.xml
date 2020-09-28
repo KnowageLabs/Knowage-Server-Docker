@@ -23,22 +23,42 @@
 
 	<!-- Global JNDI resources Documentation at /docs/jndi-resources-howto.html -->
 	<GlobalNamingResources>
+
 		<!-- Editable user database that can also be used by UserDatabaseRealm 
 			to authenticate users -->
 		<Environment name="resource_path" type="java.lang.String" value="${catalina.home}/resources"/>
 		<Environment name="service_url" type="java.lang.String" value="http://localhost:8080/knowage"/>
-		<Environment name="host_url" type="java.lang.String" value="http://localhost:8080"/>
 		<Environment name="sso_class" type="java.lang.String" value="it.eng.spagobi.services.common.JWTSsoService"/>
 		<Environment description="HMAC key" name="hmacKey" type="java.lang.String" value="__HMAC-key__"/>
 		<Environment description="File for security encryption location" name="password_encryption_secret" type="java.lang.String" value="${catalina.home}/conf/passwordEncryptionSecret"/>
-	
+
 		<!-- KNOWAGE -->
-		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/knowage" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword"/>
+		<Resource auth="Container"
+			driverClassName="com.mysql.jdbc.Driver"
+			maxActive="20"
+			maxIdle="10"
+			maxWait="-1"
+			name="jdbc/knowage"
+			type="javax.sql.DataSource"
+			url="jdbc:mysql://localhost:3306/knowagedb"
+			username="knowageuser"
+			password="knowagepassword"/>
 		
 		<!-- MULTITHREAD WORK MANAGER -->
-		<Resource auth="Container" factory="de.myfoo.commonj.work.FooWorkManagerFactory" maxThreads="15" minThreads="5" name="wm/SpagoWorkManager" type="commonj.work.WorkManager"/>
+		<Resource auth="Container"
+			factory="de.myfoo.commonj.work.FooWorkManagerFactory"
+			maxThreads="15"
+			minThreads="5"
+			name="wm/SpagoWorkManager"
+			type="commonj.work.WorkManager"/>
 
-		<Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
+		<Resource auth="Container"
+			description="User database that can be updated and saved"
+			factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+			name="UserDatabase"
+			pathname="conf/tomcat-users.xml"
+			type="org.apache.catalina.UserDatabase"/>
+
 	</GlobalNamingResources>
 
 	<!-- A "Service" is a collection of one or more "Connectors" that share 

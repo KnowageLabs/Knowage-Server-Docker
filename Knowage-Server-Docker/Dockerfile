@@ -1,9 +1,5 @@
 FROM openjdk:8
 
-LABEL knowage.version="n.d." \
-      knowage.edition="n.d." \
-      knowage.commitId="n.d."
-
 ARG KNOWAGE_CORE_ENGINE="knowage"
 ARG KNOWAGE_BIRTREPORT_ENGINE="${KNOWAGE_CORE_ENGINE}birtreportengine"
 ARG KNOWAGE_COCKPIT_ENGINE="${KNOWAGE_CORE_ENGINE}cockpitengine"
