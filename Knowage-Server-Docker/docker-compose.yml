@@ -14,7 +14,8 @@ services:
       - DB_DB=$DB_DB
       - DB_HOST=$DB_HOST
       - DB_PORT=$DB_PORT
-      # - HMAC_KEY=abc123
+      - HMAC_KEY=abc123
+      - PASSWORD_ENCRYPTION_SECRET=def456
       - PUBLIC_ADDRESS=localhost
  
   knowagedb:
