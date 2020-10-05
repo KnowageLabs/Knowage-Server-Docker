@@ -75,13 +75,14 @@ If your run Knowage in a Docker Swarm, you may want to use secrets to define the
 For example, if you create the following secrets:
 
 ```console
-$ printf "knowageuser"         | docker secret create knowage_db_user      -
-$ printf "knowagepassword"     | docker secret create knowage_db_pass      -
-$ printf "knowagedb"           | docker secret create knowage_db_host      -
-$ printf "3306"                | docker secret create knowage_db_port      -
-$ printf "knowagedb"           | docker secret create knowage_db_db        -
-$ printf "knowagerootpassword" | docker secret create knowage_db_root_pass -
-$ printf "abc123"              | docker secret create knowage_hmac_key     -
+$ printf "knowageuser"         | docker secret create knowage_db_user                        -
+$ printf "knowagepassword"     | docker secret create knowage_db_pass                        -
+$ printf "knowagedb"           | docker secret create knowage_db_host                        -
+$ printf "3306"                | docker secret create knowage_db_port                        -
+$ printf "knowagedb"           | docker secret create knowage_db_db                          -
+$ printf "knowagerootpassword" | docker secret create knowage_db_root_pass                   -
+$ printf "abc123"              | docker secret create knowage_hmac_key                       -
+$ printf "def456"              | docker secret create knowage_password_encryption_secret_key -
 ```
 
 You can create a YAML file for Docker Swarm like:
@@ -100,6 +101,7 @@ services:
       - DB_HOST_FILE=/run/secrets/knowage_db_host
       - DB_PORT_FILE=/run/secrets/knowage_db_port
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
+      - PASSWORD_ENCRYPTION_SECRET_FILE=/run/secrets/knowage_password_encryption_secret_key
 ```
 
 See ```docker-swarm.yml``` for an example.
