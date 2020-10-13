@@ -33,16 +33,9 @@
 		<Environment description="File for security encryption location" name="password_encryption_secret" type="java.lang.String" value="${catalina.home}/conf/passwordEncryptionSecret"/>
 
 		<!-- KNOWAGE -->
-		<Resource auth="Container"
-			driverClassName="com.mysql.jdbc.Driver"
-			maxActive="20"
-			maxIdle="10"
-			maxWait="-1"
-			name="jdbc/knowage"
-			type="javax.sql.DataSource"
-			url="jdbc:mysql://localhost:3306/knowagedb"
-			username="knowageuser"
-			password="knowagepassword"/>
+		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10"
+			maxWait="-1" name="jdbc/knowage" type="javax.sql.DataSource"
+			url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword" />
 		
 		<!-- MULTITHREAD WORK MANAGER -->
 		<Resource auth="Container"
