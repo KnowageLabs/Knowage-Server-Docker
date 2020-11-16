@@ -1,10 +1,10 @@
-FROM alpine/git AS build
+FROM alpine/git:v2.26.2-amd64 AS build
 
 WORKDIR /app
 
-RUN git clone --branch release-knowage-server-7.2 https://github.com/KnowageLabs/Knowage-Server.git
+RUN git clone --depth 1 --branch release-knowage-server-7.2 https://github.com/KnowageLabs/Knowage-Server.git
 
-FROM r-base
+FROM r-base:3.6.3
 
 WORKDIR /app
 
@@ -12,9 +12,9 @@ COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
 RUN apt-get update \
-	&& apt-get install -y libssl-dev file
+	&& apt-get install --no-install-recommends -y libssl-dev file
 
-# It takes too long: makes a separate layer 
+# It takes too long: makes a separate layer
 RUN r -e "install.packages('plumber')"
 
 RUN r -e "install.packages('base64enc')" \
@@ -25,5 +25,10 @@ EXPOSE 5001/tcp
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "r","knowage-r.R" ]
+HEALTHCHECK --start-period=120s                                          \
+            --interval=10s                                               \
+            --timeout=5s                                                 \
+            --retries=5                                                  \
+            CMD wget -q --spider http://127.0.0.1:5001/ || exit 1
 
+CMD [ "r","knowage-r.R" ]

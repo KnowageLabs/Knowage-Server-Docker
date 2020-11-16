@@ -1,9 +1,5 @@
 FROM openjdk:8
 
-LABEL knowage.version="n.d." \
-      knowage.edition="n.d." \
-      knowage.commitId="n.d."
-
 ARG KNOWAGE_CORE_ENGINE="knowage"
 ARG KNOWAGE_BIRTREPORT_ENGINE="${KNOWAGE_CORE_ENGINE}birtreportengine"
 ARG KNOWAGE_COCKPIT_ENGINE="${KNOWAGE_CORE_ENGINE}cockpitengine"
@@ -60,7 +56,7 @@ COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
 # Install required packages and clean up to save space
 RUN  apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y wget -q coreutils unzip mariadb-client-10.3 \
+  && apt-get install --no-install-recommends -y wget -q coreutils unzip mariadb-client-10.3 \
   && rm -rf /var/lib/apt/lists/*
 
 # Download Apache Tomcat and extract it
@@ -146,5 +142,11 @@ RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -Djava.security.manager -Djava.security
 EXPOSE 8080
 
 ENTRYPOINT ["./entrypoint.sh"]
+
+HEALTHCHECK --start-period=120s                                          \
+            --interval=10s                                               \
+            --timeout=5s                                                 \
+            --retries=5                                                  \
+            CMD wget -q --spider http://127.0.0.1:8080/ || exit 1
 
 CMD ["./apache-tomcat/bin/startup.sh"]

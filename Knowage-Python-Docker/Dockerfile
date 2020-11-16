@@ -2,7 +2,7 @@ FROM python:3.7 AS build
 
 WORKDIR /app
 
-RUN git clone --branch master https://github.com/KnowageLabs/Knowage-Server.git
+RUN git clone --depth 1 --branch master https://github.com/KnowageLabs/Knowage-Server.git
 
 RUN ls -l Knowage-Server/*
 
@@ -16,7 +16,7 @@ COPY gunicorn.conf.py entrypoint.sh /app/
 COPY config.xml /app/app
 
 RUN apt-get update \
-	&& apt-get install -y xmlstarlet \
+	&& apt-get install --no-install-recommends -y xmlstarlet \
 	&& pip install gunicorn==20.0.4 \
 	&& pip install -r requirements.txt
 
@@ -28,5 +28,10 @@ USER knowage
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-CMD [ "gunicorn","-c","file:/app/gunicorn.conf.py","knowage-python" ]
+HEALTHCHECK --start-period=120s                                          \
+            --interval=10s                                               \
+            --timeout=5s                                                 \
+            --retries=5                                                  \
+            CMD wget -q --spider http://127.0.0.1:5000/ || exit 1
 
+CMD [ "gunicorn","-c","file:/app/gunicorn.conf.py","knowage-python" ]
