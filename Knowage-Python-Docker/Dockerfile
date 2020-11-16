@@ -1,10 +1,10 @@
-FROM python:3.7 AS build
+FROM alpine/git AS build
 
 WORKDIR /app
 
-RUN git clone --branch master https://github.com/KnowageLabs/Knowage-Server.git
+ARG KNOWAGE_APP_BRANCH
 
-RUN ls -l Knowage-Server/*
+RUN git clone --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
 FROM python:3.7
 
@@ -29,4 +29,3 @@ USER knowage
 ENTRYPOINT [ "./entrypoint.sh" ]
 
 CMD [ "gunicorn","-c","file:/app/gunicorn.conf.py","knowage-python" ]
-
