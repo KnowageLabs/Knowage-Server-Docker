@@ -48,7 +48,7 @@ COPY ${KNOWAGE_CORE_ENGINE}.war \
 WORKDIR /home/expanded
 
 # Expand WARs
-RUN for archive in ../*.war; do unzip -d $( basename ${archive%%.war}) $archive ; done
+RUN for archive in ../*.war; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; done
 
 FROM openjdk:8
 

@@ -1,12 +1,13 @@
-FROM alpine/git AS build
+FROM alpine/git:v2.26.2-amd64 AS build
 
 WORKDIR /app
 
 ARG KNOWAGE_APP_BRANCH
 
-RUN git clone --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
+# Depth
+RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
-FROM r-base
+FROM r-base:4.0.3
 
 WORKDIR /app
 
@@ -14,7 +15,8 @@ COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
 RUN apt-get update \
-	&& apt-get install -y libssl-dev file
+	&& apt-get install --no-install-recommends -y libssl-dev file \
+	&& rm -rf /var/lib/apt/lists/*
 
 # It takes too long: makes a separate layer
 RUN r -e "install.packages('plumber')"
