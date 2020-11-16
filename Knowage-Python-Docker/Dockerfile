@@ -1,10 +1,8 @@
-FROM python:3.7 AS build
+FROM alpine/git:v2.26.2-amd64 AS build
 
 WORKDIR /app
 
-RUN git clone --depth 1 --branch master https://github.com/KnowageLabs/Knowage-Server.git
-
-RUN ls -l Knowage-Server/*
+RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
 FROM python:3.7
 
@@ -17,6 +15,7 @@ COPY config.xml /app/app
 
 RUN apt-get update \
 	&& apt-get install --no-install-recommends -y xmlstarlet \
+	&& rm -rf /var/lib/apt/lists/* \
 	&& pip install gunicorn==20.0.4 \
 	&& pip install -r requirements.txt
 

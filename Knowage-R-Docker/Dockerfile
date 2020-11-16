@@ -2,9 +2,9 @@ FROM alpine/git:v2.26.2-amd64 AS build
 
 WORKDIR /app
 
-RUN git clone --depth 1 --branch release-knowage-server-7.2 https://github.com/KnowageLabs/Knowage-Server.git
+RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
-FROM r-base:3.6.3
+FROM r-base:4.0.3
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
 RUN apt-get update \
-	&& apt-get install --no-install-recommends -y libssl-dev file libcurl4-openssl-dev libsodium-dev \
+	&& apt-get install --no-install-recommends -y libssl-dev file \
 	&& rm -rf /var/lib/apt/lists/*
 
 # It takes too long: makes a separate layer

@@ -91,8 +91,12 @@ COPY ${KNOWAGE_CORE_ENGINE}.war \
      ${TOMCAT_WEBAPPS}/
 
 # Expand WARs
+<<<<<<< HEAD
 RUN cd ${TOMCAT_WEBAPPS} && \
   for archive in *.war ; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; rm ${archive} ; done
+=======
+RUN for archive in ../*.war; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; done
+>>>>>>> 9e2a8d8 (Fix warning from Dockerfile linter)
 
 # Download Knowage libs and put them into Apache Tomcat lib
 RUN  wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_LOGGING_URL}"      \
