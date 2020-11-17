@@ -25,10 +25,10 @@ EXPOSE 5001/tcp
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
-HEALTHCHECK --start-period=120s                                          \
-            --interval=10s                                               \
+HEALTHCHECK --start-period=10s                                          \
+            --interval=60s                                               \
             --timeout=5s                                                 \
             --retries=5                                                  \
-            CMD wget -q --spider http://127.0.0.1:5001/ || exit 1
+            CMD wget -q --content-on-error --spider http://127.0.0.1:5001/ || exit 1
 
 CMD [ "r","knowage-r.R" ]
