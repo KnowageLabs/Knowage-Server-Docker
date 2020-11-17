@@ -15,7 +15,7 @@ COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
 RUN apt-get update \
-	&& apt-get install --no-install-recommends -y libssl-dev file \
+	&& apt-get install --no-install-recommends -y libssl-dev file libcurl4-openssl-dev libsodium-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 # It takes too long: makes a separate layer
