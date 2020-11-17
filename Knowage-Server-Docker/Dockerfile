@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8 AS init
 
 ARG KNOWAGE_CORE_ENGINE="knowage"
 ARG KNOWAGE_BIRTREPORT_ENGINE="${KNOWAGE_CORE_ENGINE}birtreportengine"
@@ -14,6 +14,43 @@ ARG KNOWAGE_SVGVIEWER_ENGINE="${KNOWAGE_CORE_ENGINE}svgviewerengine"
 ARG KNOWAGE_TALEND_ENGINE="${KNOWAGE_CORE_ENGINE}talendengine"
 ARG KNOWAGE_WHATIF_ENGINE="${KNOWAGE_CORE_ENGINE}whatifengine"
 ARG KNOWAGE_DATABASE_SCRIPT="${KNOWAGE_CORE_ENGINE}-database-scripts-mysql"
+
+WORKDIR /home
+
+# Install dependencies
+RUN  apt-get update \
+  && apt-get install -q --no-install-recommends -y unzip \
+  && rm -rf /var/lib/apt/lists/*
+
+# Add MySql scripts
+COPY ${KNOWAGE_DATABASE_SCRIPT}.zip ./
+
+# Extract database script
+RUN  unzip ${KNOWAGE_DATABASE_SCRIPT}.zip \
+  && rm ${KNOWAGE_DATABASE_SCRIPT}.zip
+
+# Add Knowage engines
+COPY ${KNOWAGE_CORE_ENGINE}.war \
+     ${KNOWAGE_BIRTREPORT_ENGINE}.war \
+     ${KNOWAGE_COCKPIT_ENGINE}.war \
+     ${KNOWAGE_COMMONJ_ENGINE}.war \
+     ${KNOWAGE_DATAMINING_ENGINE}.war \
+     ${KNOWAGE_GEOREPORT_ENGINE}.war \
+     ${KNOWAGE_JASPERREPORT_ENGINE}.war \
+     ${KNOWAGE_KPI_ENGINE}.war \
+     ${KNOWAGE_META_ENGINE}.war \
+     ${KNOWAGE_QBE_ENGINE}.war \
+     ${KNOWAGE_SVGVIEWER_ENGINE}.war \
+     ${KNOWAGE_TALEND_ENGINE}.war \
+     ${KNOWAGE_WHATIF_ENGINE}.war \
+     ./
+
+WORKDIR /home/expanded
+
+# Expand WARs
+RUN for archive in ../*.war; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; done
+
+FROM openjdk:8
 
 # Apache Tomcat
 ARG APACHE_TOMCAT_VERSION="8.5.37"
@@ -55,8 +92,7 @@ COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
 
 # Install required packages and clean up to save space
 RUN  apt-get update \
-  && apt-get upgrade -y \
-  && apt-get install --no-install-recommends -y wget -q coreutils unzip mariadb-client-10.3 \
+  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 \
   && rm -rf /var/lib/apt/lists/*
 
 # Download Apache Tomcat and extract it
@@ -65,56 +101,11 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
   && rm ${APACHE_TOMCAT_PACKAGE}.zip \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat
 
-# Add MySql scripts
-COPY ${KNOWAGE_DATABASE_SCRIPT}.zip ./
-
-RUN  unzip ${KNOWAGE_DATABASE_SCRIPT}.zip \
-  && rm ${KNOWAGE_DATABASE_SCRIPT}.zip
+COPY --from=init /home/mysql/*create* ${KNOWAGE_DIRECTORY}/mysql/
 
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 
-# Add Knowage engines
-COPY ${KNOWAGE_CORE_ENGINE}.war \
-     ${KNOWAGE_BIRTREPORT_ENGINE}.war \
-     ${KNOWAGE_COCKPIT_ENGINE}.war \
-     ${KNOWAGE_COMMONJ_ENGINE}.war \
-     ${KNOWAGE_DATAMINING_ENGINE}.war \
-     ${KNOWAGE_GEOREPORT_ENGINE}.war \
-     ${KNOWAGE_JASPERREPORT_ENGINE}.war \
-     ${KNOWAGE_KPI_ENGINE}.war \
-     ${KNOWAGE_META_ENGINE}.war \
-     ${KNOWAGE_QBE_ENGINE}.war \
-     ${KNOWAGE_SVGVIEWER_ENGINE}.war \
-     ${KNOWAGE_TALEND_ENGINE}.war \
-     ${KNOWAGE_WHATIF_ENGINE}.war \
-     ./
-
-RUN  unzip ${KNOWAGE_CORE_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_CORE_ENGINE} \
-  && rm ${KNOWAGE_CORE_ENGINE}.war \
-  && unzip ${KNOWAGE_BIRTREPORT_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_BIRTREPORT_ENGINE} \
-  && rm ${KNOWAGE_BIRTREPORT_ENGINE}.war \
-  && unzip ${KNOWAGE_COCKPIT_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_COCKPIT_ENGINE} \
-  && rm ${KNOWAGE_COCKPIT_ENGINE}.war \
-  && unzip ${KNOWAGE_COMMONJ_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_COMMONJ_ENGINE} \
-  && rm ${KNOWAGE_COMMONJ_ENGINE}.war \
-  && unzip ${KNOWAGE_DATAMINING_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_DATAMINING_ENGINE} \
-  && rm ${KNOWAGE_DATAMINING_ENGINE}.war \
-  && unzip ${KNOWAGE_GEOREPORT_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_GEOREPORT_ENGINE} \
-  && rm ${KNOWAGE_GEOREPORT_ENGINE}.war \
-  && unzip ${KNOWAGE_JASPERREPORT_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_JASPERREPORT_ENGINE} \
-  && rm ${KNOWAGE_JASPERREPORT_ENGINE}.war \
-  && unzip ${KNOWAGE_KPI_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_KPI_ENGINE} \
-  && rm ${KNOWAGE_KPI_ENGINE}.war \
-  && unzip ${KNOWAGE_META_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_META_ENGINE} \
-  && rm ${KNOWAGE_META_ENGINE}.war \
-  && unzip ${KNOWAGE_QBE_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_QBE_ENGINE} \
-  && rm ${KNOWAGE_QBE_ENGINE}.war \
-  && unzip ${KNOWAGE_SVGVIEWER_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_SVGVIEWER_ENGINE} \
-  && rm ${KNOWAGE_SVGVIEWER_ENGINE}.war \
-  && unzip ${KNOWAGE_TALEND_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_TALEND_ENGINE} \
-  && rm ${KNOWAGE_TALEND_ENGINE}.war \
-  && unzip ${KNOWAGE_WHATIF_ENGINE}.war -d ${TOMCAT_WEBAPPS}/${KNOWAGE_WHATIF_ENGINE} \
-  && rm ${KNOWAGE_WHATIF_ENGINE}.war
+COPY --from=init /home/expanded ${TOMCAT_WEBAPPS}/
 
 # Download Knowage libs and put them into Apache Tomcat lib
 RUN  wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_LOGGING_URL}"      \
@@ -141,12 +132,12 @@ RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -Djava.security.manager -Djava.security
 # Expose common tomcat port
 EXPOSE 8080
 
-ENTRYPOINT ["./entrypoint.sh"]
-
 HEALTHCHECK --start-period=120s                                          \
             --interval=10s                                               \
             --timeout=5s                                                 \
             --retries=5                                                  \
             CMD wget -q --spider http://127.0.0.1:8080/ || exit 1
+
+ENTRYPOINT ["./entrypoint.sh"]
 
 CMD ["./apache-tomcat/bin/startup.sh"]
