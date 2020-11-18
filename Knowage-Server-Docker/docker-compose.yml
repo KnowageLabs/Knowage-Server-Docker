@@ -17,7 +17,23 @@ services:
       - HMAC_KEY=abc123
       - PASSWORD_ENCRYPTION_SECRET=def456
       - PUBLIC_ADDRESS=localhost
- 
+
+  knowagepython:
+    image: knowagelabs/knowage-python-docker:7.2
+    environment:
+      - HMAC_KEY=abc123
+      - KNOWAGE_PUBLIC_ADDRESS=knowage
+      - PUBLIC_ADDRESS=localhost
+    networks:
+      - main
+
+  knowager:
+    image: knowagelabs/knowage-r-docker:7.2
+    environment:
+      - HMAC_KEY=abc123
+    networks:
+      - main
+
   knowagedb:
     image: mariadb:10.3
     environment:
@@ -35,4 +51,3 @@ volumes:
 
 networks:
   main:
-
