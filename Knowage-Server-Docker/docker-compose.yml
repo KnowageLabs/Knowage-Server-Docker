@@ -14,10 +14,26 @@ services:
       - DB_DB=$DB_DB
       - DB_HOST=$DB_HOST
       - DB_PORT=$DB_PORT
-      - HMAC_KEY=abc123
-      - PASSWORD_ENCRYPTION_SECRET=def456
+      - HMAC_KEY=$HMAC_KEY
+      - PASSWORD_ENCRYPTION_SECRET=$PASSWORD_ENCRYPTION_SECRET
       - PUBLIC_ADDRESS=localhost
- 
+
+  knowagepython:
+    image: knowagelabs/knowage-python-docker:7.2
+    environment:
+      - HMAC_KEY=$HMAC_KEY
+      - KNOWAGE_PUBLIC_ADDRESS=knowage
+      - PUBLIC_ADDRESS=localhost
+    networks:
+      - main
+
+  knowager:
+    image: knowagelabs/knowage-r-docker:7.2
+    environment:
+      - HMAC_KEY=$HMAC_KEY
+    networks:
+      - main
+
   knowagedb:
     image: mariadb:10.3
     environment:
@@ -35,4 +51,3 @@ volumes:
 
 networks:
   main:
-
