@@ -63,9 +63,9 @@ then
 	fi
 	
 	# Replace the address of container inside server.xml
-	sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
-	sed -i "s|http:\/\/.*:8080\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
-	sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/webapps/knowage/WEB-INF/web.xml
+	sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	sed -i "s|http:\/\/.*:8080\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/webapps/knowage/WEB-INF/web.xml
 	
 	# Insert knowage metadata into db if it doesn't exist
 	result=`mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_DB} -e "SHOW TABLES LIKE '%SBI_%';"`
@@ -77,13 +77,13 @@ then
 	# Replace DB connection data
 	old_connection='url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword"'
 	new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
-	sed -i "s|${old_connection}|${new_connection}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
+	sed -i "s|${old_connection}|${new_connection}|" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	
 	# Set HMAC key
-	sed -i "s|__HMAC-key__|${HMAC_KEY}|" ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/server.xml
+	sed -i "s|__HMAC-key__|${HMAC_KEY}|" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	
 	# Set password encryption key
-	echo $PASSWORD_ENCRYPTION_SECRET > ${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}/conf/passwordEncryptionSecret
+	echo $PASSWORD_ENCRYPTION_SECRET > ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/passwordEncryptionSecret
 
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
