@@ -14,6 +14,7 @@ ARG TOMCAT_BIN=${TOMCAT_HOME}/bin
 ARG TOMCAT_CONF=${TOMCAT_HOME}/conf
 ARG TOMCAT_LIB=${TOMCAT_HOME}/lib
 ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
+ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
 
 # Knowage dependencies
 ARG LIB_COMMONS_LOGGING_NAME="commons-logging-1.1.1.jar"
@@ -59,6 +60,7 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
 	"*/webapps/ROOT/*"  \
   && rm ${APACHE_TOMCAT_PACKAGE}.zip \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat
+  && mkdir ${TOMCAT_RESOURCES}
 
 # Install dependencies
 RUN  apt-get update \
@@ -90,7 +92,7 @@ COPY ${KNOWAGE_CORE_ENGINE}.war \
 
 # Expand WARs
 RUN cd ${TOMCAT_WEBAPPS} && \
-  for archive in *.war ; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; rm ${archive} ; done	
+  for archive in *.war ; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; rm ${archive} ; done
 
 # Download Knowage libs and put them into Apache Tomcat lib
 RUN  wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_LOGGING_URL}"      \
