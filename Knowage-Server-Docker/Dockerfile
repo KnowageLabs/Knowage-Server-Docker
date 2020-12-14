@@ -59,7 +59,7 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
 	"*/webapps/docs/*" \
 	"*/webapps/ROOT/*"  \
   && rm ${APACHE_TOMCAT_PACKAGE}.zip \
-  && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat
+  && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
   && mkdir ${TOMCAT_RESOURCES}
 
 # Install dependencies
