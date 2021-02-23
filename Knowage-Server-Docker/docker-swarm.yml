@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.3.0-SNAPSHOT
+    image: knowagelabs/knowage-server-docker:7.4.0-SNAPSHOT
     depends_on:
       - knowagedb
     ports:
@@ -26,7 +26,7 @@ services:
       - knowage_hmac_key
  
   knowagedb:
-    image: mysql:5.7
+    image: mariadb:10.3
     environment:
       - MYSQL_USER_FILE=/run/secrets/knowage_db_user
       - MYSQL_PASSWORD_FILE=/run/secrets/knowage_db_pass

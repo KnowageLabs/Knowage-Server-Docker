@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.3.0-SNAPSHOT
+    image: knowagelabs/knowage-server-docker:7.4.0-SNAPSHOT
     depends_on:
       - knowagedb
     ports:
@@ -19,7 +19,7 @@ services:
       - PUBLIC_ADDRESS=localhost
 
   knowagepython:
-    image: knowagelabs/knowage-python-docker:7.2
+    image: knowagelabs/knowage-python-docker:7.4.0-SNAPSHOT
     environment:
       - HMAC_KEY=$HMAC_KEY
       - KNOWAGE_PUBLIC_ADDRESS=knowage
@@ -28,7 +28,7 @@ services:
       - main
 
   knowager:
-    image: knowagelabs/knowage-r-docker:7.2
+    image: knowagelabs/knowage-r-docker:7.4.0-SNAPSHOT
     environment:
       - HMAC_KEY=$HMAC_KEY
     networks:
