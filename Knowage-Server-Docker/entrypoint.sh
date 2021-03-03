@@ -101,7 +101,7 @@ then
 	
 	# Set DB connection for Knowage cache
 	xmlstarlet ed -P -L \
-		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"      -v "jdbc:mysql://${CACHE_DB_PORT}:${CACHE_DB_HOST}/${CACHE_DB_DB}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"      -v "jdbc:mysql://${CACHE_DB_HOST}:${CACHE_DB_PORT}/${CACHE_DB_DB}" \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username" -v "${CACHE_DB_USER}" \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password" -v "${CACHE_DB_PASS}" \
 		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
