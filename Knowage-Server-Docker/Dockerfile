@@ -63,7 +63,7 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
 
 # Install dependencies
 RUN  apt-get update \
-  && apt-get install -q --no-install-recommends -y unzip xmlstarlet \
+  && apt-get install -q --no-install-recommends -y unzip \
   && rm -rf /var/lib/apt/lists/*
 
 # Add MySql scripts
@@ -122,7 +122,7 @@ COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
 
 # Install required packages and clean up to save space
 RUN  apt-get update \
-  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 \
+  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 xmlstarlet \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=init ${KNOWAGE_DIRECTORY}/mysql/ ${KNOWAGE_DIRECTORY}/mysql/
