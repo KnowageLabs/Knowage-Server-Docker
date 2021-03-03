@@ -63,7 +63,7 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
 
 # Install dependencies
 RUN  apt-get update \
-  && apt-get install -q --no-install-recommends -y unzip \
+  && apt-get install -q --no-install-recommends -y unzip xmlstarlet \
   && rm -rf /var/lib/apt/lists/*
 
 # Add MySql scripts

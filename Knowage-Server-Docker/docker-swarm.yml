@@ -4,16 +4,22 @@ services:
     image: knowagelabs/knowage-server-docker:7.4.0-SNAPSHOT
     depends_on:
       - knowagedb
+      - knowagecache
     ports:
       - "8080:8080"
     networks:
       - main
     environment:
-      - DB_USER_FILE=/run/secrets/knowage_db_user
-      - DB_PASS_FILE=/run/secrets/knowage_db_pass
-      - DB_DB_FILE=/run/secrets/knowage_db_db
       - DB_HOST_FILE=/run/secrets/knowage_db_host
       - DB_PORT_FILE=/run/secrets/knowage_db_port
+      - DB_DB_FILE=/run/secrets/knowage_db_db
+      - DB_USER_FILE=/run/secrets/knowage_db_user
+      - DB_PASS_FILE=/run/secrets/knowage_db_pass
+      - CACHE_DB_HOST_FILE=/run/secrets/knowage_cache_db_host
+      - CACHE_DB_PORT_FILE=/run/secrets/knowage_cache_db_port
+      - CACHE_DB_DB_FILE=/run/secrets/knowage_cache_db_db
+      - CACHE_DB_USER_FILE=/run/secrets/knowage_cache_db_user
+      - CACHE_DB_PASS_FILE=/run/secrets/knowage_cache_db_pass
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - PASSWORD_ENCRYPTION_SECRET_FILE==/run/secrets/knowage_password_encryption_secret
       - PUBLIC_ADDRESS=localhost
@@ -24,14 +30,47 @@ services:
       - knowage_db_host
       - knowage_db_port
       - knowage_hmac_key
- 
+
+   knowagepython:
+    image: knowagelabs/knowage-python-docker:7.4.0-SNAPSHOT
+    environment:
+      - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
+      - KNOWAGE_PUBLIC_ADDRESS=knowage
+      - PUBLIC_ADDRESS=localhost
+    networks:
+      - main
+
+  knowager:
+    image: knowagelabs/knowage-r-docker:7.4.0-SNAPSHOT
+    environment:
+      - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
+    networks:
+      - main
+
   knowagedb:
     image: mariadb:10.3
     environment:
       - MYSQL_USER_FILE=/run/secrets/knowage_db_user
       - MYSQL_PASSWORD_FILE=/run/secrets/knowage_db_pass
       - MYSQL_DATABASE_FILE=/run/secrets/knowage_db_db
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/knowage_db_root_pass
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    networks:
+      - main
+    volumes:
+      - "db:/var/lib/mysql"
+    secrets:
+      - knowage_db_user
+      - knowage_db_pass
+      - knowage_db_db
+      - knowage_db_root_pass
+
+  knowagecache:
+    image: mariadb:10.3
+    environment:
+      - MYSQL_USER_FILE=/run/secrets/knowage_cache_db_user
+      - MYSQL_PASSWORD_FILE=/run/secrets/knowage_cache_db_pass
+      - MYSQL_DATABASE_FILE=/run/secrets/knowage_cache_db_db
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
     networks:
       - main
     volumes:
@@ -44,23 +83,34 @@ services:
 
 volumes:
   db:
+  cache:
 
 networks:
   main:
 
 secrets:
-  knowage_db_user:
-    external: true
-  knowage_db_pass:
-    external: true
-  knowage_db_db:
-    external: true
   knowage_db_host:
     external: true
   knowage_db_port:
     external: true
-  knowage_db_root_pass:
+  knowage_db_db:
     external: true
+  knowage_db_user:
+    external: true
+  knowage_db_pass:
+    external: true
+
+  knowage_cache_db_host:
+    external: true
+  knowage_cache_db_port:
+    external: true
+  knowage_cache_db_db:
+    external: true
+  knowage_cache_db_user:
+    external: true
+  knowage_cache_db_pass:
+    external: true
+
   knowage_hmac_key:
     external: true
   knowage_password_encryption_secret:

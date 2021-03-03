@@ -23,11 +23,17 @@ file_env() {
 	unset "$fileVar"
 }
 
-file_env "DB_USER"
-file_env "DB_PASS"
-file_env "DB_DB"
 file_env "DB_HOST"
 file_env "DB_PORT"
+file_env "DB_DB"
+file_env "DB_USER"
+file_env "DB_PASS"
+
+file_env "CACHE_DB_HOST"
+file_env "CACHE_DB_PORT"
+file_env "CACHE_DB_DB"
+file_env "CACHE_DB_USER"
+file_env "CACHE_DB_PASS"
 
 # Wait for MySql
 ./wait-for-it.sh ${DB_HOST}:${DB_PORT} -- echo "MySql is up!"
@@ -71,16 +77,27 @@ then
 	result=`mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_DB} -e "SHOW TABLES LIKE '%SBI_%';"`
 	if [ -z "$result" ]; then
 		mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_DB} --execute="source ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create.sql"
-	        mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_DB} --execute="source ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create_quartz_schema.sql"
+		mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_DB} --execute="source ${MYSQL_SCRIPT_DIRECTORY}/MySQL_create_quartz_schema.sql"
 	fi
 	
-	# Replace DB connection data
-	old_connection='url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword"'
-	new_connection='url="jdbc:mysql://'${DB_HOST}':'${DB_PORT}'/'${DB_DB}'" username="'${DB_USER}'" password="'${DB_PASS}'"'
-	sed -i "s|${old_connection}|${new_connection}|" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	# Set DB connection for Knowage metadata
+	xmlstarlet ed -P -L \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@url"      -v "jdbc:mysql://${DB_HOST}:${DB_HOST}/${DB_DB}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@username" -v "${DB_USER}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@password" -v "${DB_PASS}" \
+		server.xml
 	
+	# Set DB connection for Knowage cache
+	xmlstarlet ed -P -L \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"      -v "jdbc:mysql://${CACHE_DB_HOST}:${CACHE_DB_HOST}/${CACHE_DB_DB}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username" -v "${CACHE_DB_USER}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password" -v "${CACHE_DB_PASS}" \
+		server.xml
+
 	# Set HMAC key
-	sed -i "s|__HMAC-key__|${HMAC_KEY}|" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	xmlstarlet ed -P -L \
+		-u "//Server/GlobalNamingResources/Environment[@name='hmacKey']/@value" -v "${HMAC_KEY}" \
+		server.xml
 	
 	# Set password encryption key
 	echo $PASSWORD_ENCRYPTION_SECRET > ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/passwordEncryptionSecret
@@ -90,4 +107,3 @@ then
 fi
 
 exec "$@"
-

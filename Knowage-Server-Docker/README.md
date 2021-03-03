@@ -10,7 +10,7 @@ Knowage is the professional open source suite for modern business analytics over
 
 ## Run Knowage
 
-Differently from its predecessor (i.e. SpagoBI), you can use ```docker-compose``` or ```Docker Swarm``` for running Knowage with a MySQL container. This will be shipped with within a single command.
+Differently from its predecessor (i.e. SpagoBI), you can use ```docker-compose``` or ```Docker Swarm``` for running Knowage with a [MariaDB container](https://hub.docker.com/_/mariadb). This will be shipped with within a single command.
 
 Both ways need to be defined by a simple text file in [YAML](https://docs.docker.com/compose/compose-file/) format that describes which containers must be run.
 
@@ -56,12 +56,16 @@ $ docker stack rm knowage
 
 Knowage need a specific set of environment variables to correctly start.:
 
-* ```DB_USER``` : *mandatory* - specify the DB user.
-* ```DB_PASS``` : *mandatory* - specify the DB user's password.
-* ```DB_ROOT_PASS``` : *mandatory* - set the root password of the DB.
-* ```DB_DB``` : *mandatory* - specify the DB name.
 * ```DB_HOST``` : *mandatory* - define the DB host.
 * ```DB_PORT``` : *mandatory* - specify the DB port.
+* ```DB_DB``` : *mandatory* - specify the DB name.
+* ```DB_USER``` : *mandatory* - specify the DB user.
+* ```DB_PASS``` : *mandatory* - specify the DB user's password.
+* ```CACHE_DB_HOST``` : *mandatory* - define the cache DB host.
+* ```CACHE_DB_PORT``` : *mandatory* - specify the cache DB port.
+* ```CACHE_DB_DB``` : *mandatory* - specify the cache DB name.
+* ```CACHE_DB_USER``` : *mandatory* - specify the cache DB user.
+* ```CACHE_DB_PASS``` : *mandatory* - specify the cache DB user's password.
 * ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
 * ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password; if not provided will be randomly generated.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
@@ -75,12 +79,18 @@ If your run Knowage in a Docker Swarm, you may want to use secrets to define the
 For example, if you create the following secrets:
 
 ```console
-$ printf "knowageuser"         | docker secret create knowage_db_user                        -
-$ printf "knowagepassword"     | docker secret create knowage_db_pass                        -
-$ printf "knowagedb"           | docker secret create knowage_db_host                        -
-$ printf "3306"                | docker secret create knowage_db_port                        -
-$ printf "knowagedb"           | docker secret create knowage_db_db                          -
-$ printf "knowagerootpassword" | docker secret create knowage_db_root_pass                   -
+$ printf "knowagedb"           | docker secret create knowage_db_host -
+$ printf "3306"                | docker secret create knowage_db_port -
+$ printf "knowagedb"           | docker secret create knowage_db_db   -
+$ printf "knowageuser"         | docker secret create knowage_db_user -
+$ printf "knowagepassword"     | docker secret create knowage_db_pass -
+
+$ printf "knowagedb"           | docker secret create knowage_cache_db_host -
+$ printf "3306"                | docker secret create knowage_cache_db_port -
+$ printf "knowagedb"           | docker secret create knowage_cache_db_db   -
+$ printf "knowageuser"         | docker secret create knowage_cache_db_user -
+$ printf "knowagepassword"     | docker secret create knowage_cache_db_pass -
+
 $ printf "abc123"              | docker secret create knowage_hmac_key                       -
 $ printf "def456"              | docker secret create knowage_password_encryption_secret_key -
 ```
@@ -91,15 +101,22 @@ You can create a YAML file for Docker Swarm like:
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.2
+    image: knowagelabs/knowage-server-docker:7.4.0-SNAPSHOT
     ports:
       - "8080:8080"
     environment:
-      - DB_USER_FILE=/run/secrets/knowage_db_user
-      - DB_PASS_FILE=/run/secrets/knowage_db_pass
-      - DB_DB_FILE=/run/secrets/knowage_db_db
       - DB_HOST_FILE=/run/secrets/knowage_db_host
       - DB_PORT_FILE=/run/secrets/knowage_db_port
+      - DB_DB_FILE=/run/secrets/knowage_db_db
+      - DB_USER_FILE=/run/secrets/knowage_db_user
+      - DB_PASS_FILE=/run/secrets/knowage_db_pass
+
+      - CACHE_DB_HOST_FILE=/run/secrets/knowage_cache_db_host
+      - CACHE_DB_PORT_FILE=/run/secrets/knowage_cache_db_port
+      - CACHE_DB_DB_FILE=/run/secrets/knowage_cache_db_db
+      - CACHE_DB_USER_FILE=/run/secrets/knowage_cache_db_user
+      - CACHE_DB_PASS_FILE=/run/secrets/knowage_cache_db_pass
+
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - PASSWORD_ENCRYPTION_SECRET_FILE=/run/secrets/knowage_password_encryption_secret_key
 ```
@@ -120,7 +137,7 @@ If you need to expose ports only on a specific ip, you need to add it to ports d
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.2
+    image: knowagelabs/knowage-server-docker:7.4.0-SNAPSHOT
     ports:
       - "127.0.0.1:8080:8080"
     ...
