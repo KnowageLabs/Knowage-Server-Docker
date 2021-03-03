@@ -97,19 +97,19 @@ then
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@url"      -v "jdbc:mysql://${DB_HOST}:${DB_HOST}/${DB_DB}" \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@username" -v "${DB_USER}" \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@password" -v "${DB_PASS}" \
-		server.xml
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	
 	# Set DB connection for Knowage cache
 	xmlstarlet ed -P -L \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"      -v "jdbc:mysql://${CACHE_DB_HOST}:${CACHE_DB_HOST}/${CACHE_DB_DB}" \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username" -v "${CACHE_DB_USER}" \
 		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password" -v "${CACHE_DB_PASS}" \
-		server.xml
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 
 	# Set HMAC key
 	xmlstarlet ed -P -L \
 		-u "//Server/GlobalNamingResources/Environment[@name='hmacKey']/@value" -v "${HMAC_KEY}" \
-		server.xml
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	
 	# Set password encryption key
 	echo $PASSWORD_ENCRYPTION_SECRET > ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/passwordEncryptionSecret
