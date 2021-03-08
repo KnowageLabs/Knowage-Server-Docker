@@ -10,7 +10,7 @@ FROM python:3.7
 
 WORKDIR /app
 
-COPY --from=build /app/Knowage-Server/Knowage-Python/pythonwebservice/ /app/Knowage-Server/Knowage-Python/requirements.txt ./
+COPY --from=build /app/Knowage-Server/Knowage-Python/src/ /app/Knowage-Server/Knowage-Python/requirements.txt ./
 
 COPY gunicorn.conf.py entrypoint.sh /app/
 COPY config.xml /app/app
