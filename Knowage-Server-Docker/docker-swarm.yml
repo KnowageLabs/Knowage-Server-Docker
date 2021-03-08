@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:7.4.0-SNAPSHOT
+    image: knowagelabs/knowage-server-docker:8.0.0-SNAPSHOT
     depends_on:
       - knowagedb
       - knowagecache
@@ -37,7 +37,7 @@ services:
       - knowage_hmac_key
 
    knowagepython:
-    image: knowagelabs/knowage-python-docker:7.4.0-SNAPSHOT
+    image: knowagelabs/knowage-python-docker:8.0.0-SNAPSHOT
     environment:
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - KNOWAGE_PUBLIC_ADDRESS=knowage
@@ -46,7 +46,7 @@ services:
       - main
 
   knowager:
-    image: knowagelabs/knowage-r-docker:7.4.0-SNAPSHOT
+    image: knowagelabs/knowage-r-docker:8.0.0-SNAPSHOT
     environment:
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
     networks:
