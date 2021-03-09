@@ -10,7 +10,7 @@ Knowage is the professional open source suite for modern business analytics over
 
 ## Run Knowage
 
-See main image [here](https://github.com/KnowageLabs/Knowage-Server-Docker/Knowage-Server-Docker).
+See main image [here](Knowage-Server-Docker/README.md).
 
 ## License
 
