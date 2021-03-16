@@ -28,7 +28,7 @@ RUN r -e "install.packages('base64enc')" \
 EXPOSE 5001/tcp
 
 HEALTHCHECK --start-period=10s                                           \
-            --interval=60s                                               \
+            --interval=5s                                                \
             --timeout=5s                                                 \
             --retries=5                                                  \
             CMD wget -q -O /dev/null http://127.0.0.1:5001/dataset/libraries || exit 1
