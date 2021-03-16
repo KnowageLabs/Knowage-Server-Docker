@@ -2,6 +2,8 @@ FROM alpine/git:v2.26.2-amd64 AS build
 
 WORKDIR /app
 
+ARG KNOWAGE_APP_BRANCH
+
 RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
 FROM python:3.7
