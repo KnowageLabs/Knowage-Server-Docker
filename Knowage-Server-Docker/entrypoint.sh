@@ -35,6 +35,8 @@ file_env "CACHE_DB_DB"
 file_env "CACHE_DB_USER"
 file_env "CACHE_DB_PASS"
 
+file_env "AJP_SECRET"
+
 # Wait for MySql
 ./wait-for-it.sh ${DB_HOST}:${DB_PORT} -- echo "MySql is up!"
 
@@ -80,6 +82,16 @@ then
 		exit -1
 	fi
 
+	if [ -z "AJP_SECRET" ]
+	then
+		AJP_SECRET=$( openssl rand -base64 32 )
+		echo "###################################################################"
+		echo "#"
+		echo "# Random generated AJP secret:"
+		echo "#   ${AJP_SECRET}"
+		echo "#"
+	fi
+
 	# Replace the address of container inside server.xml
 	sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	sed -i "s|http:\/\/.*:8080\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
@@ -113,6 +125,20 @@ then
 	
 	# Set password encryption key
 	echo $PASSWORD_ENCRYPTION_SECRET > ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/passwordEncryptionSecret
+
+	# Set AJP secret
+	xmlstarlet ed -P -L \
+		-d "//Server/Service/Connector[contains(@protocol, 'AJP')]/@secretRequired" \
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	xmlstarlet ed -P -L \
+		-d "//Server/Service/Connector[contains(@protocol, 'AJP')]/@secret" \
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	xmlstarlet ed -P -L \
+		-i "//Server/Service/Connector[contains(@protocol, 'AJP')]" -t attr -n secretRequired -v "true" \
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	xmlstarlet ed -P -L \
+		-i "//Server/Service/Connector[contains(@protocol, 'AJP')]" -t attr -n secret -v "${AJP_SECRET}" \
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"

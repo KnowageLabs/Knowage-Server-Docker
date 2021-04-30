@@ -153,7 +153,7 @@ RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+U
 RUN chmod +x ${TOMCAT_BIN}/*
 
 # Expose common tomcat port
-EXPOSE 8080
+EXPOSE 8080 8009
 
 HEALTHCHECK --start-period=120s                                          \
             --interval=10s                                               \
