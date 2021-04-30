@@ -70,19 +70,19 @@ then
 		exit -1
 	fi
 	
-	if [ -z "DB_HOST" ] || [ -z "DB_PORT" ] || [ -z "DB_DB"   ] || [ -z "DB_USER" ] || [ -z "DB_PASS" ]
+	if [ -z "$DB_HOST" ] || [ -z "$DB_PORT" ] || [ -z "$DB_DB"   ] || [ -z "$DB_USER" ] || [ -z "$DB_PASS" ]
 	then
 		echo "The DB_HOST, DB_PORT, DB_DB, DB_USER, DB_PASS environment variables are needed"
 		exit -1
 	fi
 
-	if [ -z "CACHE_DB_HOST" ] || [ -z "CACHE_DB_PORT" ] || [ -z "CACHE_DB_DB"   ] || [ -z "CACHE_DB_USER" ] || [ -z "CACHE_DB_PASS" ]
+	if [ -z "$CACHE_DB_HOST" ] || [ -z "$CACHE_DB_PORT" ] || [ -z "$CACHE_DB_DB"   ] || [ -z "$CACHE_DB_USER" ] || [ -z "$CACHE_DB_PASS" ]
 	then
 		echo "The CACHE_DB_HOST, CACHE_DB_PORT, CACHE_DB_DB, CACHE_DB_USER, CACHE_DB_PASS environment variables are needed"
 		exit -1
 	fi
 
-	if [ -z "AJP_SECRET" ]
+	if [ -z "$AJP_SECRET" ]
 	then
 		AJP_SECRET=$( openssl rand -base64 32 )
 		echo "###################################################################"
