@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WHITELIST>
+        <service baseurl="https://www.youtube.com" />
+        <service baseurl="https://vimeo.com" />
+        <service baseurl="https://www.flickr.com" />
+        <service baseurl="https://fonts.googleapis.com" />
+        <service baseurl="https://code.highcharts.com" />
+        <service relativepath="/knowage/themes/" />
+        <service relativepath="/knowage/icons/" />
+        <service relativepath="/knowage/dashboards/" />
+</WHITELIST>
