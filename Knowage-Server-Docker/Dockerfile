@@ -61,6 +61,8 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
   && mkdir ${TOMCAT_RESOURCES}
 
+COPY services-whitelist.xml ${TOMCAT_RESOURCES}
+
 # Install dependencies
 RUN  apt-get update \
   && apt-get install -q --no-install-recommends -y unzip \
@@ -101,10 +103,6 @@ RUN  wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_
   && wget -q -O "${TOMCAT_LIB}/${LIB_MYFOO_COMMONJ_NAME}"        "${LIB_MYFOO_COMMONJ_URL}"        \
   && wget -q -O "${TOMCAT_LIB}/${LIB_POSTGRESQL_CONNECTOR_NAME}" "${LIB_POSTGRESQL_CONNECTOR_URL}" \
   && wget -q -O "${TOMCAT_LIB}/${LIB_HSQLDB_JDBC_DRIVER_NAME}"   "${LIB_HSQLDB_JDBC_DRIVER_URL}"
-
-RUN mkdir ${TOMCAT_RESOURCES}
-
-COPY services-whitelist.xml ${TOMCAT_RESOURCES}
 
 FROM openjdk:8
 
