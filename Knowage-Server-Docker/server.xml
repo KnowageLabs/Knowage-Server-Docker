@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server-xml [
+  <!ENTITY ext-global-resources SYSTEM "server.xml.d/extGlobalResources">
+]>
 <!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
 	license agreements. See the NOTICE file distributed with this work for additional 
 	information regarding copyright ownership. The ASF licenses this file to 
@@ -49,6 +52,9 @@
 			minThreads="5"
 			name="wm/SpagoWorkManager"
 			type="commonj.work.WorkManager"/>
+	
+		<!-- EXTERNAL GLOBAL RESOURCES -->
+		&ext-global-resources;
 
 		<Resource auth="Container"
 			description="User database that can be updated and saved"
