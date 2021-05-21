@@ -12,6 +12,7 @@ ARG APACHE_TOMCAT_URL="https://archive.apache.org/dist/tomcat/tomcat-8/v${APACHE
 ARG TOMCAT_HOME=${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}
 ARG TOMCAT_BIN=${TOMCAT_HOME}/bin
 ARG TOMCAT_CONF=${TOMCAT_HOME}/conf
+ARG TOMCAT_CONF_CUSTOM_SERVER=${TOMCAT_HOME}/conf/server.xml.d
 ARG TOMCAT_LIB=${TOMCAT_HOME}/lib
 ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
 ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
@@ -61,9 +62,10 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
 	"*/webapps/ROOT/*"  \
   && rm ${APACHE_TOMCAT_PACKAGE}.zip \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
-  && mkdir ${TOMCAT_RESOURCES}
+  && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER}
 
-COPY services-whitelist.xml ${TOMCAT_RESOURCES}
+COPY services-whitelist.xml ${TOMCAT_RESOURCES} \
+  extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
 
 # Install dependencies
 RUN  apt-get update \
