@@ -64,8 +64,8 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
   && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER}
 
-COPY services-whitelist.xml ${TOMCAT_RESOURCES} \
-  extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
+COPY services-whitelist.xml ${TOMCAT_RESOURCES}
+COPY extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
 
 # Install dependencies
 RUN  apt-get update \
