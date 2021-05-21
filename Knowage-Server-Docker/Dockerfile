@@ -13,6 +13,7 @@ ARG TOMCAT_HOME=${KNOWAGE_DIRECTORY}/${APACHE_TOMCAT_PACKAGE}
 ARG TOMCAT_BIN=${TOMCAT_HOME}/bin
 ARG TOMCAT_CONF=${TOMCAT_HOME}/conf
 ARG TOMCAT_CONF_CUSTOM_SERVER=${TOMCAT_HOME}/conf/server.xml.d
+ARG TOMCAT_CONF_CUSTOM_CONTEXT=${TOMCAT_HOME}/conf/context.xml.d
 ARG TOMCAT_LIB=${TOMCAT_HOME}/lib
 ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
 ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
@@ -62,10 +63,12 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
 	"*/webapps/ROOT/*"  \
   && rm ${APACHE_TOMCAT_PACKAGE}.zip \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
-  && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER}
+  && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER} ${TOMCAT_CONF_CUSTOM_CONTEXT}
 
+COPY server.xml context.xml knowage-default.policy ${TOMCAT_CONF}/
 COPY services-whitelist.xml ${TOMCAT_RESOURCES}
 COPY extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
+COPY extContext ${TOMCAT_CONF_CUSTOM_CONTEXT}
 
 # Install dependencies
 RUN  apt-get update \
@@ -138,9 +141,6 @@ COPY --from=init ${KNOWAGE_DIRECTORY}/mysql/ ${KNOWAGE_DIRECTORY}/mysql/
 ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
 
 COPY --from=init ${TOMCAT_HOME} ${TOMCAT_HOME}
-
-# Override Apache Tomcat server configuration and add security policy
-COPY server.xml knowage-default.policy ${TOMCAT_CONF}/
 
 #make the script executable by bash (not only sh) and
 #make knowage running forever without exiting when running the container

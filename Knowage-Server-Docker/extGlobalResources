@@ -11,19 +11,19 @@
 
 <!-- <Resource
     auth="Container"
-    driverClassName="org.mariadb.jdbc.Driver"
+    driverClassName="com.mysql.jdbc.Driver"
     logAbandoned="true"
     maxActive="20"
     maxIdle="4"
     maxWait="300"
     minEvictableIdleTimeMillis="60000"
-    name="jdbc/sample"
-    password="sample"
+    name="jdbc/foodmart"
+    password="foodmart"
     removeAbandoned="true"
     removeAbandonedTimeout="3600"
     testOnReturn="true"
     testWhileIdle="true"
     timeBetweenEvictionRunsMillis="10000"
     type="javax.sql.DataSource"
-    url="jdbc:mariadb://sample:3310/sample"
-    username="sample"/> -->
+    url="jdbc:mysql://foodmart:3306/foodmart"
+    username="foodmart"/> -->
