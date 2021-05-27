@@ -173,7 +173,7 @@ then
 		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 	
 	# Set the actual member list
-	echo "abc,def" | xargs -d "," -n 1 -i"{}" \
+	echo -n "${HAZELCAST_HOSTS}" | xargs -d "," -n 1 -i"{}" \
 		xmlstarlet ed -P -L \
 			-s "/_:hazelcast/_:network/_:join/_:tcp-ip/_:member-list" -t elem -n member -v \{\} \
 			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
