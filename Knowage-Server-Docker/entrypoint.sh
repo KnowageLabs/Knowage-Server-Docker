@@ -164,7 +164,7 @@ then
 
 	# Set port
 	xmlstarlet ed -P -L \
-		-u "/_:hazelcast/_:network/_:port" -v "${HAZELCAST_PORT}" \
+		-u "/_:hazelcast/_:network/_:port" -v ${HAZELCAST_PORT} \
 		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 
 	# Clean up the member list
