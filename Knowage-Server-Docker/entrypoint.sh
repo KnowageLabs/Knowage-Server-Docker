@@ -163,23 +163,23 @@ then
 	# N.B.: the _ in Xmlstarlet XPath stands for default namespace
 
 	# Set port
-	xmlstarlet ed -P \
+	xmlstarlet ed -P -L \
 		-u "/_:hazelcast/_:network/_:port" -v "${HAZELCAST_PORT}" \
 		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 
 	# Clean up the member list
-	xmlstarlet ed -P -d \
-		"/_:hazelcast/_:network/_:join/_:tcp-ip/_:member-list/_:member" \
+	xmlstarlet ed -P -L \
+		-d "/_:hazelcast/_:network/_:join/_:tcp-ip/_:member-list/_:member" \
 		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 	
 	# Set the actual member list
 	echo "abc,def" | xargs -d "," -n 1 -i"{}" \
-		xmlstarlet ed -P \
+		xmlstarlet ed -P -L \
 			-s "/_:hazelcast/_:network/_:join/_:tcp-ip/_:member-list" -t elem -n member -v \{\} \
 			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 
 	# Format
-	xmlstarlet ed -L -O ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
+	xmlstarlet ed -O -L ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
