@@ -5,6 +5,7 @@ services:
     depends_on:
       - knowagedb
       - knowagecache
+      - hazelcast
     ports:
       - "8080:8080"
     networks:
@@ -25,6 +26,14 @@ services:
       - HMAC_KEY=$HMAC_KEY
       - PASSWORD_ENCRYPTION_SECRET=$PASSWORD_ENCRYPTION_SECRET
       - PUBLIC_ADDRESS=localhost
+
+      - HAZELCAST_HOSTS="hazelcast"
+      - HAZELCAST_PORT="5701"
+
+  hazelcast:
+    image: hazelcast/hazelcast:3.6.5
+    networks:
+      - main
 
   knowagepython:
     image: knowagelabs/knowage-python-docker:8.0.0-SNAPSHOT

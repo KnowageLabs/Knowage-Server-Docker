@@ -37,6 +37,9 @@ file_env "CACHE_DB_PASS"
 
 file_env "AJP_SECRET"
 
+file_env "HAZELCAST_HOSTS"
+file_env "HAZELCAST_PORT"
+
 # Wait for MySql
 ./wait-for-it.sh ${DB_HOST}:${DB_PORT} -- echo "MySql is up!"
 
@@ -92,6 +95,21 @@ then
 		echo "#"
 	fi
 
+	if [ -z "$HAZELCAST_HOSTS" ]
+	then
+		HAZELCAST_HOSTS="127.0.0.1"
+		echo "###################################################################"
+		echo "#"
+		echo "# The HAZELCAST_HOSTS environment not present. Knowage will launch "
+		echo "# one internally."
+		echo "#"
+	fi
+
+	if [ -z "$HAZELCAST_PORT" ]
+	then
+		HAZELCAST_PORT="5701"
+	fi
+
 	# Replace the address of container inside server.xml
 	sed -i "s|http:\/\/.*:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	sed -i "s|http:\/\/.*:8080\/knowage|http:\/\/localhost:8080\/knowage|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
@@ -139,6 +157,29 @@ then
 	xmlstarlet ed -P -L \
 		-i "//Server/Service/Connector[contains(@protocol, 'AJP')]" -t attr -n secret -v "${AJP_SECRET}" \
 		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+	
+	# Setting hazelcast.xml
+	# 
+	# N.B.: the _ in Xmlstarlet XPath stands for default namespace
+
+	# Set port
+	xmlstarlet ed -P \
+		-u "/_:hazelcast/_:network/_:port" -v "${HAZELCAST_PORT}" \
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
+
+	# Clean up the member list
+	xmlstarlet ed -P -d \
+		"/_:hazelcast/_:network/_:join/_:tcp-ip/_:member-list/_:member" \
+		${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
+	
+	# Set the actual member list
+	echo "abc,def" | xargs -d "," -n 1 -i"{}" \
+		xmlstarlet ed -P \
+			-s "/_:hazelcast/_:network/_:join/_:tcp-ip/_:member-list" -t elem -n member -v \{\} \
+			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
+
+	# Format
+	xmlstarlet ed -L -O ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
 
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"

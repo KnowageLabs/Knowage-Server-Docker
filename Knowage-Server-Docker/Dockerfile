@@ -65,7 +65,7 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
   && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER} ${TOMCAT_CONF_CUSTOM_CONTEXT}
 
-COPY server.xml context.xml knowage-default.policy ${TOMCAT_CONF}/
+COPY server.xml context.xml knowage-default.policy hazelcast.xml ${TOMCAT_CONF}/
 COPY services-whitelist.xml ${TOMCAT_RESOURCES}
 COPY extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
 COPY extContext ${TOMCAT_CONF_CUSTOM_CONTEXT}
