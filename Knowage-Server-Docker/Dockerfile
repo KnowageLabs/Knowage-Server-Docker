@@ -65,6 +65,7 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
   && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER} ${TOMCAT_CONF_CUSTOM_CONTEXT}
 
+COPY setenv.sh ${TOMCAT_BIN}/
 COPY server.xml context.xml knowage-default.policy hazelcast.xml ${TOMCAT_CONF}/
 COPY services-whitelist.xml ${TOMCAT_RESOURCES}
 COPY extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
@@ -146,12 +147,6 @@ COPY --from=init ${TOMCAT_HOME} ${TOMCAT_HOME}
 #make knowage running forever without exiting when running the container
 RUN  sed -i "s/bin\/sh/bin\/bash/"                   ${TOMCAT_BIN}/startup.sh \
   && sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" ${TOMCAT_BIN}/startup.sh
-
-# Enable Security Manager
-RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -Djava.security.manager -Djava.security.policy=\$CATALINA_HOME/conf/knowage-default.policy\"" >> ${TOMCAT_BIN}/setenv.sh
-
-# Memory optimization
-RUN echo "export JAVA_OPTS=\"\$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap\"" >> ${TOMCAT_BIN}/setenv.sh
 
 # Fix permissions
 RUN chmod +x ${TOMCAT_BIN}/*
