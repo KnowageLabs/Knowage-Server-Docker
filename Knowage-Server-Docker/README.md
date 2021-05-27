@@ -70,6 +70,8 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password; if not provided will be randomly generated.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
 * ```AJP_SECRET``` : *optional* - define the secret used to connect the AJP connector.
+* ```HAZELCAST_HOSTS``` : *optional* - Comma separeted hostnames of an Hazelcast cluster (for example, "host1,host2,host3")
+* ```HAZELCAST_PORT``` : *optional* - Port of every host of an Hazelcast cluster (for example, "5701")
 
 You can edit the file ```.env``` to set every variables you need.
 

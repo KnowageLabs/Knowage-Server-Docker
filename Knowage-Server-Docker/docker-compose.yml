@@ -34,6 +34,8 @@ services:
     image: hazelcast/hazelcast:3.6.5
     networks:
       - main
+    environment:
+      - JAVA_OPTS=-Dhazelcast.local.publicAddress=hazelcast
 
   knowagepython:
     image: knowagelabs/knowage-python-docker:8.0.0-SNAPSHOT
