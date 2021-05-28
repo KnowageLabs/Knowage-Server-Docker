@@ -8,13 +8,12 @@
             <multicast enabled="false"></multicast>
             <tcp-ip enabled="true">
                 <member-list>
-                    <member>127.0.0.1</member>
-                </member-list>
+			<member>hazelcast</member>
+		</member-list>
             </tcp-ip>
         </join>
     </network>
     <properties> 
     	<property name="hazelcast.socket.bind.any">false</property>
-    	<property name="hazelcast.logging.type">log4j</property>
     </properties>
 </hazelcast>

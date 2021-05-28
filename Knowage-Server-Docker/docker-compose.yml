@@ -35,7 +35,9 @@ services:
     networks:
       - main
     environment:
-      - JAVA_OPTS=-Dhazelcast.local.publicAddress=hazelcast
+      - JAVA_OPTS=-Dhazelcast.local.publicAddress=hazelcast -Dhazelcast.config=/opt/hazelcast/hazelcast.xml
+    volumes:
+      - ./hazelcast-server.xml:/opt/hazelcast/hazelcast.xml
 
   knowagepython:
     image: knowagelabs/knowage-python-docker:8.0.0-SNAPSHOT
