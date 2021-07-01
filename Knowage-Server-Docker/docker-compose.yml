@@ -25,6 +25,8 @@ services:
       - HMAC_KEY=$HMAC_KEY
       - PASSWORD_ENCRYPTION_SECRET=$PASSWORD_ENCRYPTION_SECRET
       - PUBLIC_ADDRESS=localhost
+    volumes:
+      - ./resources:/home/knowage/apache-tomcat/resources
 
   knowagepython:
     image: knowagelabs/knowage-python-docker:7.4.0-SNAPSHOT

@@ -163,6 +163,6 @@ HEALTHCHECK --start-period=120s                                          \
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-VOLUME [${TOMCAT_RESOURCES}]
+VOLUME ["${TOMCAT_RESOURCES}"]
 
 CMD ["./apache-tomcat/bin/startup.sh"]
