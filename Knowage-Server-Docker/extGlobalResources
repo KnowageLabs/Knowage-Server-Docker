@@ -13,7 +13,7 @@
     auth="Container"
     driverClassName="com.mysql.jdbc.Driver"
     logAbandoned="true"
-    maxActive="20"
+    maxTotal="20"
     maxIdle="4"
     maxWait="300"
     minEvictableIdleTimeMillis="60000"
