@@ -8,6 +8,8 @@ RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageL
 
 FROM knowagelabs/knowage-python-docker-base:1.0
 
+USER root
+
 WORKDIR /app
 
 COPY --from=build /app/Knowage-Server/Knowage-Python/src/ /app/Knowage-Server/Knowage-Python/requirements.txt ./
@@ -20,6 +22,10 @@ RUN pip install -r requirements.txt
 RUN useradd -M -r knowage \
 	&& chown -R knowage:knowage /app \
 	&& chmod a+x *.sh
+
+RUN chown -R knowage:knowage /app
+
+USER knowage
 
 EXPOSE 5000/tcp
 
