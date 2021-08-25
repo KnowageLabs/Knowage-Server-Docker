@@ -14,7 +14,8 @@ WORKDIR /app
 COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
-RUN chmod a+x *.sh
+RUN chown -R knowage:knowage /app \
+    && chmod a+x *.sh
 
 EXPOSE 5001/tcp
 

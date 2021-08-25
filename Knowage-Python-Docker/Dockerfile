@@ -19,11 +19,8 @@ COPY config.xml /app/app
 
 RUN pip install -r requirements.txt
 
-RUN useradd -M -r knowage \
-	&& chown -R knowage:knowage /app \
+RUN chown -R knowage:knowage /app \
 	&& chmod a+x *.sh
-
-RUN chown -R knowage:knowage /app
 
 USER knowage
 
