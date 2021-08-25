@@ -9,6 +9,8 @@ RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageL
 
 FROM knowagelabs/knowage-r-docker-base:1.0
 
+USER root
+
 WORKDIR /app
 
 COPY --from=build /app/Knowage-Server/Knowage-R .
@@ -16,6 +18,8 @@ COPY LICENSE entrypoint.sh ./
 
 RUN chown -R knowage:knowage /app \
     && chmod a+x *.sh
+
+USER knowage
 
 EXPOSE 5001/tcp
 
