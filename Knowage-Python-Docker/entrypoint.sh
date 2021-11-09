@@ -30,20 +30,6 @@ CONTAINER_INITIALIZED_PLACEHOLDER=/app/CONTAINER_INITIALIZED
 if [ ! -f "$CONTAINER_INITIALIZED_PLACEHOLDER" ]
 then
 	file_env "HMAC_KEY"
-	file_env "KNOWAGE_PUBLIC_ADDRESS"
-	file_env "PUBLIC_ADDRESS"
-
-	if [[ -z "$KNOWAGE_PUBLIC_ADDRESS" ]]
-	then
-		echo "The KNOWAGE_PUBLIC_ADDRESS environment variable is needed"
-		exit -1
-	fi
-
-	if [[ -z "$PUBLIC_ADDRESS" ]]
-	then
-		echo "The PUBLIC_ADDRESS environment variable is needed"
-		exit -1
-	fi
 	
 	if [ -z "$HMAC_KEY" ]
 	then
@@ -51,11 +37,8 @@ then
 		exit -1
 	fi
 	
-	# Set variable in config.xml
-	xmlstarlet edit -L --update "//data/environment/hmackey"        --value "${HMAC_KEY}" \
-	                   --update "//data/environment/knowageaddress" --value "${KNOWAGE_PUBLIC_ADDRESS}" \
-			   --update "//data/environment/pythonaddress"  --value "${PUBLIC_ADDRESS}" \
-			   app/config.xml
+	#create hmackey file
+	echo "${HMAC_KEY}" > /app/hmackey
 	
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
