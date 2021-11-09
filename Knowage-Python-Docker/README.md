@@ -16,9 +16,7 @@ Knowage Python Service needs to be use with Knowage Server Docker.
 
 Knowage Python Service need a specific set of environment variables to correctly start:
 
-* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet used with Knowage-Server-Docker.
-* ```KNOWAGE_PUBLIC_ADDRESS``` : *mandatory* - define the hostname of the instance of Knowage-Server-Docker.
-* ```PUBLIC_ADDRESS``` : *mandatory* - define the hostname of the instance of Knowage-Python-Docker.
+* ```HMAC_KEY``` : *mandatory* - defines the path for a plain-text file that contains the HMAC key that will be used with Knowage-Server-Docker.
 
 ## License
 
