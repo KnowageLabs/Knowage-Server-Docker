@@ -38,12 +38,12 @@
 		<!-- KNOWAGE -->
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxTotal="20" maxIdle="10"
 			maxWaitMillis="300" name="jdbc/knowage" type="javax.sql.DataSource"
-			url="jdbc:mysql://localhost:3306/knowagedb" username="knowageuser" password="knowagepassword" />
+			url="jdbc:mysql://localhost:3306/knowagedb?disableMariaDbDriver" username="knowageuser" password="knowagepassword" />
 		
 		<!-- KNOWAGE CACHE -->
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxTotal="20" maxIdle="4"
 			maxWaitMillis="300" name="jdbc/ds_cache" type="javax.sql.DataSource"
-			url="jdbc:mariadb://localhost:3310/cache" username="root" password="root" />
+			url="jdbc:mariadb://localhost:3310/cache?disableMariaDbDriver" username="root" password="root" />
 
 		<!-- MULTITHREAD WORK MANAGER -->
 		<Resource auth="Container"
