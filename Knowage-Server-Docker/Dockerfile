@@ -27,6 +27,8 @@ ARG LIB_CONCURRENT_NAME="oswego-concurrent-1.3.4.jar"
 ARG LIB_CONCURRENT_URL="https://search.maven.org/remotecontent?filepath=org/lucee/oswego-concurrent/1.3.4/${LIB_CONCURRENT_NAME}"
 ARG LIB_MYSQL_CONNECTOR_NAME="mysql-connector-java-5.1.33.jar"
 ARG LIB_MYSQL_CONNECTOR_URL="https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/5.1.33/${LIB_MYSQL_CONNECTOR_NAME}"
+ARG LIB_MARIADB_CONNECTOR_NAME="mariadb-java-client-2.7.2.jar"
+ARG LIB_MARIADB_CONNECTOR_URL="https://search.maven.org/remotecontent?filepath=org/mariadb/jdbc/mariadb-java-client/2.7.2/${LIB_MARIADB_CONNECTOR_NAME}"
 ARG LIB_GERONIMO_COMMONJ_NAME="geronimo-commonj_1.1_spec-1.0.jar"
 ARG LIB_GERONIMO_COMMONJ_URL="https://search.maven.org/remotecontent?filepath=org/apache/geronimo/specs/geronimo-commonj_1.1_spec/1.0/${LIB_GERONIMO_COMMONJ_NAME}"
 ARG LIB_MYFOO_COMMONJ_NAME="commonj-1.0.jar"
@@ -109,6 +111,7 @@ RUN  wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_
   && wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_API_NAME}"  "${LIB_COMMONS_LOGGING_API_URL}"  \
   && wget -q -O "${TOMCAT_LIB}/${LIB_CONCURRENT_NAME}"           "${LIB_CONCURRENT_URL}"           \
   && wget -q -O "${TOMCAT_LIB}/${LIB_MYSQL_CONNECTOR_NAME}"      "${LIB_MYSQL_CONNECTOR_URL}"      \
+  && wget -q -O "${TOMCAT_LIB}/${LIB_MARIADB_CONNECTOR_NAME}"    "${LIB_MARIADB_CONNECTOR_URL}"    \
   && wget -q -O "${TOMCAT_LIB}/${LIB_GERONIMO_COMMONJ_NAME}"     "${LIB_GERONIMO_COMMONJ_URL}"     \
   && wget -q -O "${TOMCAT_LIB}/${LIB_MYFOO_COMMONJ_NAME}"        "${LIB_MYFOO_COMMONJ_URL}"        \
   && wget -q -O "${TOMCAT_LIB}/${LIB_POSTGRESQL_CONNECTOR_NAME}" "${LIB_POSTGRESQL_CONNECTOR_URL}" \
