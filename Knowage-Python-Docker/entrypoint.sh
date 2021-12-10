@@ -38,7 +38,7 @@ then
 	fi
 	
 	#create hmackey file
-	echo "${HMAC_KEY}" > /app/hmackey
+	echo -n "${HMAC_KEY}" > /app/hmackey
 	
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
