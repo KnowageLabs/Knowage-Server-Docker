@@ -28,12 +28,18 @@ file_env "DB_PORT"
 file_env "DB_DB"
 file_env "DB_USER"
 file_env "DB_PASS"
+file_env "DB_CONNECTION_POOL_SIZE"   "20"
+file_env "DB_CONNECTION_MAX_IDLE"    "10"
+file_env "DB_CONNECTION_WAIT_MS"     "300"
 
 file_env "CACHE_DB_HOST"
 file_env "CACHE_DB_PORT"
 file_env "CACHE_DB_DB"
 file_env "CACHE_DB_USER"
 file_env "CACHE_DB_PASS"
+file_env "CACHE_DB_CONNECTION_POOL_SIZE"   "20"
+file_env "CACHE_DB_CONNECTION_MAX_IDLE"    "10"
+file_env "CACHE_DB_CONNECTION_WAIT_MS"     "300"
 
 file_env "AJP_SECRET"
 
@@ -133,16 +139,22 @@ then
 		
 		# Set DB connection for Knowage metadata
 		xmlstarlet ed -P -L \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@url"      -v "jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DB}?disableMariaDbDriver" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@username" -v "${DB_USER}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@password" -v "${DB_PASS}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@url"            -v "jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DB}?disableMariaDbDriver" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@username"       -v "${DB_USER}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@password"       -v "${DB_PASS}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxTotal"       -v "${DB_CONNECTION_POOL_SIZE}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxIdle"        -v "${DB_CONNECTION_MAX_IDLE}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxWaitMillis"  -v "${DB_CONNECTION_WAIT_MS}" \
 			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 		
 		# Set DB connection for Knowage cache
 		xmlstarlet ed -P -L \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"      -v "jdbc:mysql://${CACHE_DB_HOST}:${CACHE_DB_PORT}/${CACHE_DB_DB}?disableMariaDbDriver" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username" -v "${CACHE_DB_USER}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password" -v "${CACHE_DB_PASS}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"            -v "jdbc:mysql://${CACHE_DB_HOST}:${CACHE_DB_PORT}/${CACHE_DB_DB}?disableMariaDbDriver" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username"       -v "${CACHE_DB_USER}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password"       -v "${CACHE_DB_PASS}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxTotal"       -v "${CACHE_DB_CONNECTION_POOL_SIZE}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxIdle"        -v "${CACHE_DB_CONNECTION_MAX_IDLE}" \
+			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxWaitMillis"  -v "${CACHE_DB_CONNECTION_WAIT_MS}" \
 			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 	
 		# Set HMAC key
