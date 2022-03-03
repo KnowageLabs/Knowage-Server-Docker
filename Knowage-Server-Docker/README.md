@@ -61,11 +61,17 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```DB_DB``` : *mandatory* - specify the DB name.
 * ```DB_USER``` : *mandatory* - specify the DB user.
 * ```DB_PASS``` : *mandatory* - specify the DB user's password.
+* ```DB_CONNECTION_POOL_SIZE``` : *optional* - Set the connection pool size
+* ```DB_CONNECTION_MAX_IDLE``` : *optional* - Set the max number of idle connection
+* ```DB_CONNECTION_WAIT_MS``` : *optional* - Max wait time in millis for a new connection 
 * ```CACHE_DB_HOST``` : *mandatory* - define the cache DB host.
 * ```CACHE_DB_PORT``` : *mandatory* - specify the cache DB port.
 * ```CACHE_DB_DB``` : *mandatory* - specify the cache DB name.
 * ```CACHE_DB_USER``` : *mandatory* - specify the cache DB user.
 * ```CACHE_DB_PASS``` : *mandatory* - specify the cache DB user's password.
+* ```CACHE_DB_CONNECTION_POOL_SIZE``` : *optional* - Set the connection pool size
+* ```CACHE_DB_CONNECTION_MAX_IDLE``` : *optional* - Set the max number of idle connection
+* ```CACHE_DB_CONNECTION_WAIT_MS``` : *optional* - Max wait time in millis for a new connection
 * ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
 * ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password; if not provided will be randomly generated.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
