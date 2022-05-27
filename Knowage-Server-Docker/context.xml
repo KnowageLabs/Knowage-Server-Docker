@@ -33,4 +33,6 @@
 
     &ext-context;
 
+    <Resources cacheMaxSize="51200" />
+
 </Context>
