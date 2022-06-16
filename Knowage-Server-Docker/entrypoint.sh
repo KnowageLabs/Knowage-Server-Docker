@@ -43,8 +43,8 @@ file_env "CACHE_DB_CONNECTION_WAIT_MS"     "300"
 
 file_env "AJP_SECRET"
 
-file_env "HAZELCAST_HOSTS"
-file_env "HAZELCAST_PORT"
+file_env "HAZELCAST_HOSTS" "127.0.0.1"
+file_env "HAZELCAST_PORT"  "5701"
 
 if [ -z "$DB_HOST" ] || [ -z "$DB_PORT" ]
 then
