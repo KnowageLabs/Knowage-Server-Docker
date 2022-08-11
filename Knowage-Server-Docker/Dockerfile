@@ -152,7 +152,7 @@ RUN  sed -i "s/bin\/sh/bin\/bash/"                   ${TOMCAT_BIN}/startup.sh \
   && sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" ${TOMCAT_BIN}/startup.sh
 
 # Fix permissions
-RUN chmod +x ${TOMCAT_BIN}/*
+RUN chmod +x ${KNOWAGE_DIRECTORY}/*.sh ${TOMCAT_BIN}/*.sh
 
 # Expose common tomcat port
 EXPOSE 8080 8009
