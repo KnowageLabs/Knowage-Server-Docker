@@ -134,6 +134,7 @@ WORKDIR ${KNOWAGE_DIRECTORY}
 
 # Copy common files
 COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
+COPY scripts/ ./scripts/
 
 # Install required packages and clean up to save space
 RUN  apt-get update \
@@ -152,7 +153,7 @@ RUN  sed -i "s/bin\/sh/bin\/bash/"                   ${TOMCAT_BIN}/startup.sh \
   && sed -i "s/EXECUTABLE\" start/EXECUTABLE\" run/" ${TOMCAT_BIN}/startup.sh
 
 # Fix permissions
-RUN chmod +x ${KNOWAGE_DIRECTORY}/*.sh ${TOMCAT_BIN}/*.sh
+RUN chmod +x ${KNOWAGE_DIRECTORY}/*.sh ${KNOWAGE_DIRECTORY}/scripts/*.sh ${TOMCAT_BIN}/*.sh
 
 # Expose common tomcat port
 EXPOSE 8080 8009

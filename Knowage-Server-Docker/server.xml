@@ -43,7 +43,7 @@
 		<!-- KNOWAGE CACHE -->
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxTotal="20" maxIdle="4"
 			maxWaitMillis="300" name="jdbc/ds_cache" type="javax.sql.DataSource"
-			url="jdbc:mariadb://localhost:3310/cache?disableMariaDbDriver" username="root" password="root" />
+			url="jdbc:mysql://localhost:3310/cache?disableMariaDbDriver" username="root" password="root" />
 
 		<!-- MULTITHREAD WORK MANAGER -->
 		<Resource auth="Container"
