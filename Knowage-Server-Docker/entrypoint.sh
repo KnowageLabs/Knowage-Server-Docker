@@ -138,25 +138,25 @@ then
 		fi
 		
 		# Set DB connection for Knowage metadata
-		xmlstarlet ed -P -L \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@url"            -v "jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_DB}?disableMariaDbDriver" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@username"       -v "${DB_USER}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@password"       -v "${DB_PASS}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxTotal"       -v "${DB_CONNECTION_POOL_SIZE}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxIdle"        -v "${DB_CONNECTION_MAX_IDLE}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxWaitMillis"  -v "${DB_CONNECTION_WAIT_MS}" \
-			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
-		
+		./scripts/set-jndi-resources-for-db.sh "${DB_HOST}" \
+                        "${DB_PORT}" \
+                        "${DB_DB}" \
+                        "${DB_USER}" \
+                        "${DB_PASS}" \
+                        "${DB_CONNECTION_POOL_SIZE}" \
+                        "${DB_CONNECTION_MAX_IDLE}" \
+                        "${DB_CONNECTION_WAIT_MS}"
+
 		# Set DB connection for Knowage cache
-		xmlstarlet ed -P -L \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"            -v "jdbc:mysql://${CACHE_DB_HOST}:${CACHE_DB_PORT}/${CACHE_DB_DB}?disableMariaDbDriver" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username"       -v "${CACHE_DB_USER}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password"       -v "${CACHE_DB_PASS}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxTotal"       -v "${CACHE_DB_CONNECTION_POOL_SIZE}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxIdle"        -v "${CACHE_DB_CONNECTION_MAX_IDLE}" \
-			-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxWaitMillis"  -v "${CACHE_DB_CONNECTION_WAIT_MS}" \
-			${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
-	
+		./scripts/set-jndi-resources-for-cache.sh "${CACHE_DB_HOST}" \
+                        "${CACHE_DB_PORT}" \
+                        "${CACHE_DB_DB}" \
+                        "${CACHE_DB_USER}" \
+                        "${CACHE_DB_PASS}" \
+                        "${CACHE_DB_CONNECTION_POOL_SIZE}" \
+                        "${CACHE_DB_CONNECTION_MAX_IDLE}" \
+                        "${CACHE_DB_CONNECTION_WAIT_MS}"
+
 		# Set HMAC key
 		xmlstarlet ed -P -L \
 			-u "//Server/GlobalNamingResources/Environment[@name='hmacKey']/@value" -v "${HMAC_KEY}" \
