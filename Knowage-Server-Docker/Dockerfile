@@ -67,14 +67,20 @@ RUN  wget -q "${APACHE_TOMCAT_URL}" \
   && ln -s ${APACHE_TOMCAT_PACKAGE} apache-tomcat \
   && mkdir ${TOMCAT_RESOURCES} ${TOMCAT_CONF_CUSTOM_SERVER} ${TOMCAT_CONF_CUSTOM_CONTEXT}
 
-COPY setenv.sh ${TOMCAT_BIN}/
-COPY server.xml context.xml knowage-default.policy hazelcast.xml ${TOMCAT_CONF}/
-COPY services-whitelist.xml ${TOMCAT_RESOURCES}
-COPY extGlobalResources ${TOMCAT_CONF_CUSTOM_SERVER}
-COPY extContext ${TOMCAT_CONF_CUSTOM_CONTEXT}
+COPY utils ${KNOWAGE_DIRECTORY}/utils/
 
-# Install dependencies
-RUN  apt-get update \
+COPY bin       ${TOMCAT_BIN}
+COPY conf      ${TOMCAT_CONF}
+COPY resources ${TOMCAT_RESOURCES}
+COPY webapps   ${TOMCAT_WEBAPPS}
+
+# Generate TLS certificate && Install dependencies
+RUN  cd utils \
+  && ./generate_tls_cer.sh \
+  && cp certificate.crt ../apache-tomcat/conf/tls \
+  && cp key.key         ../apache-tomcat/conf/tls \
+  && cd .. \
+  && apt-get update \
   && apt-get install -q --no-install-recommends -y unzip \
   && rm -rf /var/lib/apt/lists/*
 
@@ -138,7 +144,7 @@ COPY scripts/ ./scripts/
 
 # Install required packages and clean up to save space
 RUN  apt-get update \
-  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 xmlstarlet \
+  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 xmlstarlet libtcnative-1 libapr1 \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=init ${KNOWAGE_DIRECTORY}/mysql/ ${KNOWAGE_DIRECTORY}/mysql/
@@ -156,7 +162,7 @@ RUN  sed -i "s/bin\/sh/bin\/bash/"                   ${TOMCAT_BIN}/startup.sh \
 RUN chmod +x ${KNOWAGE_DIRECTORY}/*.sh ${KNOWAGE_DIRECTORY}/scripts/*.sh ${TOMCAT_BIN}/*.sh
 
 # Expose common tomcat port
-EXPOSE 8080 8009
+EXPOSE 8080 8443 8009 9000
 
 HEALTHCHECK --start-period=120s                                          \
             --interval=10s                                               \

@@ -81,7 +81,14 @@
 			and responses are returned. Documentation at : Java HTTP Connector: /docs/config/http.html 
 			(blocking & non-blocking) Java AJP Connector: /docs/config/ajp.html APR (HTTP/AJP) 
 			Connector: /docs/apr.html Define a non-SSL HTTP/1.1 Connector on port 8080 -->
-		<Connector compressableMimeType="text/html,text/html;charset=UTF-8,text/xml,text/css,text/plain,application/json,application/json;charset=utf-8,application/xml,application/javascript,application/x-font-woff" compression="on" compressionMinSize="2048" connectionTimeout="20000" noCompressionUserAgents="gozilla, traviata" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+		<Connector compressableMimeType="text/html,text/html;charset=UTF-8,text/xml,text/css,text/plain,application/json,application/json;charset=utf-8,application/xml,application/javascript,application/x-font-woff"
+			compression="on"
+			compressionMinSize="2048"
+			connectionTimeout="20000"
+			noCompressionUserAgents="gozilla, traviata"
+			port="8080"
+			protocol="HTTP/1.1"
+			redirectPort="8443"/>
 		<!-- A "Connector" using the shared thread pool -->
 		<!-- <Connector executor="tomcatThreadPool" port="8080" protocol="HTTP/1.1" 
 			connectionTimeout="20000" redirectPort="8443" /> -->
@@ -92,10 +99,15 @@
 		<!-- <Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol" 
 			maxThreads="150" SSLEnabled="true" scheme="https" secure="true" clientAuth="false" 
 			sslProtocol="TLS" /> -->
+		<Connector SSLEnabled="true" maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11AprProtocol">
+			<UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol"/>
+			<SSLHostConfig>
+				<Certificate certificateFile="conf/tls/certificate.crt" certificateKeyFile="conf/tls/key.key" type="RSA"/>
+			</SSLHostConfig>
+		</Connector>
 
 		<!-- Define an AJP 1.3 Connector on port 8009 -->
 		<Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/>
-
 
 		<!-- An Engine represents the entry point (within Catalina) that processes 
 			every request. The Engine implementation for Tomcat stand alone analyzes 
