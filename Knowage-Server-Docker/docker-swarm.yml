@@ -50,7 +50,7 @@ services:
     volumes:
       - ./hazelcast-server.xml:/opt/hazelcast/hazelcast.xml
 
-   knowagepython:
+  knowagepython:
     image: knowagelabs/knowage-python-docker:8.1
     environment:
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
