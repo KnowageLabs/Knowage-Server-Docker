@@ -4,7 +4,7 @@ FROM openjdk:8 AS init
 ENV KNOWAGE_DIRECTORY /home/knowage
 
 # Apache Tomcat
-ARG APACHE_TOMCAT_VERSION="9.0.60"
+ARG APACHE_TOMCAT_VERSION="9.0.65"
 ENV APACHE_TOMCAT_PACKAGE apache-tomcat-${APACHE_TOMCAT_VERSION}
 ARG APACHE_TOMCAT_URL="https://archive.apache.org/dist/tomcat/tomcat-9/v${APACHE_TOMCAT_VERSION}/bin/${APACHE_TOMCAT_PACKAGE}.zip"
 
