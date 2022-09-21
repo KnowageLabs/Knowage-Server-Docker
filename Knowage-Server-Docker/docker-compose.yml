@@ -1,13 +1,13 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:8.1
+    image: knowagelabs/knowage-server-docker:8.2.0-SNAPSHOT
     depends_on:
       - knowagedb
       - knowagecache
       - hazelcast
     ports:
-      - "8080:8080"
+      - "18080:8080"
     networks:
       - main
     environment:
@@ -16,12 +16,15 @@ services:
       - DB_DB=$DB_DB
       - DB_USER=$DB_USER
       - DB_PASS=$DB_PASS
+      - DB_TYPE=MARIADB
+      - DB_DO_INITIALIZATION=true
 
       - CACHE_DB_HOST=$CACHE_DB_HOST
       - CACHE_DB_PORT=$CACHE_DB_PORT
       - CACHE_DB_DB=$CACHE_DB_DB
       - CACHE_DB_USER=$CACHE_DB_USER
       - CACHE_DB_PASS=$CACHE_DB_PASS
+      - CACHE_DB_TYPE=MARIADB
 
       - HMAC_KEY=$HMAC_KEY
       - PASSWORD_ENCRYPTION_SECRET=$PASSWORD_ENCRYPTION_SECRET
