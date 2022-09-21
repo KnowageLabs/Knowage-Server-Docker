@@ -15,12 +15,15 @@ services:
       - DB_DB_FILE=/run/secrets/knowage_db_db
       - DB_USER_FILE=/run/secrets/knowage_db_user
       - DB_PASS_FILE=/run/secrets/knowage_db_pass
+      - DB_TYPE=MARIADB
+      - DB_DO_INITIALIZATION=true
 
       - CACHE_DB_HOST_FILE=/run/secrets/knowage_cache_db_host
       - CACHE_DB_PORT_FILE=/run/secrets/knowage_cache_db_port
       - CACHE_DB_DB_FILE=/run/secrets/knowage_cache_db_db
       - CACHE_DB_USER_FILE=/run/secrets/knowage_cache_db_user
       - CACHE_DB_PASS_FILE=/run/secrets/knowage_cache_db_pass
+      - CACHE_DB_TYPE=MARIADB
 
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - PASSWORD_ENCRYPTION_SECRET_FILE==/run/secrets/knowage_password_encryption_secret

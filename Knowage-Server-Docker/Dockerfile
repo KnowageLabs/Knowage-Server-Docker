@@ -52,7 +52,9 @@ ARG KNOWAGE_TALEND_ENGINE="${KNOWAGE_CORE_ENGINE}talendengine"
 ARG KNOWAGE_WHATIF_ENGINE="${KNOWAGE_CORE_ENGINE}whatifengine"
 ARG KNOWAGE_API="${KNOWAGE_CORE_ENGINE}-api"
 ARG KNOWAGE_VUE="${KNOWAGE_CORE_ENGINE}-vue"
-ARG KNOWAGE_DATABASE_SCRIPT="${KNOWAGE_CORE_ENGINE}-database-scripts-mysql"
+ARG KNOWAGE_DATABASE_SCRIPT_MYSQL="${KNOWAGE_CORE_ENGINE}-database-scripts-mysql"
+ARG KNOWAGE_DATABASE_SCRIPT_POSTGRES="${KNOWAGE_CORE_ENGINE}-database-scripts-postgres"
+ARG KNOWAGE_DATABASE_SCRIPT_ORACLE="${KNOWAGE_CORE_ENGINE}-database-scripts-oracle"
 
 WORKDIR ${KNOWAGE_DIRECTORY}
 
@@ -77,6 +79,7 @@ COPY webapps   ${TOMCAT_WEBAPPS}
 # Generate TLS certificate && Install dependencies
 RUN  cd utils \
   && ./generate_tls_cer.sh \
+  && mkdir ../apache-tomcat/conf/tls \
   && cp certificate.crt ../apache-tomcat/conf/tls \
   && cp key.key         ../apache-tomcat/conf/tls \
   && cd .. \
@@ -84,12 +87,17 @@ RUN  cd utils \
   && apt-get install -q --no-install-recommends -y unzip \
   && rm -rf /var/lib/apt/lists/*
 
-# Add MySql scripts
-COPY ${KNOWAGE_DATABASE_SCRIPT}.zip ./
+# Add DB scripts
+COPY ${KNOWAGE_DATABASE_SCRIPT_MYSQL}.zip \
+  ${KNOWAGE_DATABASE_SCRIPT_POSTGRES}.zip \
+  ${KNOWAGE_DATABASE_SCRIPT_ORACLE}.zip \
+  ./db/
 
 # Extract database script
-RUN  unzip ${KNOWAGE_DATABASE_SCRIPT}.zip "*create*" \
-  && rm ${KNOWAGE_DATABASE_SCRIPT}.zip
+RUN cd ./db/ \
+  && unzip ${KNOWAGE_DATABASE_SCRIPT_MYSQL}.zip    "*create*" && rm ${KNOWAGE_DATABASE_SCRIPT_MYSQL}.zip    \
+  && unzip ${KNOWAGE_DATABASE_SCRIPT_POSTGRES}.zip "*create*" && rm ${KNOWAGE_DATABASE_SCRIPT_POSTGRES}.zip \
+  && unzip ${KNOWAGE_DATABASE_SCRIPT_ORACLE}.zip   "*create*" && rm ${KNOWAGE_DATABASE_SCRIPT_ORACLE}.zip
 
 # Add Knowage engines
 COPY ${KNOWAGE_CORE_ENGINE}.war \
@@ -139,7 +147,7 @@ ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
 WORKDIR ${KNOWAGE_DIRECTORY}
 
 # Copy common files
-COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
+COPY CHANGELOG.md LICENSE  README.md entrypoint.sh ./
 COPY scripts/ ./scripts/
 
 # Install required packages and clean up to save space
@@ -147,9 +155,11 @@ RUN  apt-get update \
   && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 xmlstarlet libtcnative-1 libapr1 \
   && rm -rf /var/lib/apt/lists/*
 
-COPY --from=init ${KNOWAGE_DIRECTORY}/mysql/ ${KNOWAGE_DIRECTORY}/mysql/
+COPY --from=init ${KNOWAGE_DIRECTORY}/db/ ${KNOWAGE_DIRECTORY}/db/
 
-ENV MYSQL_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/mysql
+ENV MYSQL_SCRIPT_DIRECTORY    ${KNOWAGE_DIRECTORY}/db/mysql
+ENV POSTGRES_SCRIPT_DIRECTORY ${KNOWAGE_DIRECTORY}/db/postgres
+ENV ORACLE_SCRIPT_DIRECTORY   ${KNOWAGE_DIRECTORY}/db/oracle
 
 COPY --from=init ${TOMCAT_HOME} ${TOMCAT_HOME}
 

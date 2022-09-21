@@ -64,6 +64,8 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```DB_CONNECTION_POOL_SIZE``` : *optional* - Set the connection pool size
 * ```DB_CONNECTION_MAX_IDLE``` : *optional* - Set the max number of idle connection
 * ```DB_CONNECTION_WAIT_MS``` : *optional* - Max wait time in millis for a new connection 
+* ```DB_TYPE``` : *optional* - Default to ``MYSQL``, one between ``MYSQL``, ``MARIADB``, ``ORACLE`` (needs the driver)  and ``POSTGRES``
+* ```DB_DO_INITIALIZATION``` : *optional* - Default to ``true``, write everything else if you want to skip DB initialization
 * ```CACHE_DB_HOST``` : *mandatory* - define the cache DB host.
 * ```CACHE_DB_PORT``` : *mandatory* - specify the cache DB port.
 * ```CACHE_DB_DB``` : *mandatory* - specify the cache DB name.
@@ -72,6 +74,7 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```CACHE_DB_CONNECTION_POOL_SIZE``` : *optional* - Set the connection pool size
 * ```CACHE_DB_CONNECTION_MAX_IDLE``` : *optional* - Set the max number of idle connection
 * ```CACHE_DB_CONNECTION_WAIT_MS``` : *optional* - Max wait time in millis for a new connection
+* ```CACHE_DB_TYPE``` : *optional* - Default to ``MYSQL``, one between ``MYSQL``, ``MARIADB``, ``ORACLE`` (needs the driver)  and ``POSTGRES``
 * ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
 * ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password; if not provided will be randomly generated.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
@@ -110,7 +113,7 @@ You can create a YAML file for Docker Swarm like:
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:8.1
+    image: knowagelabs/knowage-server-docker:8.2.0-SNAPSHOT
     ports:
       - "8080:8080"
     environment:
@@ -146,7 +149,7 @@ If you need to expose ports only on a specific ip, you need to add it to ports d
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:8.1
+    image: knowagelabs/knowage-server-docker:8.2.0-SNAPSHOT
     ports:
       - "127.0.0.1:8080:8080"
     ...
