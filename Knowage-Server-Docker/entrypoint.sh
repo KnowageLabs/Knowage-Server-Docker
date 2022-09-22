@@ -164,26 +164,10 @@ then
 		fi
 		
 		# Set DB connection for Knowage metadata
-		#./scripts/set-jndi-resources-for-db.sh "${DB_HOST}" \
-		#	"${DB_PORT}" \
-		#	"${DB_DB}" \
-		#	"${DB_USER}" \
-		#	"${DB_PASS}" \
-		#	"${DB_CONNECTION_POOL_SIZE}" \
-		#	"${DB_CONNECTION_MAX_IDLE}" \
-		#	"${DB_CONNECTION_WAIT_MS}"
 		JNDI_DB_CMD=( "$JNDI_DB_SCRIPT" "${DB_HOST}" "${DB_PORT}" "${DB_DB}" "${DB_USER}" "${DB_PASS}" "${DB_CONNECTION_POOL_SIZE}" "${DB_CONNECTION_MAX_IDLE}" "${DB_CONNECTION_WAIT_MS}" )
 		"${JNDI_DB_CMD[@]}"
 		
 		# Set DB connection for Knowage cache
-		#./scripts/set-jndi-resources-for-cache.sh "${CACHE_DB_HOST}" \
-		#	"${CACHE_DB_PORT}" \
-		#	"${CACHE_DB_DB}" \
-		#	"${CACHE_DB_USER}" \
-		#	"${CACHE_DB_PASS}" \
-		#	"${CACHE_DB_CONNECTION_POOL_SIZE}" \
-		#	"${CACHE_DB_CONNECTION_MAX_IDLE}" \
-		#	"${CACHE_DB_CONNECTION_WAIT_MS}"
 		JNDI_CACHE_DB_CMD=( "$JNDI_CACHE_SCRIPT" "${CACHE_DB_HOST}" "${CACHE_DB_PORT}" "${CACHE_DB_DB}" "${CACHE_DB_USER}" "${CACHE_DB_PASS}" "${CACHE_DB_CONNECTION_POOL_SIZE}" "${CACHE_DB_CONNECTION_MAX_IDLE}" "${CACHE_DB_CONNECTION_WAIT_MS}" )
 		"${JNDI_CACHE_DB_CMD[@]}"
 		
