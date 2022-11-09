@@ -1,5 +1,10 @@
 FROM alpine/git:v2.26.2-amd64 AS build
 
+# From external
+ARG IMAGE_DATE=use-build-arg-argument-during-build
+ARG IMAGE_VERSION=use-build-arg-argument-during-build
+ARG IMAGE_REVISION=use-build-arg-argument-during-build
+
 WORKDIR /app
 
 ARG KNOWAGE_APP_BRANCH
@@ -32,3 +37,17 @@ HEALTHCHECK --start-period=10s                                           \
 ENTRYPOINT [ "./entrypoint.sh" ]
 
 CMD [ "r","knowage-r.R" ]
+
+LABEL org.opencontainers.image.created=$IMAGE_DATE                                \
+  org.opencontainers.image.url="https://www.knowage-suite.com/"                   \
+  org.opencontainers.image.source="https://github.com/KnowageLabs/Knowage-Server" \
+  org.opencontainers.image.version=$IMAGE_VERSION                                 \
+  org.opencontainers.image.revision=$IMAGE_REVISION                               \
+  org.opencontainers.image.vendor="KNOWAGE Labs"                                  \
+  org.opencontainers.image.title="KNOWAGE Community Edition"                      \
+  org.opencontainers.image.description="Open source analytics and BI suite"       \
+  org.opencontainers.image.documentation="https://knowage-suite.readthedocs.io/"  \
+  org.opencontainers.image.authors="KNOWAGE Labs"                                 \
+  org.opencontainers.image.licenses="AGPL 3.0"                                    \
+  org.opencontainers.image.ref.name=""
+
