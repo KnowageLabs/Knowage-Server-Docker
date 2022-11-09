@@ -144,6 +144,11 @@ ARG TOMCAT_LIB=${TOMCAT_HOME}/lib
 ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
 ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
 
+# From external
+ARG IMAGE_DATE=use-build-arg-argument-during-build
+ARG IMAGE_VERSION=use-build-arg-argument-during-build
+ARG IMAGE_REVISION=use-build-arg-argument-during-build
+
 WORKDIR ${KNOWAGE_DIRECTORY}
 
 # Copy common files
@@ -180,8 +185,22 @@ HEALTHCHECK --start-period=120s                                          \
             --retries=5                                                  \
             CMD wget -q --spider http://127.0.0.1:8080/knowage || exit 1
 
-ENTRYPOINT ["./entrypoint.sh"]
-
 VOLUME ["${TOMCAT_RESOURCES}"]
 
+ENTRYPOINT ["./entrypoint.sh"]
+
 CMD ["./apache-tomcat/bin/startup.sh"]
+
+LABEL org.opencontainers.image.created=$IMAGE_DATE                                \
+  org.opencontainers.image.url="https://www.knowage-suite.com/"                   \
+  org.opencontainers.image.source="https://github.com/KnowageLabs/Knowage-Server" \
+  org.opencontainers.image.version=$IMAGE_VERSION                                 \
+  org.opencontainers.image.revision=$IMAGE_REVISION                               \
+  org.opencontainers.image.vendor="KNOWAGE Labs"                                  \
+  org.opencontainers.image.title="KNOWAGE Community Edition"                      \
+  org.opencontainers.image.description="Open source analytics and BI suite"       \
+  org.opencontainers.image.documentation="https://knowage-suite.readthedocs.io/"  \
+  org.opencontainers.image.authors="KNOWAGE Labs"                                 \
+  org.opencontainers.image.licenses="AGPL 3.0"                                    \
+  org.opencontainers.image.ref.name=""
+
