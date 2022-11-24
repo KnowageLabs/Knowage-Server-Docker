@@ -21,7 +21,8 @@ export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.rmi.port=9001"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.host=0.0.0.0"
-export JAVA_OPTS="$JAVA_OPTS -Djava.rmi.server.hostname=0.0.0.0"
+# TODO : Must be set with the most external IP or the NAT IP
+# export JAVA_OPTS="$JAVA_OPTS -Djava.rmi.server.hostname=0.0.0.0"
 
 # Add libs path where Tomcat can find the libtcnative library for SSL
 export JAVA_OPTS="$JAVA_OPTS -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu:/usr/lib64:/lib64:/lib:/usr/lib"
