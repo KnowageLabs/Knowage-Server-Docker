@@ -17,9 +17,11 @@ export JAVA_OPTS="$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemo
 # Enable JMX
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=9000"
+export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.rmi.port=9001"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
 export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.host=0.0.0.0"
+export JAVA_OPTS="$JAVA_OPTS -Djava.rmi.server.hostname=0.0.0.0"
 
 # Add libs path where Tomcat can find the libtcnative library for SSL
 export JAVA_OPTS="$JAVA_OPTS -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu:/usr/lib64:/lib64:/lib:/usr/lib"
