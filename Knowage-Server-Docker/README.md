@@ -81,6 +81,7 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```AJP_SECRET``` : *optional* - define the secret used to connect the AJP connector.
 * ```HAZELCAST_HOSTS``` : *optional* - Comma separeted hostnames of an Hazelcast cluster (for example, "host1,host2,host3")
 * ```HAZELCAST_PORT``` : *optional* - Port of every host of an Hazelcast cluster (for example, "5701")
+* ```SSO_CLASS``` : *optional* - Fully qualified class name for custom SSO implementation
 
 You can edit the file ```.env``` to set every variables you need.
 
