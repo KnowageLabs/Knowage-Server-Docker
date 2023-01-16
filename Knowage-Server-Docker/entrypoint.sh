@@ -59,7 +59,7 @@ WAIT_RET_CODE=$?
 if [ $WAIT_RET_CODE -eq 0 ]
 then
 	# Placeholder created after the first boot of the container
-	CONTAINER_INITIALIZED_PLACEHOLDER=/.CONTAINER_INITIALIZED
+	CONTAINER_INITIALIZED_PLACEHOLDER=.CONTAINER_INITIALIZED
 	
 	# Check if this is the first boot
 	if [ ! -f "$CONTAINER_INITIALIZED_PLACEHOLDER" ]
