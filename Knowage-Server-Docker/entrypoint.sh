@@ -71,9 +71,10 @@ then
 		file_env "HMAC_KEY"
 		file_env "PASSWORD_ENCRYPTION_SECRET"
 		file_env "PUBLIC_ADDRESS"
+		file_env "SSO_CLASS"
 		
 		# Generate default values for the optional env vars
-		if [[ -z "$PUBLIC_ADDRESS" ]]
+		if [ -z "$PUBLIC_ADDRESS" ]
 		then
 		        #get the address of container
 		        #example : default via 172.17.42.1 dev eth0 172.17.0.0/16 dev eth0 proto kernel scope link src 172.17.0.109
@@ -215,6 +216,13 @@ then
 		
 		# Format
 		xmlstarlet ed -O -L ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/hazelcast.xml
+		
+		if [ ! -z "$SSO_CLASS" ]
+		then
+			xmlstarlet ed -P -L \
+				-u "//Server/GlobalNamingResources/Environment[@name='sso_class']/@value" -v "${SSO_CLASS}" \
+				${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
+		fi
 		
 		# Create the placeholder to prevent multiple initializations
 		touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
