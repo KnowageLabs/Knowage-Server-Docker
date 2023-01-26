@@ -11,7 +11,7 @@ CACHE_DB_CONNECTION_MAX_IDLE=$7
 CACHE_DB_CONNECTION_WAIT_MS=$8
 
 xmlstarlet ed -P -L \
-        -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"             -v "jdbc:maria://${CACHE_DB_HOST}:${CACHE_DB_PORT}/${CACHE_DB_DB}?disableMariaDbDriver" \
+        -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@url"             -v "jdbc:mariadb://${CACHE_DB_HOST}:${CACHE_DB_PORT}/${CACHE_DB_DB}?disableMariaDbDriver" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@driverClassName" -v "org.mariadb.jdbc.Driver" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@username"        -v "${CACHE_DB_USER}" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@password"        -v "${CACHE_DB_PASS}" \
