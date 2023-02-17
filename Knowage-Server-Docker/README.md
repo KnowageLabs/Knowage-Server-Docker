@@ -75,8 +75,9 @@ Knowage need a specific set of environment variables to correctly start.:
 * ```CACHE_DB_CONNECTION_MAX_IDLE``` : *optional* - Set the max number of idle connection
 * ```CACHE_DB_CONNECTION_WAIT_MS``` : *optional* - Max wait time in millis for a new connection
 * ```CACHE_DB_TYPE``` : *optional* - Default to ``MYSQL``, one between ``MYSQL``, ``MARIADB``, ``ORACLE`` (needs the driver)  and ``POSTGRES``
-* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration; if not provided will be randomly generated.
-* ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password; if not provided will be randomly generated.
+* ```HMAC_KEY``` : *mandatory* - define the HMAC key that will bet set into Tomcat configuration.
+* ```PASSWORD_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt password.
+* ```SENSIBLE_DATA_ENCRYPTION_SECRET``` : *mandatory* - define the secret used to encrypt sensible data.
 * ```PUBLIC_ADDRESS``` : *optional* - define the IP Host of Knowage visible from outside the container (eg. ```http://$PUBLIC_ADDRESS:8080/knowage```),  the url's host part of Knowage URL. If not present (like the above examples) the default value is the IP of container. You can use the IP of virtual machine (in OSX or Windows environment) or localhost if you map the container's port.
 * ```AJP_SECRET``` : *optional* - define the secret used to connect the AJP connector.
 * ```HAZELCAST_HOSTS``` : *optional* - Comma separeted hostnames of an Hazelcast cluster (for example, "host1,host2,host3")
@@ -104,8 +105,9 @@ $ printf "knowagedb"           | docker secret create knowage_cache_db_db   -
 $ printf "knowageuser"         | docker secret create knowage_cache_db_user -
 $ printf "knowagepassword"     | docker secret create knowage_cache_db_pass -
 
-$ printf "abc123"              | docker secret create knowage_hmac_key                       -
-$ printf "def456"              | docker secret create knowage_password_encryption_secret_key -
+$ printf "abc123"              | docker secret create knowage_hmac_key                            -
+$ printf "def456"              | docker secret create knowage_password_encryption_secret_key      -
+$ printf "ghi789"              | docker secret create knowage_sensible_data_encryption_secret_key -
 ```
 
 You can create a YAML file for Docker Swarm like:
@@ -132,6 +134,7 @@ services:
 
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - PASSWORD_ENCRYPTION_SECRET_FILE=/run/secrets/knowage_password_encryption_secret_key
+      - SENSIBLE_DATA_ENCRYPTION_SECRET=/run/secrets/knowage_sensible_data_encryption_secret_key
 ```
 
 See ```docker-swarm.yml``` for an example.

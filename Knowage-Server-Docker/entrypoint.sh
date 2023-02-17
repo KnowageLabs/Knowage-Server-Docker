@@ -70,6 +70,7 @@ then
 	then
 		file_env "HMAC_KEY"
 		file_env "PASSWORD_ENCRYPTION_SECRET"
+		file_env "SENSIBLE_DATA_ENCRYPTION_SECRET"
 		file_env "PUBLIC_ADDRESS"
 		file_env "SSO_CLASS"
 		
@@ -90,6 +91,12 @@ then
 		if [ -z "$PASSWORD_ENCRYPTION_SECRET" ]
 		then
 			echo "The PASSWORD_ENCRYPTION_SECRET environment variable is needed"
+			exit -1
+		fi
+		
+		if [ -z "$SENSIBLE_DATA_ENCRYPTION_SECRET" ]
+		then
+			echo "The SENSIBLE_DATA_ENCRYPTION_SECRET environment variable is needed"
 			exit -1
 		fi
 		
@@ -224,6 +231,8 @@ then
 				${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 		fi
 		
+		sed -i "s|__symmetric_encryption_key_value__|${SENSIBLE_DATA_ENCRYPTION_SECRET}|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/bin/setenv.sh
+
 		# Create the placeholder to prevent multiple initializations
 		touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
 	fi
