@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.8"
 services:
   knowage:
     image: knowagelabs/knowage-server-docker:8.1
