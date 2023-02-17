@@ -27,3 +27,5 @@ export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.host=0.0.0.0
 # Add libs path where Tomcat can find the libtcnative library for SSL
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu:/usr/lib64:/lib64:/lib:/usr/lib"
 
+# Set symmetric key for sensible data
+export CATALINA_OPTS="$CATALINA_OPTS -Dsymmetric_encryption_key=__symmetric_encryption_key_value__"

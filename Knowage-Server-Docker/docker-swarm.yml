@@ -26,7 +26,8 @@ services:
       - CACHE_DB_TYPE=MARIADB
 
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
-      - PASSWORD_ENCRYPTION_SECRET_FILE==/run/secrets/knowage_password_encryption_secret
+      - PASSWORD_ENCRYPTION_SECRET_FILE=/run/secrets/knowage_password_encryption_secret
+      - SENSIBLE_DATA_ENCRYPTION_SECRET=/run/secrets/knowage_sensible_data_encryption_secret_key
       - PUBLIC_ADDRESS=localhost
 
       - HAZELCAST_HOSTS=hazelcast
@@ -43,6 +44,8 @@ services:
       - knowage_cache_db_user
       - knowage_cache_db_pass
       - knowage_hmac_key
+      - knowage_password_encryption_secret
+      - knowage_sensible_data_encryption_secret_key
 
   hazelcast:
     image: hazelcast/hazelcast:3.6.5
@@ -137,4 +140,5 @@ secrets:
     external: true
   knowage_password_encryption_secret:
     external: true
-
+  knowage_sensible_data_encryption_secret_key:
+    external: true
