@@ -1,14 +1,16 @@
 #!/bin/sh
 
-export CATALINA_OPTS="${CATALINA_OPTS} -Djava.awt.headless=true"
+export CATALINA_OPTS="$CATALINA_OPTS -Djava.awt.headless=true"
 
 # We add -Duser.timezone=UTC to solve error when establishing connection to Oracle metadata database:
 # java.sql.SQLException: ORA-00604: error occurred at recursive SQL level 1
 # ORA-01882: timezone region not found
-export CATALINA_OPTS="${CATALINA_OPTS} -Duser.timezone=UTC"
+export CATALINA_OPTS="$CATALINA_OPTS -Duser.timezone=UTC"
 
+# Global configuration of Hazelcast
 export CATALINA_OPTS="$CATALINA_OPTS -Dhazelcast.config=$CATALINA_HOME/conf/hazelcast.xml"
 
+# Java Security Manager
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.security.manager -Djava.security.policy=$CATALINA_HOME/conf/knowage-default.policy"
 
 # Specific for Java in containers
@@ -29,3 +31,6 @@ export CATALINA_OPTS="$CATALINA_OPTS -Djava.library.path=/usr/java/packages/lib/
 
 # Set symmetric key for sensible data
 export CATALINA_OPTS="$CATALINA_OPTS -Dsymmetric_encryption_key=__symmetric_encryption_key_value__"
+
+# Speed up the boot of Java app which doesn't need a lot of entropy on random values generation
+export CATALINA_OPTS="$CATALINA_OPTS -Djava.security.egd=file:/dev/urandom"
