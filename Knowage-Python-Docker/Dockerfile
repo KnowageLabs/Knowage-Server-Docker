@@ -11,7 +11,7 @@ ARG KNOWAGE_APP_BRANCH
 
 RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
-FROM knowagelabs/knowage-python-docker-base:1.0
+FROM knowagelabs/knowage-python-docker-base:2.0
 
 USER root
 
