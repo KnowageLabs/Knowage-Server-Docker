@@ -40,6 +40,9 @@ then
 	#create hmackey file
 	echo -n "${HMAC_KEY}" > /app/hmackey
 	
+	# Install required libraries
+	pip install -r requirements.txt
+	
 	# Create the placeholder to prevent multiple initializations
 	touch "$CONTAINER_INITIALIZED_PLACEHOLDER"
 fi
