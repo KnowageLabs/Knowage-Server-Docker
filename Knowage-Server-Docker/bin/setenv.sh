@@ -23,7 +23,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.rmi.port=900
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.host=0.0.0.0"
-export CATALINA_OPTS="$CATALINA_OPTS -Djava.rmi.server.hostname==${HOSTNAME}"
+export CATALINA_OPTS="$CATALINA_OPTS -Djava.rmi.server.hostname=$( hostname --fqdn )"
 
 # Add libs path where Tomcat can find the libtcnative library for SSL
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu:/usr/lib64:/lib64:/lib:/usr/lib"
