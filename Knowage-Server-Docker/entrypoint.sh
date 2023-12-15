@@ -143,7 +143,7 @@ then
 		sed -i "s|http:\/\/localhost:8080|http:\/\/${PUBLIC_ADDRESS}:8080|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/webapps/knowage/WEB-INF/web.xml
 		
 		if [ $DB_DO_INITIALIZATION == "true" ]; then
-			if [ $DB_TYPE == "MYSQL" ] || [ $DB_TYPE.==."MARIADB" ]; then
+			if [ $DB_TYPE == "MYSQL" ] || [ $DB_TYPE == "MARIADB" ]; then
 				# Insert knowage metadata into db if it doesn't exist
 				result=`mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_DB} -e "SHOW TABLES LIKE '%SBI_%';"`
 				if [ -z "$result" ]; then
@@ -230,7 +230,7 @@ then
 				-u "//Server/GlobalNamingResources/Environment[@name='sso_class']/@value" -v "${SSO_CLASS}" \
 				${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 		fi
-		
+
 		sed -i "s|__symmetric_encryption_key_value__|${SENSIBLE_DATA_ENCRYPTION_SECRET}|g" ${KNOWAGE_DIRECTORY}/apache-tomcat/bin/setenv.sh
 
 		# Create the placeholder to prevent multiple initializations
