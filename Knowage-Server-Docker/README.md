@@ -117,6 +117,7 @@ version: "3.1"
 services:
   knowage:
     image: knowagelabs/knowage-server-docker:8.2-SNAPSHOT
+    hostname: knowage
     ports:
       - "8080:8080"
     environment:
@@ -154,6 +155,7 @@ version: "3.1"
 services:
   knowage:
     image: knowagelabs/knowage-server-docker:8.2-SNAPSHOT
+    hostname: knowage
     ports:
       - "127.0.0.1:8080:8080"
     ...
