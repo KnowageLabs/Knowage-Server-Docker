@@ -2,6 +2,7 @@ version: "3.8"
 services:
   knowage:
     image: knowagelabs/knowage-server-docker:8.1
+    hostname: knowage
     depends_on:
       - knowagedb
       - knowagecache

@@ -156,9 +156,18 @@ COPY CHANGELOG.md LICENSE  README.md entrypoint.sh ./
 COPY scripts/ ./scripts/
 
 # Install required packages and clean up to save space
-RUN  apt-get update \
+RUN apt-get update \
   && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 xmlstarlet libtcnative-1 libapr1 vim \
   && rm -rf /var/lib/apt/lists/*
+
+# In Java, DNS resolutions are cached indefinitely. This is a problem in environment like AWS where IP could
+# occasionally change, for example, when you use a service served by a load balancer.
+# 
+# Watch out that per Oracle documentation, this could be a security flaw.
+# 
+# See:
+#  - https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/jvm-ttl-dns.html
+RUN sed -i 's/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/' $JAVA_HOME/jre/lib/security/java.security
 
 COPY --from=init ${KNOWAGE_DIRECTORY}/db/ ${KNOWAGE_DIRECTORY}/db/
 
