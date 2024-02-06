@@ -22,10 +22,10 @@ COPY --from=build /app/Knowage-Server/Knowage-Python/src/ /app/Knowage-Server/Kn
 COPY gunicorn.conf.py entrypoint.sh /app/
 COPY config.xml /app/app
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN chown -R knowage:knowage /app \
-	&& chmod a+x *.sh
+	&& chmod a+x ./*.sh
 
 USER knowage
 

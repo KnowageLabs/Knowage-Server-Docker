@@ -117,7 +117,7 @@ COPY ${KNOWAGE_CORE_ENGINE}.war \
      ${TOMCAT_WEBAPPS}/
 
 # Expand WARs
-RUN cd ${TOMCAT_WEBAPPS} && \
+RUN cd "${TOMCAT_WEBAPPS}" && \
   for archive in *.war ; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; rm ${archive} ; done
 
 # Download Knowage libs and put them into Apache Tomcat lib
@@ -167,7 +167,7 @@ RUN apt-get update \
 # 
 # See:
 #  - https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/jvm-ttl-dns.html
-RUN sed -i 's/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/' $JAVA_HOME/jre/lib/security/java.security
+RUN sed -i 's/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/' "$JAVA_HOME/jre/lib/security/java.security"
 
 COPY --from=init ${KNOWAGE_DIRECTORY}/db/ ${KNOWAGE_DIRECTORY}/db/
 

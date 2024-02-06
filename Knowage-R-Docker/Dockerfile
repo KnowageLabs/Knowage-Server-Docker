@@ -22,7 +22,7 @@ COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
 RUN chown -R knowage:knowage /app \
-    && chmod a+x *.sh
+    && chmod a+x ./*.sh
 
 USER knowage
 
