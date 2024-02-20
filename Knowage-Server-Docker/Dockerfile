@@ -59,7 +59,9 @@ ARG KNOWAGE_DATABASE_SCRIPT_ORACLE="${KNOWAGE_CORE_ENGINE}-database-scripts-orac
 WORKDIR ${KNOWAGE_DIRECTORY}
 
 # Download Apache Tomcat and extract it
-RUN apt install -q --no-install-recommends -y unzip \
+RUN apt update \
+  && apt install -q --no-install-recommends -y unzip \
+  && rm -rf /var/lib/apt/lists/* \
   && wget -q "${APACHE_TOMCAT_URL}" \
   && unzip ${APACHE_TOMCAT_PACKAGE}.zip -x "*/webapps/manager/*" \
 	"*/webapps/host-manager/*" \
