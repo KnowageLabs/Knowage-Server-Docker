@@ -143,6 +143,7 @@ ARG TOMCAT_HOME=${KNOWAGE_DIRECTORY}/apache-tomcat
 ARG TOMCAT_BIN=${TOMCAT_HOME}/bin
 ARG TOMCAT_CONF=${TOMCAT_HOME}/conf
 ARG TOMCAT_LIB=${TOMCAT_HOME}/lib
+ARG TOMCAT_LOGS=${TOMCAT_HOME}/logs
 ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
 ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
 
@@ -196,11 +197,12 @@ HEALTHCHECK --start-period=120s                                          \
             --retries=5                                                  \
             CMD wget -q --spider http://127.0.0.1:8080/knowage || exit 1
 
-VOLUME ["${TOMCAT_RESOURCES}"]
-
 ENTRYPOINT ["./entrypoint.sh"]
 
 CMD ["./apache-tomcat/bin/startup.sh"]
+
+# VOLUME must be after USER to inherit the right owner
+VOLUME ["${TOMCAT_RESOURCES}", "${TOMCAT_LOGS}"]
 
 LABEL org.opencontainers.image.created=$IMAGE_DATE                                \
   org.opencontainers.image.url="https://www.knowage-suite.com/"                   \
