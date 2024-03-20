@@ -7,7 +7,7 @@ ARG KNOWAGE_APP_BRANCH
 # Depth
 RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
-FROM r-base:4.0.3
+FROM knowagelabs/knowage-r-docker-base:1.0
 
 WORKDIR /app
 
