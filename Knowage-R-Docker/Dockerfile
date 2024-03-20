@@ -1,4 +1,4 @@
-FROM alpine/git:v2.26.2-amd64 AS build
+FROM alpine/git:latest AS build
 
 # From external
 ARG IMAGE_DATE=use-build-arg-argument-during-build
