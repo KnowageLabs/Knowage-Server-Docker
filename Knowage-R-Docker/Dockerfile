@@ -1,5 +1,10 @@
 FROM alpine/git:latest AS build
 
+# From external
+ARG IMAGE_DATE=use-build-arg-argument-during-build
+ARG IMAGE_VERSION=use-build-arg-argument-during-build
+ARG IMAGE_REVISION=use-build-arg-argument-during-build
+
 WORKDIR /app
 
 ARG KNOWAGE_APP_BRANCH
@@ -9,21 +14,17 @@ RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageL
 
 FROM knowagelabs/knowage-r-docker-base:1.0
 
+USER root
+
 WORKDIR /app
 
 COPY --from=build /app/Knowage-Server/Knowage-R .
 COPY LICENSE entrypoint.sh ./
 
-RUN apt-get update \
-	&& apt-get install --no-install-recommends -y libssl-dev file libcurl4-openssl-dev libsodium-dev \
-	&& rm -rf /var/lib/apt/lists/*
+RUN chown -R knowage:knowage /app \
+    && chmod a+x *.sh
 
-# It takes too long: makes a separate layer
-RUN r -e "install.packages('plumber')"
-
-RUN r -e "install.packages('base64enc')" \
-	&& r -e "install.packages('jose')" \
-	&& chmod a+x *.sh
+USER knowage
 
 EXPOSE 5001/tcp
 
@@ -36,3 +37,17 @@ HEALTHCHECK --start-period=10s                                           \
 ENTRYPOINT [ "./entrypoint.sh" ]
 
 CMD [ "r","knowage-r.R" ]
+
+LABEL org.opencontainers.image.created=$IMAGE_DATE                                \
+  org.opencontainers.image.url="https://www.knowage-suite.com/"                   \
+  org.opencontainers.image.source="https://github.com/KnowageLabs/Knowage-Server" \
+  org.opencontainers.image.version=$IMAGE_VERSION                                 \
+  org.opencontainers.image.revision=$IMAGE_REVISION                               \
+  org.opencontainers.image.vendor="KNOWAGE Labs"                                  \
+  org.opencontainers.image.title="KNOWAGE Community Edition"                      \
+  org.opencontainers.image.description="Open source analytics and BI suite"       \
+  org.opencontainers.image.documentation="https://knowage-suite.readthedocs.io/"  \
+  org.opencontainers.image.authors="KNOWAGE Labs"                                 \
+  org.opencontainers.image.licenses="AGPL 3.0"                                    \
+  org.opencontainers.image.ref.name=""
+
