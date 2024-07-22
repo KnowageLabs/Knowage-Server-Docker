@@ -144,6 +144,16 @@
 
 				<!-- KNOWAGE: Disable stack traces and server infos in error pages -->
 				<Valve className="org.apache.catalina.valves.ErrorReportValve" showReport="false" showServerInfo="false" />
+
+				<!-- KNOWAGE: Enable clustering in Kubernetes -->
+				<!--
+				<Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
+					<Channel className="org.apache.catalina.tribes.group.GroupChannel">
+						<Membership className="org.apache.catalina.tribes.membership.cloud.CloudMembershipService" membershipProviderClassName="org.apache.catalina.tribes.membership.cloud.DNSMembershipProvider" />
+					</Channel>
+				</Cluster>
+				-->
+
 			</Host>
 		</Engine>
 	</Service>
