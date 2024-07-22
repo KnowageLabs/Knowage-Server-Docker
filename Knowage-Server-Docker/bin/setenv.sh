@@ -33,3 +33,6 @@ export CATALINA_OPTS="$CATALINA_OPTS -Dsymmetric_encryption_key=__symmetric_encr
 
 # Speed up the boot of Java app which doesn't need a lot of entropy on random values generation
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.security.egd=file:/dev/urandom"
+
+# WORKAROUND: Hazelcast 5.3 is not compatible with our version of Xalan/Xerces
+export CATALINA_OPTS="$CATALINA_OPTS -Dhazelcast.ignoreXxeProtectionFailures=true"
