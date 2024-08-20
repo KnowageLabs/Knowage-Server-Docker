@@ -160,7 +160,7 @@ COPY scripts/ ./scripts/
 
 # Install required packages and clean up to save space
 RUN apt-get update \
-  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.6 xmlstarlet libtcnative-1 libapr1 vim \
+  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client xmlstarlet libtcnative-1 libapr1 vim \
   && rm -rf /var/lib/apt/lists/*
 
 # In Java, DNS resolutions are cached indefinitely. This is a problem in environment like AWS where IP could
