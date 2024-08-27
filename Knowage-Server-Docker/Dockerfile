@@ -203,17 +203,3 @@ CMD ["./apache-tomcat/bin/startup.sh"]
 
 # VOLUME must be after USER to inherit the right owner
 VOLUME ["${TOMCAT_RESOURCES}", "${TOMCAT_LOGS}"]
-
-LABEL org.opencontainers.image.created=$IMAGE_DATE                                \
-  org.opencontainers.image.url="https://www.knowage-suite.com/"                   \
-  org.opencontainers.image.source="https://github.com/KnowageLabs/Knowage-Server" \
-  org.opencontainers.image.version=$IMAGE_VERSION                                 \
-  org.opencontainers.image.revision=$IMAGE_REVISION                               \
-  org.opencontainers.image.vendor="KNOWAGE Labs"                                  \
-  org.opencontainers.image.title="KNOWAGE Community Edition"                      \
-  org.opencontainers.image.description="Open source analytics and BI suite"       \
-  org.opencontainers.image.documentation="https://knowage-suite.readthedocs.io/"  \
-  org.opencontainers.image.authors="KNOWAGE Labs"                                 \
-  org.opencontainers.image.licenses="AGPL 3.0"                                    \
-  org.opencontainers.image.ref.name=""
-
