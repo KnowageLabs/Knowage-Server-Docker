@@ -1,24 +1,10 @@
-FROM docker.io/alpine/git:latest AS build
-
-# From external
-ARG IMAGE_DATE=use-build-arg-argument-during-build
-ARG IMAGE_VERSION=use-build-arg-argument-during-build
-ARG IMAGE_REVISION=use-build-arg-argument-during-build
-
-WORKDIR /app
-
-ARG KNOWAGE_APP_BRANCH
-
-# Depth
-RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
-
 FROM docker.io/knowagelabs/knowage-r-docker-base:1.0
 
 USER root
 
 WORKDIR /app
 
-COPY --from=build /app/Knowage-Server/Knowage-R .
+COPY *.R ./
 COPY LICENSE entrypoint.sh ./
 
 RUN chown -R knowage:knowage /app \

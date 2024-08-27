@@ -1,26 +1,14 @@
-FROM docker.io/alpine/git:latest AS build
-
-# From external
-ARG IMAGE_DATE=use-build-arg-argument-during-build
-ARG IMAGE_VERSION=use-build-arg-argument-during-build
-ARG IMAGE_REVISION=use-build-arg-argument-during-build
-
-WORKDIR /app
-
-ARG KNOWAGE_APP_BRANCH
-
-RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
-
 FROM docker.io/knowagelabs/knowage-python-docker-base:2.0
 
 USER root
 
 WORKDIR /app
 
-COPY --from=build /app/Knowage-Server/Knowage-Python/src/ /app/Knowage-Server/Knowage-Python/requirements.txt ./
+ADD src ./
+COPY requirements.txt ./
 
-COPY gunicorn.conf.py entrypoint.sh /app/
-COPY config.xml /app/app
+COPY gunicorn.conf.py entrypoint.sh ./
+COPY config.xml ./app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
