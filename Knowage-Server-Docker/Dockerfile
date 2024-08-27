@@ -191,11 +191,12 @@ RUN chmod +x ${KNOWAGE_DIRECTORY}/*.sh ${KNOWAGE_DIRECTORY}/scripts/*.sh ${TOMCA
 # Expose common tomcat port
 EXPOSE 8080 8443 8009 9000
 
-HEALTHCHECK --start-period=120s                                          \
-            --interval=10s                                               \
-            --timeout=5s                                                 \
-            --retries=5                                                  \
-            CMD wget -q --spider http://127.0.0.1:8080/knowage || exit 1
+# Not compatible with OCI
+# HEALTHCHECK --start-period=120s                                          \
+#             --interval=10s                                               \
+#             --timeout=5s                                                 \
+#             --retries=5                                                  \
+#             CMD wget -q --spider http://127.0.0.1:8080/knowage || exit 1
 
 ENTRYPOINT ["./entrypoint.sh"]
 

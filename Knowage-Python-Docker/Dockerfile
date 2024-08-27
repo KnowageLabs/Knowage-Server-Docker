@@ -31,11 +31,12 @@ USER knowage
 
 EXPOSE 5000/tcp
 
-HEALTHCHECK --start-period=10s                                           \
-            --interval=5s                                                \
-            --timeout=5s                                                 \
-            --retries=5                                                  \
-            CMD wget -q --content-on-error --spider http://127.0.0.1:5000/dataset/libraries || exit 1
+# Not compatible with OCI
+#HEALTHCHECK --start-period=10s                                           \
+#            --interval=5s                                                \
+#            --timeout=5s                                                 \
+#            --retries=5                                                  \
+#            CMD wget -q --content-on-error --spider http://127.0.0.1:5000/dataset/libraries || exit 1
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
