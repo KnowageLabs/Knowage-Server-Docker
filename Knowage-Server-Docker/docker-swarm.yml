@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:8.1
+    image: knowagelabs/knowage-server-docker:8.2
     hotsname: knowage
     depends_on:
       - knowagedb
@@ -58,7 +58,7 @@ services:
       - ./hazelcast-server.xml:/opt/hazelcast/hazelcast.xml
 
   knowagepython:
-    image: knowagelabs/knowage-python-docker:8.1
+    image: knowagelabs/knowage-python-docker:8.2
     environment:
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - KNOWAGE_PUBLIC_ADDRESS=knowage
@@ -67,7 +67,7 @@ services:
       - main
 
   knowager:
-    image: knowagelabs/knowage-r-docker:8.1
+    image: knowagelabs/knowage-r-docker:8.2
     environment:
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
     networks:

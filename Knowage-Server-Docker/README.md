@@ -116,7 +116,7 @@ You can create a YAML file for Docker Swarm like:
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:8.1
+    image: knowagelabs/knowage-server-docker:8.2
     hostname: knowage
     ports:
       - "8080:8080"
@@ -154,7 +154,7 @@ If you need to expose ports only on a specific ip, you need to add it to ports d
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:8.1
+    image: knowagelabs/knowage-server-docker:8.2
     hostname: knowage
     ports:
       - "127.0.0.1:8080:8080"
