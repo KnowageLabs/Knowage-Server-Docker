@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine/git:latest AS build
+FROM docker.io/alpine/git:latest AS build
 
 # From external
 ARG IMAGE_DATE=use-build-arg-argument-during-build
