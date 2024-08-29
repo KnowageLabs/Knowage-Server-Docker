@@ -137,7 +137,7 @@ COPY CHANGELOG.md LICENSE  README.md entrypoint.sh wait-for-it.sh ./
 
 # Install required packages and clean up to save space
 RUN  apt-get update \
-  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client-10.3 xmlstarlet \
+  && apt-get install -q --no-install-recommends -y wget coreutils unzip mariadb-client xmlstarlet \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=init ${KNOWAGE_DIRECTORY}/mysql/ ${KNOWAGE_DIRECTORY}/mysql/
