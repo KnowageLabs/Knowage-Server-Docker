@@ -1,4 +1,4 @@
-FROM alpine/git:latest AS build
+FROM docker.io/alpine/git:latest AS build
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ ARG KNOWAGE_APP_BRANCH
 
 RUN git clone --depth 1 --branch $KNOWAGE_APP_BRANCH https://github.com/KnowageLabs/Knowage-Server.git
 
-FROM python:3.7
+FROM docker.io/library/python:3.7
 
 WORKDIR /app
 
