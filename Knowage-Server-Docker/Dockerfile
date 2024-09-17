@@ -170,7 +170,7 @@ RUN apt-get update \
 # 
 # See:
 #  - https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/jvm-ttl-dns.html
-RUN sed -i 's/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/' "$JAVA_HOME/jre/lib/security/java.security"
+RUN sed -i 's/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/' "$JAVA_HOME/conf/security/java.security"
 
 COPY --from=init ${KNOWAGE_DIRECTORY}/db/ ${KNOWAGE_DIRECTORY}/db/
 
