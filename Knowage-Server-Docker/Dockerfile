@@ -1,4 +1,4 @@
-FROM docker.io/library/eclipse-temurin:8-jdk AS init
+FROM docker.io/library/eclipse-temurin:17-jdk AS init
 
 # Knowage home directory
 ENV KNOWAGE_DIRECTORY /home/knowage
@@ -133,7 +133,7 @@ RUN  wget -q -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_
   && wget -q -O "${TOMCAT_LIB}/${LIB_POSTGRESQL_CONNECTOR_NAME}" "${LIB_POSTGRESQL_CONNECTOR_URL}" \
   && wget -q -O "${TOMCAT_LIB}/${LIB_HSQLDB_JDBC_DRIVER_NAME}"   "${LIB_HSQLDB_JDBC_DRIVER_URL}"
 
-FROM docker.io/library/eclipse-temurin:8-jdk
+FROM docker.io/library/eclipse-temurin:17-jdk
 
 # Knowage home directory
 ENV KNOWAGE_DIRECTORY /home/knowage
