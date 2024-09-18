@@ -14,7 +14,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Dhazelcast.config=$CATALINA_HOME/conf/haze
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.security.manager -Djava.security.policy=$CATALINA_HOME/conf/knowage-default.policy"
 
 # Specific for Java in containers
-export CATALINA_OPTS="$CATALINA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+export CATALINA_OPTS="$CATALINA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport"
 
 # Enable JMX
 export CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote"
