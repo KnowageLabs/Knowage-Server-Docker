@@ -38,7 +38,7 @@ services:
       - ./resources:/home/knowage/apache-tomcat/resources
 
   hazelcast:
-    image: hazelcast/hazelcast:3.6.5
+    image: hazelcast/hazelcast:5.3
     networks:
       - main
     environment:
