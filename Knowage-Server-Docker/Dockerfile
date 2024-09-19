@@ -78,6 +78,7 @@ COPY webapps   ${TOMCAT_WEBAPPS}
 
 # Generate TLS certificate && Install dependencies
 RUN  cd utils \
+  && chmod a+x generate_tls_cer.sh \
   && ./generate_tls_cer.sh \
   && mkdir ../apache-tomcat/conf/tls \
   && cp certificate.crt ../apache-tomcat/conf/tls \
