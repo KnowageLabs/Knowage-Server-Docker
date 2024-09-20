@@ -49,7 +49,7 @@ services:
       - knowage_sensible_data_encryption_secret_key
 
   hazelcast:
-    image: hazelcast/hazelcast:3.6.5
+    image: hazelcast/hazelcast:5.3
     networks:
       - main
     environment:
