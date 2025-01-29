@@ -50,6 +50,8 @@ file_env "AJP_SECRET"
 file_env "HAZELCAST_HOSTS" "127.0.0.1"
 file_env "HAZELCAST_PORT"  "5701"
 
+file_env "TIMEOUT_START_KNOWAGE"   "60"
+
 if [ -z "$DB_HOST" ] || [ -z "$DB_PORT" ]
 then
 	echo "The DB_HOST and DB_PORT environment variables are needed"
@@ -57,7 +59,7 @@ then
 fi
 
 # Wait for MySql
-./scripts/wait-for-it.sh -t 60 ${DB_HOST}:${DB_PORT}
+./scripts/wait-for-it.sh -t ${TIMEOUT_START_KNOWAGE} ${DB_HOST}:${DB_PORT}
 WAIT_RET_CODE=$?
 
 if [ $WAIT_RET_CODE -eq 0 ]
