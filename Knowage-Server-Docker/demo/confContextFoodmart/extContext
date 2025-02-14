@@ -1,0 +1,16 @@
+<!-- 
+    Resource links from context.xml.d/extContext.
+    
+    Copy the template from Knowage-Server-Docker/extContext, edit it and mount it as:
+    
+        /home/knowage/apache-tomcat/conf/context.xml.d/extContext
+    
+    To customize your context.xml with your resource links. For example, you can
+    link all the JDBC connections you put into server.xml.d/extGlobalResources.
+ -->
+
+	<ResourceLink
+	global="jdbc/foodmart"
+	name="jdbc/foodmart"
+	type="javax.sql.DataSource" />
+

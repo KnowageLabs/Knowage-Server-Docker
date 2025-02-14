@@ -1,0 +1,75 @@
+<h2> SPAGOBI TEST ENVIRONMENT</h2>
+<hr>
+<p>
+Questo ambiente ha lo scopo di supportare le fasi di TEST di SpagoBI e di fornire un primo repository di esempio di documenti analitici.
+</p>
+<h3> Esecuzione dei TEST </h3>
+<p>
+I test devono essere eseguiti seguendo la traccia dei fogli excel (https://web.eng.it/svn/spagobi/documentation/Test/piani) dove sono presenti riferimenti ai documenti da utilizzare per i TEST.
+I fogli excel rappresentano una check list, si consiglia di farne una copia e di utilizzarla per tracciare il risultato della fase di TEST.
+</p>
+<h3> Elenco Documenti </h3>
+Sotto la cartella TEST sono presenti le seguenti cartelle con i documenti specifici per:
+<ol>
+<li>KPI ->  <b>KPI_RETAIL_ANALYSIS</b>  : Documento di TEST per il motore KPI </li>
+<li>REPORT -> <b>RPT_CUSTOMER_DETAIL</b> : Documento di TEST per BIRT</li>
+<li>REPORT -> <b>RPT_SALARY_BY_POS</b> : Documento di TEST per Jasper</li>
+<li>REPORT -> <b>Report Jasper che invoca un chart </b> : Documento di TEST per Jasper che invoca un chart esterno</li>
+<li>REPORT -> <b>Report con immagine Jasper</b> : Documento di TEST per Jasper con una immagine allegata inserita in resources</li>
+<li>REPORT -> <b>ReportLinkato</b> : Documento di TEST per a cui sono linkati dei Chart. Ha 3 parametri con url ParRelativo1 ParRelativo2 e ParAssoluto</li>
+<li>REPORT-CROSS_NAV -> <b>EmployeeList</b> : Documento per il test della cross navigation tra jasper</li>
+<li>REPORT-SubReport -> <b>MASTER</b> : Documento per il test dei sub report Jasper</li>
+<li>OLAP-> <b>OLP_INVENTORY</b> : semplice Olap </li>
+<li>OLAP-> <b>OLP_INVENTORY_DRILL</b> : Olap con una funziona di drill dalla dimensione verso un report</li>
+<li>OLAP-> <b>OLP_INVENTORY_PROF</b> : Olap profilato su un attributo di sessione</li>
+<li>OLAP-> <b>OLP_INVENTORY_PARAM</b> : Olap filtrato con un parametro</li>
+<li>QBE-> <b>QBE_FOODMART</b> : QBE su Foodmart</li>
+<li>TALEND-> <b>CLEAN_AUDIT</b> : processo Talend che esegue la pulizia della tabella di audith, per il test di esecuzione</li>
+<li>GEO-> <b>GEO_USA_REGIONS</b> : Semplice mappa GEO</li>
+<li>GEO-> <b>USA State Cross</b> : Mappa GEo con Cross su un report jasper</li>
+<li>CHART-> <b>BARCHART_linkablebar</b> : BarChart di esempio linkabile a ReportLinkato</li>
+<li>CHART-> <b>BARCHART_overlaidbar</b> : Chart di esempio con barre e linee</li>
+<li>CHART-> <b>BARCHART_simplebar</b> : Chart di esempio con barre e selezione serie</li>
+<li>CHART-> <b>BARCHART_stackedbar</b> : Chart di esempio con barre cumulate</li>
+<li>CHART-> <b>BOX_CHART</b> : Chart a Box di esempio</li>
+<li>CHART-> <b>CLUSTERCHART_simplecluster</b> : Chart a Bolle di esempio</li>
+<li>CHART-> <b>DIALCHART_bullet</b> : Bullet Chart di esempio</li>
+<li>CHART-> <b>DIALCHART_meter</b> : Chart meter di esempio</li>
+<li>CHART-> <b>DIALCHART_simpledial</b> : Chart simpleDial di esempio</li>
+<li>CHART-> <b>DIALCHART_speedometer</b> : Chart sppedometer di esempio</li>
+<li>CHART-> <b>DIALCHART_thermometer</b> : Chart termometro di esempio</li>
+<li>CHART-> <b>LinkablePieChart</b> : PieChart di esempio linkabile a ReportLinkato</li>
+<li>CHART-> <b>PIECHART</b> : Chart a Torta di esempio</li>
+<li>CHART-> <b>SCATTER_Marker</b> : ScatterChart complesso con puntini e assi per le soglie</li>
+<li>CHART-> <b>SCATTER_Simple</b> : ScatterChart semplice di esempio(solo con puntini qua e la)</li>
+<li>CHART-> <b>XYCHART</b> : Chart a blocchi di esempio</li>
+<li>CHART-> <b>SalesVsStoreAppeal</b> : Chart di esempio con linee e barre e selzione delle categorie</li>
+<li>CHART-> <b>HistorySalesDIrector</b> : Chart di esempio con linee, con slider e selezione delle categorie</li>
+<li>DASHBOARD-> <b>DashMoods</b> : Esempio di dashboard rotate con più aghi e con un link nel sottotitolo al Chart HistorySalesDIrector</li>
+<li>DASHBOARD-> <b>DashboardTrend</b> : Esempio di dashboard che mostra un trend</li>
+<li>DASHBOARD-> <b>DashBoardRotate</b> : Esempio di dashboard rotate con un ago solo</li>
+<li>DASHBOARD-> <b>DashBoardTable</b> : Esempio di dashboard table</li>
+<li>DOC_COMPOSTO-> <b>DC_FOODMART</b>: Documento composto di esempio su foodmart</li>
+<li>PARAMETRI-> <b>parametro_vuoto</b>: Documento di esempio con parametro vuoto, server per il test del parametro senza valore</li>
+<li>PARAMETRI-> <b>Gestione Colonne</b>: Documento di test per 8 parametri per verificare il layout su colonne</li>
+<li>PARAMETRI-> <b>Parametro_aperto</b>: Documento di test un parametro aperto</li>
+<li>PARAMETRI-> <b>Parametro_DATA</b>: Documento di test un parametro Data</li>
+<li>PARAMETRI-> <b>TEST_Correlazione</b>: Documento di test per la correlazione tra 3 parametri</li>
+<li>PARAMETRI-> <b>Parametro_obblig</b>: Documento di test per un parametro obbligatorio</li>
+<li>PARAMETRI-> <b>parametri_correlati</b>: Documento di test per i parametri correlati dove il primo parametro è singleValue</li>
+<li>PARAMETRI-> <b>parametro_singolo</b>: Documento di test per u parametro SingleValue</li>
+<li>PARAMETRI-> <b>parametro_singolo</b>: Documento di test per u parametro SingleValue</li>
+<li>CHECK-> <b>CHECK_ALFANUMERICO</b>: Documento di esempio con parametro con un check alfanumerico</li>
+<li>CHECK-> <b>CHECK_EMAIL</b>: Documento di test con parametro con un check email</li>
+<li>CHECK-> <b>CHECK_FISCALCODE</b>: Documento di test con parametro con un check fiscalcode</li>
+<li>CHECK-> <b>CHECK_INTERNETADDRESS</b>: Documento di test con parametro con un check internetaddress</li>
+<li>CHECK-> <b>CHECK_LETTERSTRING</b>: Documento di test con parametro con un check letterstring</li>
+<li>CHECK-> <b>CHECK_MANDATORY</b>: Documento di test con parametro con un check mandatory</li>
+<li>CHECK-> <b>CHECK_NUMERICO</b>: Documento di test con parametro con un check numerico</li>
+<li>DATAMINING-> <b>WekaProvaSenzaPar</b>: Documento di test Weka che prende i dati dalla tabella cust_to_dept e inserisce il risultato in cust_to_dept_clutered</li>
+<li>DATAMINING-> <b>WekaProvaConPar</b>: Documento di test Weka che prende i dati dalla tabella cust_to_dept e inserisce il risultato in cust_to_dept_clutered con parametri per scegliere l'algoritmo e il numero di cluster</li>
+
+<li>FOLDER VISIBILE TEST-> : Folder con diversi documenti in stato sviluppo/test/rilascio</li>
+
+
+</ol>

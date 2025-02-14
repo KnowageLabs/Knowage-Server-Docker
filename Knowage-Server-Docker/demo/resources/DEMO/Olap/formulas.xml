@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<formulas>
+	<formula >
+		<name>Max</name>
+		<syntax>Max( Set_Expression [ , Numeric_Expression ] )</syntax>
+		
+			<argument>
+				<expected_value>Set_Expression</expected_value>
+				<argument_description>A valid Multidimensional Expressions (MDX) expression that returns a set</argument_description>
+			</argument>
+			<argument>
+				<expected_value>Numeric_Expression</expected_value>
+				<argument_description>
+					A valid numeric expression that is typically a Multidimensional Expressions (MDX) expression of cell coordinates that return a number.	
+					</argument_description>
+			</argument>
+			
+		
+		<output>Number</output>
+		<description>
+			Returns the maximum value of a numeric expression that is evaluated over a set.
+		</description>
+		<type>aggregation</type>
+	</formula>
+	
+	<formula >
+		<name>Min</name>
+		<syntax>Min( Set_Expression [ , Numeric_Expression ] )</syntax>
+		
+			<argument>
+				<expected_value>Set_Expression</expected_value>
+				<argument_description>A valid Multidimensional Expressions (MDX) expression that returns a set</argument_description>
+			</argument>
+			<argument>
+				<expected_value>Numeric_Expression</expected_value>
+				<argument_description>
+					A valid numeric expression that is typically a Multidimensional Expressions (MDX) expression of cell coordinates that return a number.	
+					</argument_description>
+			</argument>
+			
+		
+		<output>Number</output>
+		<description>
+			Returns the minimum value of a numeric expression that is evaluated over a set.
+		</description>
+		<type>aggregation</type>
+	</formula>
+	
+	<formula >
+		<name>Sum</name>
+		<syntax>Sum( Set_Expression [ , Numeric_Expression ] )</syntax>
+		
+			<argument>
+				<expected_value>Set_Expression</expected_value>
+				<argument_description>A valid Multidimensional Expressions (MDX) expression that returns a set</argument_description>
+			</argument>
+			<argument>
+				<expected_value>Numeric_Expression</expected_value>
+				<argument_description>
+					A valid numeric expression that is typically a Multidimensional Expressions (MDX) expression of cell coordinates that return a number.	
+					</argument_description>
+			</argument>
+			
+		
+		<output>Number</output>
+		<description>
+			Returns the summ of a numeric expression that is evaluated over a set.
+		</description>
+		<type>arithmetic</type>
+	</formula>
+	
+	<formula >
+		<name>LastPeriods</name>
+		<syntax>LastPeriods(Index ,Member_Expression  )</syntax>
+		
+			<argument>
+				<expected_value>Index</expected_value>
+				<argument_description>A valid numeric expression that specifies a number of periods.</argument_description>
+			</argument>
+			<argument>
+				<expected_value>Member_Expression</expected_value>
+				<argument_description>
+					A valid Multidimensional Expressions (MDX) expression that returns a member.	
+					</argument_description>
+			</argument>
+			
+		
+		<output>Set</output>
+		<description>
+			Returns a set of members up to and including a specified member.
+		</description>
+		<type>temporal</type>
+	</formula>
+	
+	<formula >
+		<name>ParallelPeriod</name>
+		<syntax>ParallelPeriod( [ Level_Expression [ ,Index [ , Member_Expression ] ] ] )</syntax>
+		
+			<argument>
+				<expected_value>Level_Expression</expected_value>
+				<argument_description>A valid Multidimensional Expressions (MDX) expression that returns a level.</argument_description>
+			</argument>
+			<argument>
+				<expected_value>Numeric_Expression_Expression</expected_value>
+				<argument_description>
+					A valid numeric expression that specifies the number of parallel periods to lag.
+					</argument_description>
+			</argument>
+			<argument>
+				<expected_value>Member_Expression</expected_value>
+				<argument_description>
+					A valid Multidimensional Expressions (MDX) expression that returns a member.
+				</argument_description>
+			</argument>
+			
+		
+		<output>member</output>
+		<description>
+			Returns a member from a prior period in the same relative position as a specified member. 
+		</description>
+		<type>temporal</type>
+	</formula>
+</formulas>
+
+
+
+
