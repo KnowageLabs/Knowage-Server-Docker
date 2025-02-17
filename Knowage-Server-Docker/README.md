@@ -52,6 +52,7 @@ If you want to stop Knowage and remove all created containers, you can use:
 $ docker stack rm knowage
 ```
 
+
 ### Environment variables
 
 Knowage need a specific set of environment variables to correctly start.:
@@ -168,6 +169,27 @@ By default, the available users are:
 |biadmin|biadmin |
 |bidev  |bidev   |
 |biuser |biuser  |
+
+## Run Knowage demo
+
+If you want to run Knowage with some dummy data and some pre-made documents, there is a specific docker-compose you can use.
+
+Follow the instructions from the "use docker-compose section", but add the -f property to point to the demo docker-compose:
+
+```console
+$ docker-compose up -f docker-compose-demo.yml
+```
+Using some externally defined database like foodmart mysql, the first container start can take up to 5 minutes to populate the databases.
+
+When finished you should be able to navigate to the following link (if you haven't changed related properties in the docker-compose file):
+> http://localhost:18080/knowage
+
+By default, the available users are:
+
+|User   |Password|
+|-------|--------|
+|biadmin|biadmin |
+|demo_admin (suggested one)  |demo_admin   |
 
 ## License
 
