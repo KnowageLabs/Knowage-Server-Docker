@@ -55,13 +55,6 @@ services:
     networks:
       - main
 
-  knowager:
-    image: knowagelabs/knowage-r-docker:9.0-SNAPSHOT
-    environment:
-      - HMAC_KEY=$HMAC_KEY
-    networks:
-      - main
-
   knowagedb:
     image: mariadb:10.3
     environment:
