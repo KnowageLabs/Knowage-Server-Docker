@@ -18,5 +18,6 @@ xmlstarlet ed -P -L \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxTotal"        -v "${CACHE_DB_CONNECTION_POOL_SIZE}" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxIdle"         -v "${CACHE_DB_CONNECTION_MAX_IDLE}" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@maxWaitMillis"   -v "${CACHE_DB_CONNECTION_WAIT_MS}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/ds_cache']/@validationQuery"   -v "SELECT 1 FROM DUAL" \
         ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 

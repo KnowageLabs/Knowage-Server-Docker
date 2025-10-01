@@ -18,5 +18,6 @@ xmlstarlet ed -P -L \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxTotal"        -v "${DB_CONNECTION_POOL_SIZE}" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxIdle"         -v "${DB_CONNECTION_MAX_IDLE}" \
         -u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@maxWaitMillis"   -v "${DB_CONNECTION_WAIT_MS}" \
+		-u "//Server/GlobalNamingResources/Resource[@name='jdbc/knowage']/@validationQuery"   -v "SELECT 1 FROM DUAL" \
         ${KNOWAGE_DIRECTORY}/apache-tomcat/conf/server.xml
 
