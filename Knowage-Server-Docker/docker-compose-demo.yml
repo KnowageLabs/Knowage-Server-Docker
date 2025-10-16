@@ -1,0 +1,104 @@
+version: "3.8"
+services:
+  knowage:
+    image: knowagelabs/knowage-server-docker:9.0
+    hostname: knowage
+    depends_on:
+      - knowagedb
+      - knowagecache
+      - hazelcast
+    ports:
+      - "18080:8080"
+    networks:
+      - main
+    environment:
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - DB_DB=$DB_DB
+      - DB_USER=$DB_USER
+      - DB_PASS=$DB_PASS
+      - DB_TYPE=MYSQL
+      - DB_DO_INITIALIZATION=false
+
+      - CACHE_DB_HOST=$CACHE_DB_HOST
+      - CACHE_DB_PORT=$CACHE_DB_PORT
+      - CACHE_DB_DB=$CACHE_DB_DB
+      - CACHE_DB_USER=$CACHE_DB_USER
+      - CACHE_DB_PASS=$CACHE_DB_PASS
+      - CACHE_DB_TYPE=MYSQL
+
+      - HMAC_KEY=$HMAC_KEY
+      - PASSWORD_ENCRYPTION_SECRET=$PASSWORD_ENCRYPTION_SECRET
+      - SENSIBLE_DATA_ENCRYPTION_SECRET=$SENSIBLE_DATA_ENCRYPTION_SECRET
+      - PUBLIC_ADDRESS=localhost
+
+      - HAZELCAST_HOSTS=hazelcast
+      - HAZELCAST_PORT=5701
+      
+      - TIMEOUT_START_KNOWAGE=240
+    volumes:
+      - ./demo/resources:/home/knowage/apache-tomcat/resources
+      - ./demo/confServerFoodmart:/home/knowage/apache-tomcat/conf/server.xml.d
+      - ./demo/confContextFoodmart:/home/knowage/apache-tomcat/conf/context.xml.d
+
+  hazelcast:
+    image: hazelcast/hazelcast:5.3
+    networks:
+      - main
+    environment:
+      - JAVA_OPTS=-Dhazelcast.local.publicAddress=hazelcast -Dhazelcast.config=/opt/hazelcast/hazelcast.xml
+    volumes:
+      - ./hazelcast-server.xml:/opt/hazelcast/hazelcast.xml
+  
+  knowagepython:
+    image: knowagelabs/knowage-python-docker:9.0
+    environment:
+      - HMAC_KEY=$HMAC_KEY
+      - KNOWAGE_PUBLIC_ADDRESS=knowage
+      - PUBLIC_ADDRESS=localhost
+    networks:
+      - main
+
+  knowagedb:
+    image: knowagelabs/knowagedb:9.0
+    environment:
+      - MYSQL_USER=$DB_USER
+      - MYSQL_PASSWORD=$DB_PASS
+      - MYSQL_DATABASE=$DB_DB
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    networks:
+      - main
+    volumes:
+      - "db:/var/lib/mysql"
+
+  knowagecache:
+    image: mysql:8.0.39
+    environment:
+      - MYSQL_USER=$CACHE_DB_USER
+      - MYSQL_PASSWORD=$CACHE_DB_PASS
+      - MYSQL_DATABASE=$CACHE_DB_DB
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    networks:
+      - main
+    volumes:
+      - "cache:/var/lib/mysql"
+  
+  knowagefoodmart:
+    image: jsminet/docker-mysql-foodmart:8.0.28
+    environment:
+      - MYSQL_USER=foodmart
+      - MYSQL_PASSWORD=foodmart
+      - MYSQL_DATABASE=foodmart
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    networks:
+      - main
+    volumes:
+      - "foodmart:/var/lib/mysql"
+
+volumes:
+  db:
+  cache:
+  foodmart:
+
+networks:
+  main:

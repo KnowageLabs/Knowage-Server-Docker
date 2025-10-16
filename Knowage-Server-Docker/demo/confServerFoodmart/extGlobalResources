@@ -1,0 +1,22 @@
+<!-- 
+    Resources from server.xml.d/extGlobalRerouces.
+    
+    Copy the template from Knowage-Server-Docker/extGlobalRerouces, edit it and mount it as:
+    
+        /home/knowage/apache-tomcat/conf/server.xml.d/extGlobalRerouces
+    
+    To customize your server.xml with your resources. For example, you can
+    add all the JDBC connections you need.
+ -->
+
+	<Resource
+    auth="Container"
+    driverClassName="com.mysql.jdbc.Driver"
+    maxTotal="20"
+    maxIdle="4"
+    maxWait="300"
+    name="jdbc/foodmart"
+    password="foodmart"
+    type="javax.sql.DataSource"
+    url="jdbc:mysql://knowagefoodmart:3306/foodmart"
+    username="foodmart"/>
