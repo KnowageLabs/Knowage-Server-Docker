@@ -18,6 +18,13 @@ ARG TOMCAT_LIB=${TOMCAT_HOME}/lib
 ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
 ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
 
+
+# Install unzip and wget before using them
+RUN apt-get update \
+ && apt-get install -q --no-install-recommends -y unzip wget \
+ && rm -rf /var/lib/apt/lists/*
+
+
 # Knowage dependencies
 ARG LIB_COMMONS_LOGGING_NAME="commons-logging-1.1.1.jar"
 ARG LIB_COMMONS_LOGGING_URL="https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging/1.1.1/${LIB_COMMONS_LOGGING_NAME}"
