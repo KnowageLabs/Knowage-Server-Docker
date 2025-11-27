@@ -34,7 +34,9 @@
 		<Environment name="sso_class" type="java.lang.String" value="it.eng.spagobi.services.common.JWTSsoService"/>
 		<Environment description="HMAC key" name="hmacKey" type="java.lang.String" value="__HMAC-key__"/>
 		<Environment description="File for security encryption location" name="password_encryption_secret" type="java.lang.String" value="${catalina.home}/conf/passwordEncryptionSecret"/>
-
+		<Environment name="logs_path" type="java.lang.String" value="${catalina.home}/logs"/>
+	
+	    <ResourceLink global="logs_path" name="logs_path" type="java.lang.String"/>
 		<!-- KNOWAGE -->
 		<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxTotal="20" maxIdle="10"
 			maxWaitMillis="300" name="jdbc/knowage" type="javax.sql.DataSource"
