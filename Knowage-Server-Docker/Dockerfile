@@ -19,24 +19,35 @@ ARG TOMCAT_WEBAPPS=${TOMCAT_HOME}/webapps
 ARG TOMCAT_RESOURCES=${TOMCAT_HOME}/resources
 
 # Knowage dependencies
+# Maven Central base (puoi anche usare repo.maven.apache.org)
+ARG MAVEN_CENTRAL_BASE_URL="https://repo1.maven.org/maven2"
+
 ARG LIB_COMMONS_LOGGING_NAME="commons-logging-1.1.1.jar"
-ARG LIB_COMMONS_LOGGING_URL="https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging/1.1.1/${LIB_COMMONS_LOGGING_NAME}"
+ARG LIB_COMMONS_LOGGING_URL="${MAVEN_CENTRAL_BASE_URL}/commons-logging/commons-logging/1.1.1/${LIB_COMMONS_LOGGING_NAME}"
+
 ARG LIB_COMMONS_LOGGING_API_NAME="commons-logging-api-1.1.jar"
-ARG LIB_COMMONS_LOGGING_API_URL="https://search.maven.org/remotecontent?filepath=commons-logging/commons-logging-api/1.1/${LIB_COMMONS_LOGGING_API_NAME}"
+ARG LIB_COMMONS_LOGGING_API_URL="${MAVEN_CENTRAL_BASE_URL}/commons-logging/commons-logging-api/1.1/${LIB_COMMONS_LOGGING_API_NAME}"
+
 ARG LIB_CONCURRENT_NAME="oswego-concurrent-1.3.4.jar"
-ARG LIB_CONCURRENT_URL="https://search.maven.org/remotecontent?filepath=org/lucee/oswego-concurrent/1.3.4/${LIB_CONCURRENT_NAME}"
+ARG LIB_CONCURRENT_URL="${MAVEN_CENTRAL_BASE_URL}/org/lucee/oswego-concurrent/1.3.4/${LIB_CONCURRENT_NAME}"
+
 ARG LIB_MYSQL_CONNECTOR_NAME="mysql-connector-java-8.0.30.jar"
-ARG LIB_MYSQL_CONNECTOR_URL="https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/8.0.30/${LIB_MYSQL_CONNECTOR_NAME}"
+ARG LIB_MYSQL_CONNECTOR_URL="${MAVEN_CENTRAL_BASE_URL}/mysql/mysql-connector-java/8.0.30/${LIB_MYSQL_CONNECTOR_NAME}"
+
 ARG LIB_MARIADB_CONNECTOR_NAME="mariadb-java-client-2.7.2.jar"
-ARG LIB_MARIADB_CONNECTOR_URL="https://search.maven.org/remotecontent?filepath=org/mariadb/jdbc/mariadb-java-client/2.7.2/${LIB_MARIADB_CONNECTOR_NAME}"
+ARG LIB_MARIADB_CONNECTOR_URL="${MAVEN_CENTRAL_BASE_URL}/org/mariadb/jdbc/mariadb-java-client/2.7.2/${LIB_MARIADB_CONNECTOR_NAME}"
+
 ARG LIB_GERONIMO_COMMONJ_NAME="geronimo-commonj_1.1_spec-1.0.jar"
-ARG LIB_GERONIMO_COMMONJ_URL="https://search.maven.org/remotecontent?filepath=org/apache/geronimo/specs/geronimo-commonj_1.1_spec/1.0/${LIB_GERONIMO_COMMONJ_NAME}"
+ARG LIB_GERONIMO_COMMONJ_URL="${MAVEN_CENTRAL_BASE_URL}/org/apache/geronimo/specs/geronimo-commonj_1.1_spec/1.0/${LIB_GERONIMO_COMMONJ_NAME}"
+
+ARG LIB_HSQLDB_JDBC_DRIVER_NAME="hsqldb-1.8.0.10.jar"
+ARG LIB_HSQLDB_JDBC_DRIVER_URL="${MAVEN_CENTRAL_BASE_URL}/org/hsqldb/hsqldb/1.8.0.10/${LIB_HSQLDB_JDBC_DRIVER_NAME}"
+
 ARG LIB_MYFOO_COMMONJ_NAME="commonj-1.0.jar"
 ARG LIB_MYFOO_COMMONJ_URL="https://github.com/SpagoBILabs/SpagoBI/blob/mvn-repo/releases/de/myfoo/commonj/1.0/${LIB_MYFOO_COMMONJ_NAME}?raw=true"
+
 ARG LIB_POSTGRESQL_CONNECTOR_NAME="postgresql-42.2.4.jar"
 ARG LIB_POSTGRESQL_CONNECTOR_URL="https://jdbc.postgresql.org/download/${LIB_POSTGRESQL_CONNECTOR_NAME}"
-ARG LIB_HSQLDB_JDBC_DRIVER_NAME="hsqldb-1.8.0.10.jar"
-ARG LIB_HSQLDB_JDBC_DRIVER_URL="https://search.maven.org/remotecontent?filepath=org/hsqldb/hsqldb/1.8.0.10/${LIB_HSQLDB_JDBC_DRIVER_NAME}"
 
 ARG KNOWAGE_CORE_ENGINE="knowage"
 ARG KNOWAGE_BIRTREPORT_ENGINE="${KNOWAGE_CORE_ENGINE}birtreportengine"
