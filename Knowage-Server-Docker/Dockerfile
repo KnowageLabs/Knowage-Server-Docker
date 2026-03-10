@@ -44,10 +44,11 @@ ARG LIB_HSQLDB_JDBC_DRIVER_NAME="hsqldb-1.8.0.10.jar"
 ARG LIB_HSQLDB_JDBC_DRIVER_URL="${MAVEN_CENTRAL_BASE_URL}/org/hsqldb/hsqldb/1.8.0.10/${LIB_HSQLDB_JDBC_DRIVER_NAME}"
 
 ARG LIB_MYFOO_COMMONJ_NAME="commonj-1.0.jar"
-ARG LIB_MYFOO_COMMONJ_URL="https://github.com/SpagoBILabs/SpagoBI/blob/mvn-repo/releases/de/myfoo/commonj/1.0/${LIB_MYFOO_COMMONJ_NAME}?raw=true"
+ARG LIB_MYFOO_COMMONJ_URL="https://raw.githubusercontent.com/SpagoBILabs/SpagoBI/mvn-repo/releases/de/myfoo/commonj/1.0/${LIB_MYFOO_COMMONJ_NAME}"
 
 ARG LIB_POSTGRESQL_CONNECTOR_NAME="postgresql-42.2.4.jar"
 ARG LIB_POSTGRESQL_CONNECTOR_URL="https://jdbc.postgresql.org/download/${LIB_POSTGRESQL_CONNECTOR_NAME}"
+
 
 ARG KNOWAGE_CORE_ENGINE="knowage"
 ARG KNOWAGE_BIRTREPORT_ENGINE="${KNOWAGE_CORE_ENGINE}birtreportengine"
@@ -129,20 +130,14 @@ RUN cd "${TOMCAT_WEBAPPS}" && \
   for archive in *.war ; do unzip -d "$( basename "${archive%%.war}")" "$archive" ; rm ${archive} ; done
 
 # Download Knowage libs and put them into Apache Tomcat lib
-RUN wget -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_LOGGING_URL}" \
-  && sleep 2 \
-  && wget -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_API_NAME}"  "${LIB_COMMONS_LOGGING_API_URL}" \
-  && sleep 2 \
-  && wget -O "${TOMCAT_LIB}/${LIB_CONCURRENT_NAME}"           "${LIB_CONCURRENT_URL}" \
-  && sleep 2 \
-  && wget -O "${TOMCAT_LIB}/${LIB_MYSQL_CONNECTOR_NAME}"      "${LIB_MYSQL_CONNECTOR_URL}" \
-  && sleep 2 \
-  && wget -O "${TOMCAT_LIB}/${LIB_MARIADB_CONNECTOR_NAME}"    "${LIB_MARIADB_CONNECTOR_URL}" \
-  && sleep 2 \
-  && wget -O "${TOMCAT_LIB}/${LIB_GERONIMO_COMMONJ_NAME}"     "${LIB_GERONIMO_COMMONJ_URL}" \
-  && sleep 2 \
-  && wget -O "${TOMCAT_LIB}/${LIB_MYFOO_COMMONJ_NAME}"        "${LIB_MYFOO_COMMONJ_URL}" \
-  && sleep 2 \
+RUN  wget -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_NAME}"      "${LIB_COMMONS_LOGGING_URL}"      \
+  && wget -O "${TOMCAT_LIB}/${LIB_COMMONS_LOGGING_API_NAME}"  "${LIB_COMMONS_LOGGING_API_URL}"  \
+  && wget -O "${TOMCAT_LIB}/${LIB_CONCURRENT_NAME}"           "${LIB_CONCURRENT_URL}"           \
+  && wget -O "${TOMCAT_LIB}/${LIB_MYSQL_CONNECTOR_NAME}"      "${LIB_MYSQL_CONNECTOR_URL}"      \
+  && wget -O "${TOMCAT_LIB}/${LIB_MARIADB_CONNECTOR_NAME}"    "${LIB_MARIADB_CONNECTOR_URL}"    \
+  && wget -O "${TOMCAT_LIB}/${LIB_GERONIMO_COMMONJ_NAME}"     "${LIB_GERONIMO_COMMONJ_URL}"     \
+  && wget --tries=10 --waitretry=5 --retry-connrefused --timeout=30 \
+      -O "${TOMCAT_LIB}/${LIB_MYFOO_COMMONJ_NAME}" "${LIB_MYFOO_COMMONJ_URL}" \
   && wget -O "${TOMCAT_LIB}/${LIB_POSTGRESQL_CONNECTOR_NAME}" "${LIB_POSTGRESQL_CONNECTOR_URL}" \
   && sleep 2 \
   && wget -O "${TOMCAT_LIB}/${LIB_HSQLDB_JDBC_DRIVER_NAME}"   "${LIB_HSQLDB_JDBC_DRIVER_URL}"
