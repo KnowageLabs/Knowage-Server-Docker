@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   knowage:
-    image: knowagelabs/knowage-server-docker:9.0-SNAPSHOT
+    image: knowagelabs/knowage-server-docker:9.1-SNAPSHOT
     hotsname: knowage
     depends_on:
       - knowagedb
@@ -63,13 +63,6 @@ services:
       - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
       - KNOWAGE_PUBLIC_ADDRESS=knowage
       - PUBLIC_ADDRESS=localhost
-    networks:
-      - main
-
-  knowager:
-    image: knowagelabs/knowage-r-docker:9.0-SNAPSHOT
-    environment:
-      - HMAC_KEY_FILE=/run/secrets/knowage_hmac_key
     networks:
       - main
 
